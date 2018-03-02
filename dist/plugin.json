@@ -1,14 +1,14 @@
 {
-    "id":"alex-d3-panel",
+    "id":"jancho-heatmap-panel",
     "type":"panel",
-    "name":"SegundoPlugin",
+    "name":"HP Heatmap",
     "info":{
-        "description":"Segundo plugin",
+        "description":"Heatmap generator for visualization o timeseries data over SVG figures",
         "author":{
-            "name":"alex",
+            "name":"Alejandro Rodríguez Díaz",
             "url":"none"
         },
-        "keywords":["panel", "new", "test", "first"],
+        "keywords":["panel", "d3", "heatmap", "plugin"],
         "version":"1.0"
     },
     "dependencies":{
@@ -16,4 +16,3 @@
         "plugins":[]
     }
 }
-
