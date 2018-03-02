@@ -1,5 +1,3 @@
 import {HeatmapController} from './heatmapCtrl.js';
 
-export{
-    HeatmapController as PanelCtrl
-};
+export{ HeatmapController as PanelCtrl };

@@ -1,1 +1,1 @@
-{"version":3,"sources":["../src/module.js"],"names":["HeatmapController"],"mappings":";;;;;;;;AAAQA,6B,kBAAAA,iB;;;iCAGJA,iB","file":"module.js","sourcesContent":["import {HeatmapController} from './heatmapCtrl.js';\n\nexport{\n    HeatmapController as PanelCtrl\n};\n"]}
+{"version":3,"sources":["../src/module.js"],"names":["HeatmapController"],"mappings":";;;;;;;;AAAQA,uB,kBAAAA,iB;;;2BAEAA,iB","file":"module.js","sourcesContent":["import {HeatmapController} from './heatmapCtrl.js';\n\nexport{ HeatmapController as PanelCtrl };\n"]}
