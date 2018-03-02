@@ -1,0 +1,26 @@
+{
+  "name": "jancho-heatmapGenerator-panel",
+  "version": "1.0.0",
+  "description": "Plugin for visualizing time series over SVG figures",
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alejandro Rodríguez Díaz",
+  "license": "ISC",
+  "dependencies": {
+    "babel": "^6.23.0",
+    "babel-preset-es2015": "^6.24.1",
+    "d3": "^4.13.0",
+    "grunt": "^1.0.1",
+    "grunt-babel": "^7.0.0",
+    "grunt-contrib-clean": "^1.1.0",
+    "grunt-contrib-copy": "^1.0.0",
+    "grunt-contrib-watch": "^1.0.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "grunt-babel": "^7.0.0"
+  }
+}

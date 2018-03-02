@@ -1,0 +1,19 @@
+{
+    "id":"alex-d3-panel",
+    "type":"panel",
+    "name":"SegundoPlugin",
+    "info":{
+        "description":"Segundo plugin",
+        "author":{
+            "name":"alex",
+            "url":"none"
+        },
+        "keywords":["panel", "new", "test", "first"],
+        "version":"1.0"
+    },
+    "dependencies":{
+        "grafanaVersion":"4.5.2",
+        "plugins":[]
+    }
+}
+
