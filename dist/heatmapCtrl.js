@@ -3,7 +3,7 @@
 System.register(['app/plugins/sdk', 'app/core/time_series2', 'moment', 'lodash', './libs/d3/build/d3.js', './panelDefaults.js'], function (_export, _context) {
     "use strict";
 
-    var MetricsPanelCtrl, TimeSeries, moment, _, d3, panelDefaults, _createClass, D3Controller;
+    var MetricsPanelCtrl, TimeSeries, moment, _, d3, panelDefaults, _createClass, HeatmapController;
 
     function _classCallCheck(instance, Constructor) {
         if (!(instance instanceof Constructor)) {
@@ -68,13 +68,13 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'moment', 'lodash',
                 };
             }();
 
-            _export('D3Controller', D3Controller = function (_MetricsPanelCtrl) {
-                _inherits(D3Controller, _MetricsPanelCtrl);
+            _export('HeatmapController', HeatmapController = function (_MetricsPanelCtrl) {
+                _inherits(HeatmapController, _MetricsPanelCtrl);
 
-                function D3Controller($scope, $injector) {
-                    _classCallCheck(this, D3Controller);
+                function HeatmapController($scope, $injector) {
+                    _classCallCheck(this, HeatmapController);
 
-                    var _this = _possibleConstructorReturn(this, (D3Controller.__proto__ || Object.getPrototypeOf(D3Controller)).call(this, $scope, $injector));
+                    var _this = _possibleConstructorReturn(this, (HeatmapController.__proto__ || Object.getPrototypeOf(HeatmapController)).call(this, $scope, $injector));
 
                     _.defaults(_this.panel, panelDefaults);
                     _this.panel.thresholds = panelDefaults.thresholds;
@@ -93,7 +93,7 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'moment', 'lodash',
                 // Grafana event controllers
 
 
-                _createClass(D3Controller, [{
+                _createClass(HeatmapController, [{
                     key: 'onPanelInitialized',
                     value: function onPanelInitialized() {}
                 }, {
@@ -113,13 +113,13 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'moment', 'lodash',
                     value: function onColorChange(index) {}
                 }]);
 
-                return D3Controller;
+                return HeatmapController;
             }(MetricsPanelCtrl));
 
-            _export('D3Controller', D3Controller);
+            _export('HeatmapController', HeatmapController);
 
-            D3Controller.templateUrl = 'partials/module.html';
+            HeatmapController.templateUrl = 'partials/module.html';
         }
     };
 });
-//# sourceMappingURL=d3_ctrl.js.map
+//# sourceMappingURL=heatmapCtrl.js.map

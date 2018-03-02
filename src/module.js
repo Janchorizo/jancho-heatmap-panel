@@ -1,6 +1,5 @@
-import {D3Controller} from './d3_ctrl.js';
+import {HeatmapController} from './heatmapCtrl.js';
 
 export{
-    D3Controller as PanelCtrl
+    HeatmapController as PanelCtrl
 };
-

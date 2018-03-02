@@ -1,1 +1,1 @@
-{"version":3,"sources":["../src/module.js"],"names":["D3Controller"],"mappings":";;;;;;;;AAAQA,wB,cAAAA,Y;;;iCAGJA,Y","file":"module.js","sourcesContent":["import {D3Controller} from './d3_ctrl.js';\n\nexport{\n    D3Controller as PanelCtrl\n};\n\n"]}
+{"version":3,"sources":["../src/module.js"],"names":["HeatmapController"],"mappings":";;;;;;;;AAAQA,6B,kBAAAA,iB;;;iCAGJA,iB","file":"module.js","sourcesContent":["import {HeatmapController} from './heatmapCtrl.js';\n\nexport{\n    HeatmapController as PanelCtrl\n};\n"]}

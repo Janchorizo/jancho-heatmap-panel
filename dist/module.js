@@ -1,15 +1,15 @@
 'use strict';
 
-System.register(['./d3_ctrl.js'], function (_export, _context) {
+System.register(['./heatmapCtrl.js'], function (_export, _context) {
     "use strict";
 
-    var D3Controller;
+    var HeatmapController;
     return {
-        setters: [function (_d3_ctrlJs) {
-            D3Controller = _d3_ctrlJs.D3Controller;
+        setters: [function (_heatmapCtrlJs) {
+            HeatmapController = _heatmapCtrlJs.HeatmapController;
         }],
         execute: function () {
-            _export('PanelCtrl', D3Controller);
+            _export('PanelCtrl', HeatmapController);
         }
     };
 });

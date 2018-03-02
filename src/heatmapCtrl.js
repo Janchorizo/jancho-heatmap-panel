@@ -6,7 +6,7 @@ import * as d3 from './libs/d3/build/d3.js' ;
 
 import { panelDefaults } from "./panelDefaults.js";
 
-export class D3Controller extends MetricsPanelCtrl{
+export class HeatmapController extends MetricsPanelCtrl{
     constructor( $scope, $injector){
         super( $scope, $injector);
         _.defaults( this.panel, panelDefaults);
@@ -34,8 +34,8 @@ export class D3Controller extends MetricsPanelCtrl{
     }
 
     onRender(){
-    }
 
+    }
     onRefresh(){
     }
 
@@ -45,4 +45,4 @@ export class D3Controller extends MetricsPanelCtrl{
 
 }
 
-D3Controller.templateUrl = 'partials/module.html';
+HeatmapController.templateUrl = 'partials/module.html';
