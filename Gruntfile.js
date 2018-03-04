@@ -42,6 +42,15 @@ module.exports = function(grunt){
                   dest: 'dist',
                   ext:'.js'
                 }]
+            },
+            ts: {
+                files:  [{
+                  cwd: 'src/features',
+                  expand: true,
+                  src: ['*/*.ts'],
+                  dest: 'dist/features',
+                  ext:'.js'
+                }]
             }
 
         },
@@ -61,7 +70,7 @@ module.exports = function(grunt){
                 }
             },
             scripts:{
-                files:['src/*.js'],
+                files:['src/*.js', 'src/features/**/*'],
                 tasks:['babel'],
                 options:{
                     debounceDelay: 200,

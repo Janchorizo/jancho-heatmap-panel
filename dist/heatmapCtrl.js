@@ -1,9 +1,9 @@
 'use strict';
 
-System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './libs/d3/build/d3.js', './panelDefaults.js'], function (_export, _context) {
+System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './libs/d3/build/d3.js', './panelDefaults.js', './features/render/renderController.js'], function (_export, _context) {
     "use strict";
 
-    var MetricsPanelCtrl, TimeSeries, _, d3, panelDefaults, _createClass, HeatmapController;
+    var MetricsPanelCtrl, TimeSeries, _, d3, panelDefaults, renderFeature, _createClass, HeatmapController;
 
     function _classCallCheck(instance, Constructor) {
         if (!(instance instanceof Constructor)) {
@@ -46,6 +46,8 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './libs/d
             d3 = _libsD3BuildD3Js;
         }, function (_panelDefaultsJs) {
             panelDefaults = _panelDefaultsJs.panelDefaults;
+        }, function (_featuresRenderRenderControllerJs) {
+            renderFeature = _featuresRenderRenderControllerJs.default;
         }],
         execute: function () {
             _createClass = function () {
@@ -82,6 +84,8 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './libs/d
                     _this.events.on('panel-initialized', _this.onPanelInitialized.bind(_this));
                     _this.events.on('render', _this.onRender.bind(_this));
                     _this.events.on('refresh', _this.onRefresh.bind(_this));
+
+                    _this.renderFeature = new renderFeature(_this.$scope);
                     return _this;
                 }
 

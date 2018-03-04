@@ -5,6 +5,8 @@ import * as d3 from './libs/d3/build/d3.js' ;
 
 import { panelDefaults } from "./panelDefaults.js";
 
+import renderFeature from './features/render/renderController.js';
+
 export class HeatmapController extends MetricsPanelCtrl{
     constructor( $scope, $injector){
         super( $scope, $injector);
@@ -16,6 +18,8 @@ export class HeatmapController extends MetricsPanelCtrl{
         this.events.on( 'panel-initialized', this.onPanelInitialized.bind(this));
         this.events.on( 'render', this.onRender.bind(this));
         this.events.on( 'refresh', this.onRefresh.bind(this));
+
+        this.renderFeature = new renderFeature( this.$scope);
     }
 
     // Grafana event controllers
