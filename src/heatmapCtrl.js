@@ -1,6 +1,5 @@
 import {MetricsPanelCtrl} from 'app/plugins/sdk';
 import TimeSeries from 'app/core/time_series2';
-import moment from 'moment';
 import _ from 'lodash';
 import * as d3 from './libs/d3/build/d3.js' ;
 
@@ -17,9 +16,6 @@ export class HeatmapController extends MetricsPanelCtrl{
         this.events.on( 'panel-initialized', this.onPanelInitialized.bind(this));
         this.events.on( 'render', this.onRender.bind(this));
         this.events.on( 'refresh', this.onRefresh.bind(this));
-
-        console.info('This panel');
-        console.log(this.panel);
     }
 
     // Grafana event controllers

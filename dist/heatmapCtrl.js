@@ -1,9 +1,9 @@
 'use strict';
 
-System.register(['app/plugins/sdk', 'app/core/time_series2', 'moment', 'lodash', './libs/d3/build/d3.js', './panelDefaults.js'], function (_export, _context) {
+System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './libs/d3/build/d3.js', './panelDefaults.js'], function (_export, _context) {
     "use strict";
 
-    var MetricsPanelCtrl, TimeSeries, moment, _, d3, panelDefaults, _createClass, HeatmapController;
+    var MetricsPanelCtrl, TimeSeries, _, d3, panelDefaults, _createClass, HeatmapController;
 
     function _classCallCheck(instance, Constructor) {
         if (!(instance instanceof Constructor)) {
@@ -40,8 +40,6 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'moment', 'lodash',
             MetricsPanelCtrl = _appPluginsSdk.MetricsPanelCtrl;
         }, function (_appCoreTime_series) {
             TimeSeries = _appCoreTime_series.default;
-        }, function (_moment) {
-            moment = _moment.default;
         }, function (_lodash) {
             _ = _lodash.default;
         }, function (_libsD3BuildD3Js) {
@@ -84,9 +82,6 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'moment', 'lodash',
                     _this.events.on('panel-initialized', _this.onPanelInitialized.bind(_this));
                     _this.events.on('render', _this.onRender.bind(_this));
                     _this.events.on('refresh', _this.onRefresh.bind(_this));
-
-                    console.info('This panel');
-                    console.log(_this.panel);
                     return _this;
                 }
 
