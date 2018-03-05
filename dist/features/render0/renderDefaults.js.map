@@ -1,0 +1,1 @@
+{"version":3,"sources":["../../../src/features/render0/renderDefaults.ts"],"names":["renderDefaults","render","feature","desc"],"mappings":";;;;;;;;;gCAAaA,c,GAAiB;AAC5BC,gBAAS;AACPC,mBAAS,QADF;AAEPC,gBAAM;AAFC;AADmB,O","file":"renderDefaults.js","sourcesContent":["export const renderDefaults = {\n  render : {\n    feature: 'render',\n    desc: 'rendering SVG map',\n  },\n};\n"]}
