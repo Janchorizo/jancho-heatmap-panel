@@ -26,6 +26,14 @@ module.exports = function(grunt){
                 flatten:true,
                 src:['README.md','src/plugin.json'],
                 dest:'dist/'
+            },
+            html: {
+                files:  [{
+                  cwd: 'src/features',
+                  expand: true,
+                  src: ['*/*.html'],
+                  dest: 'dist/features',
+                }]
             }
         },
         babel:{
@@ -72,6 +80,13 @@ module.exports = function(grunt){
             scripts:{
                 files:['src/*.js', 'src/features/**/*'],
                 tasks:['babel'],
+                options:{
+                    debounceDelay: 200,
+                }
+            },
+            html:{
+                files:['src/*.html', 'src/features/**/*'],
+                tasks:['copy'],
                 options:{
                     debounceDelay: 200,
                 }

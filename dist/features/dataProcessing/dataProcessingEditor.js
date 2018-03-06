@@ -3,7 +3,7 @@
 System.register([], function (_export, _context) {
   "use strict";
 
-  var _createClass, __Feature__EditorController;
+  var _createClass, DataProcessingEditorController;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -11,21 +11,21 @@ System.register([], function (_export, _context) {
     }
   }
 
-  function __feature__Editor(scope) {
+  function dataProcessingEditor(scope) {
     'use strict';
 
-    var pathToTemplate = 'public/plugins/' + scope.ctrl.panel.type + '/features/__feature__/__feature__Editor.html';
+    var pathToTemplate = 'public/plugins/' + scope.ctrl.panel.type + '/features/dataProcessing/dataProcessingEditor.html';
     return function () {
       return {
         restrict: 'E',
         scope: true,
         templateUrl: pathToTemplate,
-        controller: __Feature__EditorController
+        controller: DataProcessingEditorController
       };
     };
   }
 
-  _export('__feature__Editor', __feature__Editor);
+  _export('dataProcessingEditor', dataProcessingEditor);
 
   return {
     setters: [],
@@ -48,27 +48,27 @@ System.register([], function (_export, _context) {
         };
       }();
 
-      _export('__Feature__EditorController', __Feature__EditorController = function () {
-        function __Feature__EditorController($scope) {
-          _classCallCheck(this, __Feature__EditorController);
+      _export('DataProcessingEditorController', DataProcessingEditorController = function () {
+        function DataProcessingEditorController($scope) {
+          _classCallCheck(this, DataProcessingEditorController);
 
           $scope.editor = this;
           this.panelCtrl = $scope.ctrl;
           this.panel = this.panelCtrl.panel;
         }
 
-        _createClass(__Feature__EditorController, [{
+        _createClass(DataProcessingEditorController, [{
           key: 'hola',
           value: function hola() {
-            console.info('Qué pasa chavalada');
+            console.info('Qué pasa dataProcessingggggg');
           }
         }]);
 
-        return __Feature__EditorController;
+        return DataProcessingEditorController;
       }());
 
-      _export('__Feature__EditorController', __Feature__EditorController);
+      _export('DataProcessingEditorController', DataProcessingEditorController);
     }
   };
 });
-//# sourceMappingURL=__feature__Editor.js.map
+//# sourceMappingURL=dataProcessingEditor.js.map

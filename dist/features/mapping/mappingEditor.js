@@ -3,7 +3,7 @@
 System.register([], function (_export, _context) {
   "use strict";
 
-  var _createClass, RenderEditorController;
+  var _createClass, MappingEditorController;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -11,21 +11,21 @@ System.register([], function (_export, _context) {
     }
   }
 
-  function renderEditor(scope) {
+  function mappingEditor(scope) {
     'use strict';
 
-    var pathToTemplate = 'public/plugins/' + scope.ctrl.panel.type + '/features/render/renderEditor.html';
+    var pathToTemplate = 'public/plugins/' + scope.ctrl.panel.type + '/features/mapping/mappingEditor.html';
     return function () {
       return {
         restrict: 'E',
         scope: true,
-        templateUrl: pathToTemplate, //'public/plugins/jancho-heatmap-panel/features/render/renderEditor.html',
-        controller: RenderEditorController
+        templateUrl: pathToTemplate,
+        controller: MappingEditorController
       };
     };
   }
 
-  _export('renderEditor', renderEditor);
+  _export('mappingEditor', mappingEditor);
 
   return {
     setters: [],
@@ -48,27 +48,27 @@ System.register([], function (_export, _context) {
         };
       }();
 
-      _export('RenderEditorController', RenderEditorController = function () {
-        function RenderEditorController($scope) {
-          _classCallCheck(this, RenderEditorController);
+      _export('MappingEditorController', MappingEditorController = function () {
+        function MappingEditorController($scope) {
+          _classCallCheck(this, MappingEditorController);
 
           $scope.editor = this;
           this.panelCtrl = $scope.ctrl;
           this.panel = this.panelCtrl.panel;
         }
 
-        _createClass(RenderEditorController, [{
+        _createClass(MappingEditorController, [{
           key: 'hola',
           value: function hola() {
-            console.info('Qué pasa chavalada');
+            console.info('Qué pasa mappingEditor');
           }
         }]);
 
-        return RenderEditorController;
+        return MappingEditorController;
       }());
 
-      _export('RenderEditorController', RenderEditorController);
+      _export('MappingEditorController', MappingEditorController);
     }
   };
 });
-//# sourceMappingURL=renderEditor.js.map
+//# sourceMappingURL=mappingEditor.js.map

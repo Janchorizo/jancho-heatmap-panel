@@ -1,9 +1,9 @@
 'use strict';
 
-System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './renderDefaults.js', './renderEditor.js'], function (_export, _context) {
+System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './dataProcessingDefaults.js', './dataProcessingEditor.js'], function (_export, _context) {
     "use strict";
 
-    var MetricsPanelCtrl, TimeSeries, _, renderDefaults, renderEditor, _createClass, Feature;
+    var MetricsPanelCtrl, TimeSeries, _, dataProcessingDefaults, dataProcessingEditor, _createClass, Feature;
 
     function _classCallCheck(instance, Constructor) {
         if (!(instance instanceof Constructor)) {
@@ -18,10 +18,10 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './render
             TimeSeries = _appCoreTime_series.default;
         }, function (_lodash) {
             _ = _lodash.default;
-        }, function (_renderDefaultsJs) {
-            renderDefaults = _renderDefaultsJs.renderDefaults;
-        }, function (_renderEditorJs) {
-            renderEditor = _renderEditorJs.renderEditor;
+        }, function (_dataProcessingDefaultsJs) {
+            dataProcessingDefaults = _dataProcessingDefaultsJs.dataProcessingDefaults;
+        }, function (_dataProcessingEditorJs) {
+            dataProcessingEditor = _dataProcessingEditorJs.dataProcessingEditor;
         }],
         execute: function () {
             _createClass = function () {
@@ -48,7 +48,7 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './render
 
                     this.$scope = $scope;
                     this.panelController = $scope.ctrl;
-                    _.defaults(this.panelController.panel, renderDefaults);
+                    _.defaults(this.panelController.panel, dataProcessingDefaults);
 
                     this.panelController.events.on('init-edit-mode', this.onInitEditMode.bind(this));
                     //this.panelController.events.on( 'data-received', this.onDataReceived);
@@ -60,7 +60,7 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './render
                 _createClass(Feature, [{
                     key: 'onInitEditMode',
                     value: function onInitEditMode() {
-                        this.panelController.addEditorTab('Render', renderEditor(this.$scope), 2);
+                        this.panelController.addEditorTab('DataProcessing', dataProcessingEditor(this.$scope), 2);
                     }
                 }]);
 
@@ -71,4 +71,4 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './render
         }
     };
 });
-//# sourceMappingURL=renderController.js.map
+//# sourceMappingURL=dataProcessingController.js.map

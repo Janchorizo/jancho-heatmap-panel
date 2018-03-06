@@ -12,7 +12,7 @@ export class __Feature__EditorController {
 
 export function __feature__Editor( scope){
   'use strict';
-  let pathToTemplate = 'public/plugins/' + scope.ctrl.panel.type + '/features/__feature__/__Feature__Editor.html';
+  let pathToTemplate = 'public/plugins/' + scope.ctrl.panel.type + '/features/__feature__/__feature__Editor.html';
   return function(){
     return{
       restrict: 'E',

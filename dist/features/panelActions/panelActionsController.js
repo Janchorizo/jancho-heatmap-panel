@@ -1,9 +1,9 @@
 'use strict';
 
-System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './__feature__Defaults.js', './__feature__Editor.js'], function (_export, _context) {
+System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './panelActionsDefaults.js', './panelActionsEditor.js'], function (_export, _context) {
     "use strict";
 
-    var MetricsPanelCtrl, TimeSeries, _, __feature__Defaults, __feature__Editor, _createClass, Feature;
+    var MetricsPanelCtrl, TimeSeries, _, panelActionsDefaults, panelActionsEditor, _createClass, Feature;
 
     function _classCallCheck(instance, Constructor) {
         if (!(instance instanceof Constructor)) {
@@ -18,10 +18,10 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './__feat
             TimeSeries = _appCoreTime_series.default;
         }, function (_lodash) {
             _ = _lodash.default;
-        }, function (_feature__DefaultsJs) {
-            __feature__Defaults = _feature__DefaultsJs.__feature__Defaults;
-        }, function (_feature__EditorJs) {
-            __feature__Editor = _feature__EditorJs.__feature__Editor;
+        }, function (_panelActionsDefaultsJs) {
+            panelActionsDefaults = _panelActionsDefaultsJs.panelActionsDefaults;
+        }, function (_panelActionsEditorJs) {
+            panelActionsEditor = _panelActionsEditorJs.panelActionsEditor;
         }],
         execute: function () {
             _createClass = function () {
@@ -48,7 +48,7 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './__feat
 
                     this.$scope = $scope;
                     this.panelController = $scope.ctrl;
-                    _.defaults(this.panelController.panel, __feature__Defaults);
+                    _.defaults(this.panelController.panel, panelActionsDefaults);
 
                     this.panelController.events.on('init-edit-mode', this.onInitEditMode.bind(this));
                     //this.panelController.events.on( 'data-received', this.onDataReceived);
@@ -60,7 +60,7 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './__feat
                 _createClass(Feature, [{
                     key: 'onInitEditMode',
                     value: function onInitEditMode() {
-                        this.panelController.addEditorTab('__Feature__', __feature__Editor(this.$scope), 2);
+                        this.panelController.addEditorTab('PanelActions', panelActionsEditor(this.$scope), 2);
                     }
                 }]);
 
@@ -71,4 +71,4 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './__feat
         }
     };
 });
-//# sourceMappingURL=renderController.js.map
+//# sourceMappingURL=panelActionsController.js.map

@@ -3,7 +3,7 @@
 System.register([], function (_export, _context) {
   "use strict";
 
-  var _createClass, __Feature__EditorController;
+  var _createClass, PanelActionsEditorController;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -11,21 +11,21 @@ System.register([], function (_export, _context) {
     }
   }
 
-  function __feature__Editor(scope) {
+  function panelActionsEditor(scope) {
     'use strict';
 
-    var pathToTemplate = 'public/plugins/' + scope.ctrl.panel.type + '/features/__feature__/__Feature__Editor.html';
+    var pathToTemplate = 'public/plugins/' + scope.ctrl.panel.type + '/features/panelActions/panelActionsEditor.html';
     return function () {
       return {
         restrict: 'E',
         scope: true,
         templateUrl: pathToTemplate,
-        controller: __Feature__EditorController
+        controller: PanelActionsEditorController
       };
     };
   }
 
-  _export('__feature__Editor', __feature__Editor);
+  _export('panelActionsEditor', panelActionsEditor);
 
   return {
     setters: [],
@@ -48,27 +48,27 @@ System.register([], function (_export, _context) {
         };
       }();
 
-      _export('__Feature__EditorController', __Feature__EditorController = function () {
-        function __Feature__EditorController($scope) {
-          _classCallCheck(this, __Feature__EditorController);
+      _export('PanelActionsEditorController', PanelActionsEditorController = function () {
+        function PanelActionsEditorController($scope) {
+          _classCallCheck(this, PanelActionsEditorController);
 
           $scope.editor = this;
           this.panelCtrl = $scope.ctrl;
           this.panel = this.panelCtrl.panel;
         }
 
-        _createClass(__Feature__EditorController, [{
+        _createClass(PanelActionsEditorController, [{
           key: 'hola',
           value: function hola() {
-            console.info('Qué pasa chavalada');
+            console.info('Qué pasa panelActions');
           }
         }]);
 
-        return __Feature__EditorController;
+        return PanelActionsEditorController;
       }());
 
-      _export('__Feature__EditorController', __Feature__EditorController);
+      _export('PanelActionsEditorController', PanelActionsEditorController);
     }
   };
 });
-//# sourceMappingURL=renderEditor.js.map
+//# sourceMappingURL=panelActionsEditor.js.map
