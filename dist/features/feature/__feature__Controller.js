@@ -48,13 +48,14 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './__feat
 
                     this.$scope = $scope;
                     this.panelController = $scope.ctrl;
-                    _.defaults(this.panelController.panel, __feature__Defaults);
+                    this.panel = $scope.ctrl.panel;
+                    _.defaults(this.panel, __feature__Defaults);
 
                     this.panelController.events.on('init-edit-mode', this.onInitEditMode.bind(this));
-                    //this.panelController.events.on( 'data-received', this.onDataReceived);
-                    //this.panelController.events.on( 'panel-initialized', this.onPanelInitialized);
-                    //this.panelController.events.on( 'render', this.onRender);
-                    //this.panelController.events.on( 'refresh', this.onRefresh);
+                    //this.panelController.events.on( 'data-received', this.onDataReceived.bind(this));
+                    //this.panelController.events.on( 'panel-initialized', this.onPanelInitialized.bind(this));
+                    //this.panelController.events.on( 'render', this.onRender.bind(this));
+                    //this.panelController.events.on( 'refresh', this.onRefresh.bind(this));
                 }
 
                 _createClass(Feature, [{
