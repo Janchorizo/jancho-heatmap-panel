@@ -58,6 +58,17 @@ System.register([], function (_export, _context) {
         }
 
         _createClass(MappingEditorController, [{
+          key: 'removeValueMapping',
+          value: function removeValueMapping(mapping) {
+            var index = this.panel.valueMaps.indexOf(mapping);
+            this.panel.valueMaps.splice(index);
+          }
+        }, {
+          key: 'addValueMapping',
+          value: function addValueMapping() {
+            this.panel.valueMaps.push({ metric: '', target: '', desc: '' });
+          }
+        }, {
           key: 'hola',
           value: function hola() {
             console.info('Qué pasa mappingEditor');

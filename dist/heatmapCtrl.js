@@ -1,9 +1,9 @@
 'use strict';
 
-System.register(['app/plugins/sdk', 'lodash', './features/render/renderController.js', './features/mapping/mappingController.js', './features/panelActions/panelActionsController.js', './features/dataProcessing/dataProcessingController.js'], function (_export, _context) {
+System.register(['app/plugins/sdk', 'lodash', './panelDefaults.js', './features/render/renderController.js', './features/mapping/mappingController.js', './features/panelActions/panelActionsController.js', './features/dataProcessing/dataProcessingController.js'], function (_export, _context) {
     "use strict";
 
-    var MetricsPanelCtrl, _, RenderFeature, MappingFeature, PanelActionsFeature, DataProcessingFeature, HeatmapController;
+    var MetricsPanelCtrl, _, panelDefaults, RenderFeature, MappingFeature, PanelActionsFeature, DataProcessingFeature, HeatmapController;
 
     function _classCallCheck(instance, Constructor) {
         if (!(instance instanceof Constructor)) {
@@ -40,6 +40,8 @@ System.register(['app/plugins/sdk', 'lodash', './features/render/renderControlle
             MetricsPanelCtrl = _appPluginsSdk.MetricsPanelCtrl;
         }, function (_lodash) {
             _ = _lodash.default;
+        }, function (_panelDefaultsJs) {
+            panelDefaults = _panelDefaultsJs.panelDefaults;
         }, function (_featuresRenderRenderControllerJs) {
             RenderFeature = _featuresRenderRenderControllerJs.default;
         }, function (_featuresMappingMappingControllerJs) {
@@ -58,10 +60,14 @@ System.register(['app/plugins/sdk', 'lodash', './features/render/renderControlle
 
                     var _this = _possibleConstructorReturn(this, (HeatmapController.__proto__ || Object.getPrototypeOf(HeatmapController)).call(this, $scope, $injector));
 
+                    _.defaults(_this.panel, panelDefaults);
+
                     _this.dataProcessingFeature = new DataProcessingFeature(_this.$scope);
                     _this.mappingFeature = new MappingFeature(_this.$scope);
                     _this.panelActionsFeature = new PanelActionsFeature(_this.$scope);
                     _this.renderFeature = new RenderFeature(_this.$scope);
+
+                    _this.render();
                     return _this;
                 }
 

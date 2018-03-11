@@ -1,2 +1,42 @@
-<p>esto es una prueba</p>
-<input type="button" ng-click="editor.hola()">Haz click aqui</input>
+<div class="editor-row">
+    <div class="section gf-form-group">
+        <h5 class="section-heading">Set Value Mapping</h5>
+        <p>
+            Establish correspondance between metrics, and the css 'id' selector
+            tags in the svg to be rendered.
+        </p>
+        <input type="radio" name="status" data-ng-value="true"
+            ng-model="ctrl.panel.mapping.mapByAlias"
+            ng-change="ctrl.refresh()"> Map by alias </input>
+        <input type="radio" name="status" data-ng-value="false"
+            ng-model="ctrl.panel.mapping.mapByAlias"
+            ng-change="ctrl.refresh()"> Edit mappings </input>
+
+    </div>
+</div>
+<div class="editor-row" ng-show="ctrl.panel.mapping.mapByAlias == false">
+    <div class="gf-form-group">
+        <div class="gf-form-inline" ng-repeat="mapping in ctrl.panel.valueMaps">
+            <span class="gf-form-label">
+                <i class="fa fa-remove pointer" ng-click="ctrl.removeValueMapping(mapping)"></i>
+            </span>
+            <input type="text" ng-model="mapping.metric" placeholder="metric"
+            class="gf-form-input max-width-6" ng-blur="ctrl.refresh()">
+            <span class="gf-form-label">
+                <i class="fa fa-arrow-right"></i>
+            </span>
+            <input type="text" placeholder="id in svg"
+            ng-model="mapping.target" class="gf-form-input max-width-8"
+            ng-blur="ctrl.refresh()">
+            <input type="text" placeholder="description" ng-model="mapping.desc" class="gf-form-input max-width-16" ng-blur="ctrl.refresh()">
+        </div>
+    </div>
+</div>
+<div class="editor-row" ng-show="ctrl.panel.mapping.mapByAlias == false">
+    <div class="gf-form-button-row">
+      <button class="btn btn-inverse" ng-click="ctrl.addValueMapping();">
+        <i class="fa fa-plus"></i>
+        Add a value mapping
+      </button>
+    </div>
+</div>

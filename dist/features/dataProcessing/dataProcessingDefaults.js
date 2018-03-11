@@ -10,7 +10,8 @@ System.register([], function (_export, _context) {
       _export('dataProcessingDefaults', dataProcessingDefaults = {
         dataProcessing: {
           feature: 'dataProcessing',
-          desc: 'dataProcessing description'
+          desc: 'dataProcessing description',
+          processingOnGoing: false
         }
       });
 

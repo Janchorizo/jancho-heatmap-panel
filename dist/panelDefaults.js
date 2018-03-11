@@ -8,7 +8,9 @@ System.register([], function (_export, _context) {
         setters: [],
         execute: function () {
             _export("panelDefaults", panelDefaults = {
-                data: [] // data values from operating over the received
+                data: [], // data values from operating over the received
+                mappedData: [],
+                rawData: []
             });
 
             _export("panelDefaults", panelDefaults);

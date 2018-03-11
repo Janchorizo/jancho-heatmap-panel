@@ -53,8 +53,9 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './render
                     this.panelController.events.on('init-edit-mode', this.onInitEditMode.bind(this));
                     //this.panelController.events.on( 'data-received', this.onDataReceived);
                     //this.panelController.events.on( 'panel-initialized', this.onPanelInitialized);
-                    //this.panelController.events.on( 'render', this.onRender);
+                    this.panelController.events.on('render', this.onRender);
                     //this.panelController.events.on( 'refresh', this.onRefresh);
+                    this.panelController.render();
                 }
 
                 _createClass(Feature, [{
@@ -62,6 +63,9 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './render
                     value: function onInitEditMode() {
                         this.panelController.addEditorTab('Render', renderEditor(this.$scope), 2);
                     }
+                }, {
+                    key: 'onRender',
+                    value: function onRender() {}
                 }]);
 
                 return Feature;

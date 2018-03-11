@@ -10,7 +10,13 @@ System.register([], function (_export, _context) {
       _export('mappingDefaults', mappingDefaults = {
         mapping: {
           feature: 'mapping',
-          desc: 'mapping description'
+          desc: 'mapping description',
+          mapByAlias: true,
+          valueMappings: [{
+            metric: 'none',
+            target: 'none',
+            description: 'One simple mapping description'
+          }]
         }
       });
 

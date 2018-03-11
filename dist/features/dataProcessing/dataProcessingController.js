@@ -1,9 +1,21 @@
 'use strict';
 
-System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './dataProcessingDefaults.js', './dataProcessingEditor.js'], function (_export, _context) {
+System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './dataProcessingDefaults.js'], function (_export, _context) {
     "use strict";
 
-    var MetricsPanelCtrl, TimeSeries, _, dataProcessingDefaults, dataProcessingEditor, _createClass, Feature;
+    var MetricsPanelCtrl, TimeSeries, _, dataProcessingDefaults, _createClass, Feature;
+
+    function _toConsumableArray(arr) {
+        if (Array.isArray(arr)) {
+            for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) {
+                arr2[i] = arr[i];
+            }
+
+            return arr2;
+        } else {
+            return Array.from(arr);
+        }
+    }
 
     function _classCallCheck(instance, Constructor) {
         if (!(instance instanceof Constructor)) {
@@ -20,8 +32,6 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './dataPr
             _ = _lodash.default;
         }, function (_dataProcessingDefaultsJs) {
             dataProcessingDefaults = _dataProcessingDefaultsJs.dataProcessingDefaults;
-        }, function (_dataProcessingEditorJs) {
-            dataProcessingEditor = _dataProcessingEditorJs.dataProcessingEditor;
         }],
         execute: function () {
             _createClass = function () {
@@ -48,19 +58,112 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './dataPr
 
                     this.$scope = $scope;
                     this.panelController = $scope.ctrl;
+                    this.panel = this.panelController.panel;
                     _.defaults(this.panelController.panel, dataProcessingDefaults);
 
-                    this.panelController.events.on('init-edit-mode', this.onInitEditMode.bind(this));
-                    //this.panelController.events.on( 'data-received', this.onDataReceived);
+                    //this.panelController.events.on( 'init-edit-mode', this.onInitEditMode.bind(this));
+                    this.panelController.events.on('data-received', this.onDataReceived.bind(this));
                     //this.panelController.events.on( 'panel-initialized', this.onPanelInitialized);
-                    //this.panelController.events.on( 'render', this.onRender);
-                    //this.panelController.events.on( 'refresh', this.onRefresh);
+                    this.panelController.events.on('refresh', this.onRefresh.bind(this));
                 }
 
                 _createClass(Feature, [{
                     key: 'onInitEditMode',
                     value: function onInitEditMode() {
                         this.panelController.addEditorTab('DataProcessing', dataProcessingEditor(this.$scope), 2);
+                    }
+                }, {
+                    key: 'onDataReceived',
+                    value: function onDataReceived(dataList) {
+                        if (dataList.length > 0) {
+                            this.panel.rawData = dataList;
+                            this.panel.dataProcessing.processingOnGoing = true;
+
+                            var data = dataList.map(this.seriesHandler.bind(this));
+                            this.panel.data = data.map(this.mapSeriesToValue.bind(this));
+
+                            this.panel.dataProcessing.processingOnGoing = false;
+                        } else {
+                            return;
+                        }
+                    }
+                }, {
+                    key: 'onRefresh',
+                    value: function onRefresh() {
+                        if (this.panel.rawData.length > 0) {
+                            this.panel.dataProcessing.processingOnGoing = true;
+
+                            var data = this.panel.rawData.map(this.seriesHandler.bind(this));
+                            this.panel.data = data.map(this.mapSeriesToValue.bind(this));
+
+                            this.panel.dataProcessing.processingOnGoing = false;
+                        } else {
+                            return;
+                        }
+                    }
+                }, {
+                    key: 'seriesHandler',
+                    value: function seriesHandler(dataList) {
+                        //tratar nulos
+                        var series = new TimeSeries({
+                            datapoints: dataList.datapoints,
+                            alias: dataList.target
+                        });
+                        return series;
+                    }
+                }, {
+                    key: 'mapSeriesToValue',
+                    value: function mapSeriesToValue(timeseries) {
+                        var value = {};
+                        value['metric'] = timeseries.id;
+                        switch (this.panel.valueStat) {
+                            case 'min':
+                                value['value'] = Math.min.apply(Math, _toConsumableArray(timeseries.datapoints.map(function (s) {
+                                    return s[0];
+                                })));
+                                break;
+                            case 'max':
+                                value['value'] = Math.max.apply(Math, _toConsumableArray(timeseries.datapoints.map(function (s) {
+                                    return s[0];
+                                })));
+                                break;
+                            case 'avg':
+                                value['value'] = timeseries.datapoints.map(function (s) {
+                                    return s[0];
+                                }).reduce(function (a, b) {
+                                    return a + b;
+                                }, 0) / timeseries.datapoints.length;
+                                break;
+                            case 'current':
+                                value['value'] = timeseries.datapoints[timeseries.datapoints.length - 1][0];
+                                break;
+                            case 'total':
+                                value['value'] = timeseries.datapoints.map(function (s) {
+                                    return s[0];
+                                }).reduce(function (a, b) {
+                                    return a + b;
+                                }, 0);
+                                break;
+                            case 'name':
+
+                                break;
+                            case 'first':
+                                value['value'] = timeseries.datapoints[0][0];
+                                break;
+                            case 'delta':
+
+                                break;
+                            case 'diff':
+
+                                break;
+                            case 'range':
+
+                                break;
+                            case 'last_time':
+
+                                break;
+                        }
+                        return value;
                     }
                 }]);
 
