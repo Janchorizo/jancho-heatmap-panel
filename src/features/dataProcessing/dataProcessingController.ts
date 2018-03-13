@@ -79,14 +79,16 @@ export default class Feature{
                 value['value'] = timeseries.datapoints[0][0];
             break;
             case 'diff':
+                value['value'] =
                 _.max(
+                  _.map(
                   _.map( timeseries.datapoints.map( (a)=>{return a[0];}), (a,b,c)=>{
                               if(b< c.length -1){ return [a, c[b+1]];
-                              }else{return[0,0];}}), 
-                        (a)=>{return Math.abs(a[0]-a[1]);});
+                              }else{return[0,0];}}),
+                        (a)=>{return Math.abs(a[0]-a[1]);}));
             break;
             case 'range':
-                value['value'] = _.max( timeseries.datapoints) - _.min( timeseries.datapoints);
+                value['value'] = _.max( timeseries.datapoints.map((a)=>{return a[0];})) - _.min( timeseries.datapoints.map((a)=>{return a[0];}));
             break;
             case 'last_time':
                 value['value'] = timeseries.datapoints[ timeseries.datapoints.length -1][1];
