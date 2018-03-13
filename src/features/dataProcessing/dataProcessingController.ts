@@ -3,7 +3,7 @@ import TimeSeries from 'app/core/time_series2';
 import _ from 'lodash';
 
 import { dataProcessingDefaults } from "./dataProcessingDefaults.js";
-//import { dataProcessingEditor } from "./dataProcessingEditor.js";
+import { dataProcessingEditor } from "./dataProcessingEditor.js";
 
 export default class Feature{
   constructor( $scope){
@@ -12,7 +12,7 @@ export default class Feature{
       this.panel = this.panelController.panel;
       _.defaults( this.panelController.panel, dataProcessingDefaults);
 
-      //this.panelController.events.on( 'init-edit-mode', this.onInitEditMode.bind(this));
+      this.panelController.events.on( 'init-edit-mode', this.onInitEditMode.bind(this));
       this.panelController.events.on( 'data-received', this.onDataReceived.bind(this));
       //this.panelController.events.on( 'panel-initialized', this.onPanelInitialized);
       this.panelController.events.on( 'refresh', this.onRefresh.bind(this));
@@ -47,18 +47,18 @@ export default class Feature{
   }
 
   seriesHandler( dataList){
-        //tratar nulos
-        let series = new TimeSeries({
-            datapoints: dataList.datapoints,
-            alias: dataList.target
-        });
-        return( series);
-    }
+      //tratar nulos
+      let series = new TimeSeries({
+          datapoints: dataList.datapoints,
+          alias: dataList.target
+      });
+      return( series);
+  }
 
   mapSeriesToValue( timeseries){
         let value = {};
         value['metric'] = timeseries.id;
-        switch( this.panel.valueStat){
+        switch( this.panel.dataProcessing.valueStat){
             case 'min':
                 value['value'] = Math.min( ...timeseries.datapoints.map(function(s){ return( s[0]);}));
             break;
@@ -75,23 +75,21 @@ export default class Feature{
             case 'total':
                 value['value'] = timeseries.datapoints.map(function(s){ return( s[0]);}).reduce( (a,b)=>a+b, 0);
             break;
-            case 'name':
-
-            break;
             case 'first':
                 value['value'] = timeseries.datapoints[0][0];
             break;
-            case 'delta':
-
-            break;
             case 'diff':
-
+                _.max(
+                  _.map( timeseries.datapoints.map( (a)=>{return a[0];}), (a,b,c)=>{
+                              if(b< c.length -1){ return [a, c[b+1]];
+                              }else{return[0,0];}}), 
+                        (a)=>{return Math.abs(a[0]-a[1]);});
             break;
             case 'range':
-
+                value['value'] = _.max( timeseries.datapoints) - _.min( timeseries.datapoints);
             break;
             case 'last_time':
-
+                value['value'] = timeseries.datapoints[ timeseries.datapoints.length -1][1];
             break;
         }
         return( value);

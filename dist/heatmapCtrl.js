@@ -60,7 +60,7 @@ System.register(['app/plugins/sdk', 'lodash', './panelDefaults.js', './features/
 
                     var _this = _possibleConstructorReturn(this, (HeatmapController.__proto__ || Object.getPrototypeOf(HeatmapController)).call(this, $scope, $injector));
 
-                    _.defaults(_this.panel, panelDefaults);
+                    _.defaultsDeep(_this.panel, panelDefaults);
 
                     _this.dataProcessingFeature = new DataProcessingFeature(_this.$scope);
                     _this.mappingFeature = new MappingFeature(_this.$scope);

@@ -1,2 +1,17 @@
-<p>esto es una prueba</p>
-<input type="button" ng-click="editor.hola()">Haz click aqui</input>
+<div class="editor-row">
+    <div class="section gf-form-group">
+        <h5 class="section-heading">Values</h5>
+
+        <div class="gf-form-inline">
+            <div class="gf-form">
+                <label class="gf-form-label width-6">Stat</label>
+                <div class="gf-form-select-wrapper width-12">
+                  <select class="gf-form-input"
+                      ng-model="ctrl.panel.dataProcessing.valueStat"
+                      ng-options="f.value as f.text for f in ctrl.panel.dataProcessing.valueStatOptions"
+                      ng-change="editor.changeValueStat( ctrl.panel.dataProcessing.valueStat)"></select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

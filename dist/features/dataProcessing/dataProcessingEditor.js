@@ -55,9 +55,17 @@ System.register([], function (_export, _context) {
           $scope.editor = this;
           this.panelCtrl = $scope.ctrl;
           this.panel = this.panelCtrl.panel;
+
+          console.info(this.panel.dataProcessing.valueStatOptions);
         }
 
         _createClass(DataProcessingEditorController, [{
+          key: 'changeValueStat',
+          value: function changeValueStat(value) {
+            this.panel.dataProcessing.valueStat = value;
+            this.panelCtrl.refresh();
+          }
+        }, {
           key: 'hola',
           value: function hola() {
             console.info('Qué pasa dataProcessingggggg');

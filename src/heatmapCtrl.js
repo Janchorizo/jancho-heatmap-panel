@@ -11,7 +11,7 @@ import DataProcessingFeature from './features/dataProcessing/dataProcessingContr
 export class HeatmapController extends MetricsPanelCtrl{
     constructor( $scope, $injector){
         super( $scope, $injector);
-      _.defaults( this.panel, panelDefaults);
+        _.defaultsDeep( this.panel, panelDefaults);
 
         this.dataProcessingFeature = new DataProcessingFeature( this.$scope);
         this.mappingFeature = new MappingFeature( this.$scope);

@@ -1,17 +1,25 @@
 export class MappingEditorController {
   constructor( $scope) {
+    this.mappingAlias = true;
     $scope.editor = this;
     this.panelCtrl = $scope.ctrl;
     this.panel = this.panelCtrl.panel;
   }
   removeValueMapping( mapping){
-    let index = this.panel.valueMaps.indexOf( mapping);
-    this.panel.valueMaps.splice( index);
+    let index = this.panel.mapping.valueMappings.indexOf( mapping);
+    this.panel.mapping.valueMappings.splice( index);
+    this.panelCtrl.refresh();
   }
 
   addValueMapping(){
-    this.panel.valueMaps.push({metric: '', target: '', desc: ''});
+    this.panel.mapping.valueMappings.push({metric: '', target: '', desc: ''});
   }
+
+  changeMapping( mappingByAlias){
+    this.panel.mapping.mapByAlias = mappingByAlias;
+    this.panelCtrl.refresh();
+  }
+
   hola(){
     console.info('Qué pasa mappingEditor');
   }

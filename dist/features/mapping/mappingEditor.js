@@ -52,6 +52,7 @@ System.register([], function (_export, _context) {
         function MappingEditorController($scope) {
           _classCallCheck(this, MappingEditorController);
 
+          this.mappingAlias = true;
           $scope.editor = this;
           this.panelCtrl = $scope.ctrl;
           this.panel = this.panelCtrl.panel;
@@ -60,13 +61,20 @@ System.register([], function (_export, _context) {
         _createClass(MappingEditorController, [{
           key: 'removeValueMapping',
           value: function removeValueMapping(mapping) {
-            var index = this.panel.valueMaps.indexOf(mapping);
-            this.panel.valueMaps.splice(index);
+            var index = this.panel.mapping.valueMappings.indexOf(mapping);
+            this.panel.mapping.valueMappings.splice(index);
+            this.panelCtrl.refresh();
           }
         }, {
           key: 'addValueMapping',
           value: function addValueMapping() {
-            this.panel.valueMaps.push({ metric: '', target: '', desc: '' });
+            this.panel.mapping.valueMappings.push({ metric: '', target: '', desc: '' });
+          }
+        }, {
+          key: 'changeMapping',
+          value: function changeMapping(mappingByAlias) {
+            this.panel.mapping.mapByAlias = mappingByAlias;
+            this.panelCtrl.refresh();
           }
         }, {
           key: 'hola',

@@ -1,9 +1,9 @@
 'use strict';
 
-System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './dataProcessingDefaults.js'], function (_export, _context) {
+System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './dataProcessingDefaults.js', './dataProcessingEditor.js'], function (_export, _context) {
     "use strict";
 
-    var MetricsPanelCtrl, TimeSeries, _, dataProcessingDefaults, _createClass, Feature;
+    var MetricsPanelCtrl, TimeSeries, _, dataProcessingDefaults, dataProcessingEditor, _createClass, Feature;
 
     function _toConsumableArray(arr) {
         if (Array.isArray(arr)) {
@@ -32,6 +32,8 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './dataPr
             _ = _lodash.default;
         }, function (_dataProcessingDefaultsJs) {
             dataProcessingDefaults = _dataProcessingDefaultsJs.dataProcessingDefaults;
+        }, function (_dataProcessingEditorJs) {
+            dataProcessingEditor = _dataProcessingEditorJs.dataProcessingEditor;
         }],
         execute: function () {
             _createClass = function () {
@@ -61,7 +63,7 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './dataPr
                     this.panel = this.panelController.panel;
                     _.defaults(this.panelController.panel, dataProcessingDefaults);
 
-                    //this.panelController.events.on( 'init-edit-mode', this.onInitEditMode.bind(this));
+                    this.panelController.events.on('init-edit-mode', this.onInitEditMode.bind(this));
                     this.panelController.events.on('data-received', this.onDataReceived.bind(this));
                     //this.panelController.events.on( 'panel-initialized', this.onPanelInitialized);
                     this.panelController.events.on('refresh', this.onRefresh.bind(this));
@@ -116,7 +118,7 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './dataPr
                     value: function mapSeriesToValue(timeseries) {
                         var value = {};
                         value['metric'] = timeseries.id;
-                        switch (this.panel.valueStat) {
+                        switch (this.panel.dataProcessing.valueStat) {
                             case 'min':
                                 value['value'] = Math.min.apply(Math, _toConsumableArray(timeseries.datapoints.map(function (s) {
                                     return s[0];
@@ -144,23 +146,27 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './dataPr
                                     return a + b;
                                 }, 0);
                                 break;
-                            case 'name':
-
-                                break;
                             case 'first':
                                 value['value'] = timeseries.datapoints[0][0];
                                 break;
-                            case 'delta':
-
-                                break;
                             case 'diff':
-
+                                _.max(_.map(timeseries.datapoints.map(function (a) {
+                                    return a[0];
+                                }), function (a, b, c) {
+                                    if (b < c.length - 1) {
+                                        return [a, c[b + 1]];
+                                    } else {
+                                        return [0, 0];
+                                    }
+                                }), function (a) {
+                                    return Math.abs(a[0] - a[1]);
+                                });
                                 break;
                             case 'range':
-
+                                value['value'] = _.max(timeseries.datapoints) - _.min(timeseries.datapoints);
                                 break;
                             case 'last_time':
-
+                                value['value'] = timeseries.datapoints[timeseries.datapoints.length - 1][1];
                                 break;
                         }
                         return value;

@@ -6,19 +6,19 @@
             tags in the svg to be rendered.
         </p>
         <input type="radio" name="status" data-ng-value="true"
-            ng-model="ctrl.panel.mapping.mapByAlias"
-            ng-change="ctrl.refresh()"> Map by alias </input>
+            ng-model="editor.mappingAlias"
+            ng-change="editor.changeMapping( true)"> Map by alias </input>
         <input type="radio" name="status" data-ng-value="false"
-            ng-model="ctrl.panel.mapping.mapByAlias"
-            ng-change="ctrl.refresh()"> Edit mappings </input>
+            ng-model="editor.mappingAlias"
+            ng-change="editor.changeMapping( false)"> Edit mappings </input>
 
     </div>
 </div>
-<div class="editor-row" ng-show="ctrl.panel.mapping.mapByAlias == false">
+<div class="editor-row" ng-show="editor.mappingAlias == false">
     <div class="gf-form-group">
-        <div class="gf-form-inline" ng-repeat="mapping in ctrl.panel.valueMaps">
+        <div class="gf-form-inline" ng-repeat="mapping in ctrl.panel.mapping.valueMappings">
             <span class="gf-form-label">
-                <i class="fa fa-remove pointer" ng-click="ctrl.removeValueMapping(mapping)"></i>
+                <i class="fa fa-remove pointer" ng-click="editor.removeValueMapping(mapping)"></i>
             </span>
             <input type="text" ng-model="mapping.metric" placeholder="metric"
             class="gf-form-input max-width-6" ng-blur="ctrl.refresh()">
@@ -32,9 +32,9 @@
         </div>
     </div>
 </div>
-<div class="editor-row" ng-show="ctrl.panel.mapping.mapByAlias == false">
+<div class="editor-row" ng-show="editor.mappingAlias == false">
     <div class="gf-form-button-row">
-      <button class="btn btn-inverse" ng-click="ctrl.addValueMapping();">
+      <button class="btn btn-inverse" ng-click="editor.addValueMapping();">
         <i class="fa fa-plus"></i>
         Add a value mapping
       </button>
