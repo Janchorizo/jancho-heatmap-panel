@@ -3,8 +3,6 @@ export class DataProcessingEditorController {
     $scope.editor = this;
     this.panelCtrl = $scope.ctrl;
     this.panel = this.panelCtrl.panel;
-
-    console.info(this.panel.dataProcessing.valueStatOptions);
   }
 
   changeValueStat( value){

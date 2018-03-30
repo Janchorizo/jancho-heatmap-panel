@@ -62,7 +62,7 @@ System.register([], function (_export, _context) {
           key: 'removeValueMapping',
           value: function removeValueMapping(mapping) {
             var index = this.panel.mapping.valueMappings.indexOf(mapping);
-            this.panel.mapping.valueMappings.splice(index);
+            this.panel.mapping.valueMappings.remove(index, 1);
             this.panelCtrl.refresh();
           }
         }, {

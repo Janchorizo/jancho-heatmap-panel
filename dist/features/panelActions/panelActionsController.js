@@ -3,7 +3,7 @@
 System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './panelActionsDefaults.js', './panelActionsEditor.js'], function (_export, _context) {
     "use strict";
 
-    var MetricsPanelCtrl, TimeSeries, _, panelActionsDefaults, panelActionsEditor, _createClass, Feature;
+    var MetricsPanelCtrl, TimeSeries, _, panelActionsDefaults, panelActionsEditor, Feature;
 
     function _classCallCheck(instance, Constructor) {
         if (!(instance instanceof Constructor)) {
@@ -24,48 +24,24 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './panelA
             panelActionsEditor = _panelActionsEditorJs.panelActionsEditor;
         }],
         execute: function () {
-            _createClass = function () {
-                function defineProperties(target, props) {
-                    for (var i = 0; i < props.length; i++) {
-                        var descriptor = props[i];
-                        descriptor.enumerable = descriptor.enumerable || false;
-                        descriptor.configurable = true;
-                        if ("value" in descriptor) descriptor.writable = true;
-                        Object.defineProperty(target, descriptor.key, descriptor);
-                    }
-                }
+            Feature = function Feature($scope) {
+                _classCallCheck(this, Feature);
 
-                return function (Constructor, protoProps, staticProps) {
-                    if (protoProps) defineProperties(Constructor.prototype, protoProps);
-                    if (staticProps) defineProperties(Constructor, staticProps);
-                    return Constructor;
-                };
-            }();
+                this.$scope = $scope;
+                this.panelController = $scope.ctrl;
+                _.defaults(this.panelController.panel, panelActionsDefaults);
 
-            Feature = function () {
-                function Feature($scope) {
-                    _classCallCheck(this, Feature);
+                //this.panelController.events.on( 'init-edit-mode', this.onInitEditMode.bind(this));
+                //this.panelController.events.on( 'data-received', this.onDataReceived);
+                //this.panelController.events.on( 'panel-initialized', this.onPanelInitialized);
+                //this.panelController.events.on( 'render', this.onRender);
+                //this.panelController.events.on( 'refresh', this.onRefresh);
+            }
 
-                    this.$scope = $scope;
-                    this.panelController = $scope.ctrl;
-                    _.defaults(this.panelController.panel, panelActionsDefaults);
-
-                    this.panelController.events.on('init-edit-mode', this.onInitEditMode.bind(this));
-                    //this.panelController.events.on( 'data-received', this.onDataReceived);
-                    //this.panelController.events.on( 'panel-initialized', this.onPanelInitialized);
-                    //this.panelController.events.on( 'render', this.onRender);
-                    //this.panelController.events.on( 'refresh', this.onRefresh);
-                }
-
-                _createClass(Feature, [{
-                    key: 'onInitEditMode',
-                    value: function onInitEditMode() {
-                        this.panelController.addEditorTab('PanelActions', panelActionsEditor(this.$scope), 2);
-                    }
-                }]);
-
-                return Feature;
-            }();
+            //onInitEditMode(){
+            //    this.panelController.addEditorTab( 'PanelActions', panelActionsEditor( this.$scope), 2);
+            //}
+            ;
 
             _export('default', Feature);
         }

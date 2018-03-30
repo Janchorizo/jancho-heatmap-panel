@@ -8,6 +8,7 @@ import { mappingEditor } from "./mappingEditor.js";
 
 export default class Feature{
   constructor( $scope){
+      console.log('mapping object doing');
       this.$scope = $scope;
       this.panelController = $scope.ctrl;
       this.panel = this.panelController.panel;
@@ -17,6 +18,7 @@ export default class Feature{
       this.panelController.events.on( 'data-received', this.onDataReceived.bind(this));
       this.panelController.events.on( 'refresh', this.onRefresh.bind(this));
 
+      console.log('mapping object done');
   }
 
   onInitEditMode(){
@@ -24,11 +26,13 @@ export default class Feature{
   }
 
   onDataReceived( dataList){
+    console.log('Mapping controller onDataReceived');
     this.mapData();
     this.panelController.render();
   }
 
   onRefresh( ){
+    console.log('dataProcessing controller refresh');
     this.mapData();
     this.panelController.render();
   }
@@ -37,9 +41,11 @@ export default class Feature{
     if(this.panelController.panel.data.processingOnGoing == true) {
        window.setTimeout(onDataReceived, 100); /* this checks the flag every 100 milliseconds*/
     } else {
+      console.info('Mapping data ...');
       this.panel.mappedData = [];
 
       if(this.panelController.panel.mapping.mapByAlias == true){
+        console.log('Mapping by alias');
         for( var i in this.panel.targets){
           let correspondance = this.panel.targets[i];
           correspondance.series = correspondance.refId+"-series";
@@ -50,9 +56,11 @@ export default class Feature{
             t['identificador'] = correspondance.alias;
             t['valor'] = this.panel.data[index]['value'];
             this.panel.mappedData.push(t);
+            console.log('added ' + t.identificador + " " + t.valor);
           }
         }
       }else{
+        console.log('Mapping by values');
         for( var i in this.panel.valueMaps){
           var correspondance = this.panel.valueMaps[i];
           let index = this.panel.data.map( function(s){return(s['metric']);}).indexOf( correspondance.metric);
@@ -62,6 +70,7 @@ export default class Feature{
             t['identificador'] = correspondance.target;
             t['valor'] = this.panel.data[index]['value'];
             this.panel.mappedData.push(t);
+            console.log('added ' + t.identificador + " " + t.valor);
           }
         }
       }

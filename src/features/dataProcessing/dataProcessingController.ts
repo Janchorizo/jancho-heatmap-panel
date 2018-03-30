@@ -16,7 +16,7 @@ export default class Feature{
       this.panelController.events.on( 'data-received', this.onDataReceived.bind(this));
       //this.panelController.events.on( 'panel-initialized', this.onPanelInitialized);
       this.panelController.events.on( 'refresh', this.onRefresh.bind(this));
-
+      console.log('data object done');
   }
 
   onInitEditMode(){
@@ -24,6 +24,7 @@ export default class Feature{
   }
 
   onDataReceived( dataList){
+    console.log('dataProcessing controller onDataReceived');
     if( dataList.length > 0){
       this.panel.rawData = dataList;
       this.panel.dataProcessing.processingOnGoing = true;
@@ -36,6 +37,7 @@ export default class Feature{
   }
 
   onRefresh(){
+    console.log('dataProcessing controller refresh');
     if( this.panel.rawData.length > 0){
       this.panel.dataProcessing.processingOnGoing = true;
 
@@ -47,6 +49,7 @@ export default class Feature{
   }
 
   seriesHandler( dataList){
+    console.log('data processing series handler');
       //tratar nulos
       let series = new TimeSeries({
           datapoints: dataList.datapoints,

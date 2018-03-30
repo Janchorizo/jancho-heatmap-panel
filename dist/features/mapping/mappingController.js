@@ -46,6 +46,7 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './mappin
         function Feature($scope) {
           _classCallCheck(this, Feature);
 
+          console.log('mapping object doing');
           this.$scope = $scope;
           this.panelController = $scope.ctrl;
           this.panel = this.panelController.panel;
@@ -54,6 +55,8 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './mappin
           this.panelController.events.on('init-edit-mode', this.onInitEditMode.bind(this));
           this.panelController.events.on('data-received', this.onDataReceived.bind(this));
           this.panelController.events.on('refresh', this.onRefresh.bind(this));
+
+          console.log('mapping object done');
         }
 
         _createClass(Feature, [{
@@ -64,12 +67,14 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './mappin
         }, {
           key: 'onDataReceived',
           value: function onDataReceived(dataList) {
+            console.log('Mapping controller onDataReceived');
             this.mapData();
             this.panelController.render();
           }
         }, {
           key: 'onRefresh',
           value: function onRefresh() {
+            console.log('dataProcessing controller refresh');
             this.mapData();
             this.panelController.render();
           }
@@ -79,9 +84,11 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './mappin
             if (this.panelController.panel.data.processingOnGoing == true) {
               window.setTimeout(onDataReceived, 100); /* this checks the flag every 100 milliseconds*/
             } else {
+              console.info('Mapping data ...');
               this.panel.mappedData = [];
 
               if (this.panelController.panel.mapping.mapByAlias == true) {
+                console.log('Mapping by alias');
                 for (var i in this.panel.targets) {
                   var _correspondance = this.panel.targets[i];
                   _correspondance.series = _correspondance.refId + "-series";
@@ -94,9 +101,11 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './mappin
                     t['identificador'] = _correspondance.alias;
                     t['valor'] = this.panel.data[index]['value'];
                     this.panel.mappedData.push(t);
+                    console.log('added ' + t.identificador + " " + t.valor);
                   }
                 }
               } else {
+                console.log('Mapping by values');
                 for (var i in this.panel.valueMaps) {
                   var correspondance = this.panel.valueMaps[i];
                   var _index = this.panel.data.map(function (s) {
@@ -108,6 +117,7 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './mappin
                     _t['identificador'] = correspondance.target;
                     _t['valor'] = this.panel.data[_index]['value'];
                     this.panel.mappedData.push(_t);
+                    console.log('added ' + _t.identificador + " " + _t.valor);
                   }
                 }
               }

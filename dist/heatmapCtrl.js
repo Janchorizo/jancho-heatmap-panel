@@ -61,12 +61,14 @@ System.register(['app/plugins/sdk', 'lodash', './panelDefaults.js', './features/
                     var _this = _possibleConstructorReturn(this, (HeatmapController.__proto__ || Object.getPrototypeOf(HeatmapController)).call(this, $scope, $injector));
 
                     _.defaultsDeep(_this.panel, panelDefaults);
+                    _this.panel.panelDivId = 'heatmap-' + _this.$scope.$id;
 
                     _this.dataProcessingFeature = new DataProcessingFeature(_this.$scope);
                     _this.mappingFeature = new MappingFeature(_this.$scope);
                     _this.panelActionsFeature = new PanelActionsFeature(_this.$scope);
                     _this.renderFeature = new RenderFeature(_this.$scope);
 
+                    _this.refresh();
                     _this.render();
                     return _this;
                 }

@@ -12,7 +12,7 @@ export default class Feature{
       this.panelController = $scope.ctrl;
       _.defaults( this.panelController.panel, panelActionsDefaults);
 
-      this.panelController.events.on( 'init-edit-mode', this.onInitEditMode.bind(this));
+      //this.panelController.events.on( 'init-edit-mode', this.onInitEditMode.bind(this));
       //this.panelController.events.on( 'data-received', this.onDataReceived);
       //this.panelController.events.on( 'panel-initialized', this.onPanelInitialized);
       //this.panelController.events.on( 'render', this.onRender);
@@ -20,7 +20,7 @@ export default class Feature{
 
   }
 
-  onInitEditMode(){
-      this.panelController.addEditorTab( 'PanelActions', panelActionsEditor( this.$scope), 2);
-  }
+  //onInitEditMode(){
+  //    this.panelController.addEditorTab( 'PanelActions', panelActionsEditor( this.$scope), 2);
+  //}
 }

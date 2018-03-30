@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 System.register([], function (_export, _context) {
     "use strict";
@@ -7,13 +7,14 @@ System.register([], function (_export, _context) {
     return {
         setters: [],
         execute: function () {
-            _export("panelDefaults", panelDefaults = {
+            _export('panelDefaults', panelDefaults = {
                 data: [], // data values from operating over the received
                 mappedData: [],
-                rawData: []
+                rawData: [],
+                panelDivId: ''
             });
 
-            _export("panelDefaults", panelDefaults);
+            _export('panelDefaults', panelDefaults);
         }
     };
 });

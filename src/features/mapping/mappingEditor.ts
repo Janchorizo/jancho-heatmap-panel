@@ -7,7 +7,7 @@ export class MappingEditorController {
   }
   removeValueMapping( mapping){
     let index = this.panel.mapping.valueMappings.indexOf( mapping);
-    this.panel.mapping.valueMappings.splice( index);
+    this.panel.mapping.valueMappings.remove( index,1);
     this.panelCtrl.refresh();
   }
 

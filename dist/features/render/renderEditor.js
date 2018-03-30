@@ -1,9 +1,9 @@
 'use strict';
 
-System.register([], function (_export, _context) {
+System.register(['../../libs/d3/build/d3.js'], function (_export, _context) {
   "use strict";
 
-  var _createClass, RenderEditorController;
+  var d3, _createClass, RenderEditorController;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -28,7 +28,9 @@ System.register([], function (_export, _context) {
   _export('renderEditor', renderEditor);
 
   return {
-    setters: [],
+    setters: [function (_libsD3BuildD3Js) {
+      d3 = _libsD3BuildD3Js;
+    }],
     execute: function () {
       _createClass = function () {
         function defineProperties(target, props) {
@@ -61,6 +63,54 @@ System.register([], function (_export, _context) {
           key: 'hola',
           value: function hola() {
             console.info('Qué pasa chavalada');
+          }
+        }, {
+          key: 'invertirColores',
+          value: function invertirColores() {
+            var temp = this.panel.render.colors[0];
+            this.panel.render.colors[0] = this.panel.render.colors[2];
+            this.panel.render.colors[2] = temp;
+            this.panelCtrl.render();
+          }
+        }, {
+          key: 'actualizarMapa',
+          value: function actualizarMapa() {
+            var target = this.panel.panelDivId;
+            var dir = this.panel.render.baseMapRoute + this.panel.render.mapRoute;
+
+            d3.xml(dir).mimeType("image/svg+xml").get(function (error, xml) {
+              if (error) {
+                throw error;
+              }
+              var div = document.getElementById(target);
+              div.removeChild(div.childNodes[0]);
+              div.appendChild(xml.documentElement);
+            });
+            this.panelCtrl.render();
+          }
+        }, {
+          key: 'actualizarColores',
+          value: function actualizarColores() {
+            if (this.panel.render.discrete_continuous == true) {
+              this.panelCtrl.renderFeature.scaleColor = function (value) {
+                if (value <= this.panel.render.thresholds[0]) {
+                  return this.panel.render.colors[0];
+                } else if (value <= this.panel.render.thresholds[1]) {
+                  return this.panel.render.colors[1];
+                } else {
+                  return this.panel.render.colors[2];
+                }
+              };
+            } else {
+              this.panelCtrl.renderFeature.scaleColor = d3.scaleLinear().domain(this.panel.render.domain).range(this.panel.render.colors);
+            }
+            this.panelCtrl.render();
+          }
+        }, {
+          key: 'cambiarColor',
+          value: function cambiarColor() {
+            console.log('Color cambiado para el plugin');
+            this.panelCtrl.render();
           }
         }]);
 

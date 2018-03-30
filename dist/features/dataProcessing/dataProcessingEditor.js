@@ -55,8 +55,6 @@ System.register([], function (_export, _context) {
           $scope.editor = this;
           this.panelCtrl = $scope.ctrl;
           this.panel = this.panelCtrl.panel;
-
-          console.info(this.panel.dataProcessing.valueStatOptions);
         }
 
         _createClass(DataProcessingEditorController, [{
