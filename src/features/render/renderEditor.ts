@@ -15,6 +15,9 @@ export class RenderEditorController {
     let temp = this.panel.render.colors[0];
     this.panel.render.colors[0] = this.panel.render.colors[2];
     this.panel.render.colors[2] = temp;
+    if(this.panel.render.discrete_continuous != true){
+      this.actualizarColores();
+    }
     this.panelCtrl.render();
   }
 
@@ -47,11 +50,6 @@ export class RenderEditorController {
         .domain( this.panel.render.domain)
         .range( this.panel.render.colors);
     }
-    this.panelCtrl.render();
-  }
-
-  cambiarColor(){
-    console.log( 'Color cambiado para el plugin');
     this.panelCtrl.render();
   }
 }

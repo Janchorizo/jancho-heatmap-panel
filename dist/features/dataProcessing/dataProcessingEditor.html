@@ -1,6 +1,7 @@
 <div class="editor-row">
     <div class="section gf-form-group">
         <h5 class="section-heading">Values</h5>
+        <p>Select the statistic to represent on the SVG resource. </p>
 
         <div class="gf-form-inline">
             <div class="gf-form">
@@ -13,5 +14,14 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="section gf-form-group" ng-show="ctrl.panel.render.discrete_continuous == false">
+        <h5 class="section-heading">Available statistics</h5>
+        <p>A complete list of available statistics for incoming data.</p>
+        <ul>
+          <li ng-repeat="stat in ctrl.panel.dataProcessing.valueStatOptions">
+            <b>{{ stat.text }}</b> <br> {{ stat.desc }}
+          </li>
+        </ul>
     </div>
 </div>

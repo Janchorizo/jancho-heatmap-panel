@@ -1,9 +1,9 @@
 'use strict';
 
-System.register(['app/plugins/sdk', 'lodash', './panelDefaults.js', './features/render/renderController.js', './features/mapping/mappingController.js', './features/panelActions/panelActionsController.js', './features/dataProcessing/dataProcessingController.js'], function (_export, _context) {
+System.register(['app/plugins/sdk', 'lodash', './panelDefaults.js', './features/render/renderController.js', './features/panelActions/panelActionsController.js', './features/dataProcessing/dataProcessingController.js'], function (_export, _context) {
     "use strict";
 
-    var MetricsPanelCtrl, _, panelDefaults, RenderFeature, MappingFeature, PanelActionsFeature, DataProcessingFeature, HeatmapController;
+    var MetricsPanelCtrl, _, panelDefaults, RenderFeature, PanelActionsFeature, DataProcessingFeature, HeatmapController;
 
     function _classCallCheck(instance, Constructor) {
         if (!(instance instanceof Constructor)) {
@@ -44,8 +44,6 @@ System.register(['app/plugins/sdk', 'lodash', './panelDefaults.js', './features/
             panelDefaults = _panelDefaultsJs.panelDefaults;
         }, function (_featuresRenderRenderControllerJs) {
             RenderFeature = _featuresRenderRenderControllerJs.default;
-        }, function (_featuresMappingMappingControllerJs) {
-            MappingFeature = _featuresMappingMappingControllerJs.default;
         }, function (_featuresPanelActionsPanelActionsControllerJs) {
             PanelActionsFeature = _featuresPanelActionsPanelActionsControllerJs.default;
         }, function (_featuresDataProcessingDataProcessingControllerJs) {
@@ -63,10 +61,11 @@ System.register(['app/plugins/sdk', 'lodash', './panelDefaults.js', './features/
                     _.defaultsDeep(_this.panel, panelDefaults);
                     _this.panel.panelDivId = 'heatmap-' + _this.$scope.$id;
 
+                    console.info('Loading Features v9...');
                     _this.dataProcessingFeature = new DataProcessingFeature(_this.$scope);
-                    _this.mappingFeature = new MappingFeature(_this.$scope);
                     _this.panelActionsFeature = new PanelActionsFeature(_this.$scope);
                     _this.renderFeature = new RenderFeature(_this.$scope);
+                    console.info('Feature loading complete');
 
                     _this.refresh();
                     _this.render();

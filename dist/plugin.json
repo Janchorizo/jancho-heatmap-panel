@@ -1,7 +1,7 @@
 {
     "id":"jancho-heatmap-panel",
     "type":"panel",
-    "name":"HP Heatmap",
+    "name":"HP HeatMap",
     "info":{
         "description":"Heatmap generator for visualization o timeseries data over SVG figures",
         "author":{
@@ -9,10 +9,10 @@
             "url":"none"
         },
         "keywords":["panel", "d3", "heatmap", "plugin"],
-        "version":"1.0"
+        "version":"0.95"
     },
     "dependencies":{
-        "grafanaVersion":"4.5.2",
+        "grafanaVersion":"5.0.3",
         "plugins":[]
     }
 }

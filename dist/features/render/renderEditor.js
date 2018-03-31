@@ -70,6 +70,9 @@ System.register(['../../libs/d3/build/d3.js'], function (_export, _context) {
             var temp = this.panel.render.colors[0];
             this.panel.render.colors[0] = this.panel.render.colors[2];
             this.panel.render.colors[2] = temp;
+            if (this.panel.render.discrete_continuous != true) {
+              this.actualizarColores();
+            }
             this.panelCtrl.render();
           }
         }, {
@@ -104,12 +107,6 @@ System.register(['../../libs/d3/build/d3.js'], function (_export, _context) {
             } else {
               this.panelCtrl.renderFeature.scaleColor = d3.scaleLinear().domain(this.panel.render.domain).range(this.panel.render.colors);
             }
-            this.panelCtrl.render();
-          }
-        }, {
-          key: 'cambiarColor',
-          value: function cambiarColor() {
-            console.log('Color cambiado para el plugin');
             this.panelCtrl.render();
           }
         }]);

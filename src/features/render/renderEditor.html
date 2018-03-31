@@ -1,7 +1,7 @@
 <div class="editor-row">
     <div class="section gf-form-group">
         <h5 class="section-heading">Svg Resources</h5>
-
+        <p>Select the SVG resource to represent on the visualization.</p>
         <div class="gf-form-inline">
             <div class="gf-form">
                 <label class="gf-form-label width-6">Route</label>
@@ -13,6 +13,8 @@
     </div>
     <div class="section gf-form-group">
         <h5 class="section-heading">Coloring</h5>
+        <p>A discrete colouring will only apply the three specified colors, <br> while
+        a continous colouring will create a gradient with the three specfied colors.</p>
             <input type="radio" name="status" data-ng-value="true"
                 ng-model="ctrl.panel.render.discrete_continuous"
                 ng-change="editor.actualizarColores()"> Discrete </input>
@@ -21,6 +23,15 @@
                 ng-change="editor.actualizarColores()">  Continuous</input>
 
             <div ng-show="ctrl.panel.render.discrete_continuous == true">
+              <p><br>
+                All values will be included in the following three ranges :
+                <ul>
+                  <li>(-inf., first_threshold]</li>
+                  <li>(first_threshold, second_threshold]</li>
+                  <li>(second_threshold, inf.)</li>
+                </ul>
+                <br>
+              </p>
                 <div class="gf-form">
                     <label class="gf-form-label width-6">Thresholds</label>
                     <input class="gf-form-input width-4"
@@ -33,24 +44,25 @@
             </div>
 
             <div ng-show="ctrl.panel.render.discrete_continuous == false">
+              <p>All values should be included between the first and third specified values.</p>
                 <div class="gf-form">
                     <label class="gf-form-label width-6">Domain</label>
                     <input class="gf-form-input width-4"
                         ng-model="ctrl.panel.render.domain[0]"
-                        ng-change="ctrl.render()"></input>
+                        ng-change="editor.actualizarColores()"></input>
                     <input class="gf-form-input width-4"
                         ng-model="ctrl.panel.render.domain[1]"
-                        ng-change="ctrl.render()"></input>
+                        ng-change="editor.actualizarColores()"></input>
                     <input class="gf-form-input width-4"
                         ng-model="ctrl.panel.render.domain[2]"
-                        ng-change="ctrl.render()"></input>
+                        ng-change="editor.actualizarColores()"></input>
                 </div>
             </div>
             <div class="gf-form">
                 <label class="gf-form-label width-8">Colors</label>
-                    <spectrum-picker ng-model="ctrl.panel.render.colors[0]" ng-change="editor.cambiarColor()"></spectrum-picker>
-                    <spectrum-picker ng-model="ctrl.panel.render.colors[1]" ng-change="editor.cambiarColor()"></spectrum-picker>
-                    <spectrum-picker ng-model="ctrl.panel.render.colors[2]" ng-change="editor.cambiarColor()"></spectrum-picker>
+                    <spectrum-picker ng-model="ctrl.panel.render.colors[0]" ng-change="ctrl.render()"></spectrum-picker>
+                    <spectrum-picker ng-model="ctrl.panel.render.colors[1]" ng-change="ctrl.render()"></spectrum-picker>
+                    <spectrum-picker ng-model="ctrl.panel.render.colors[2]" ng-change="ctrl.render()"></spectrum-picker>
                     <!--
                     <color-picker color="color" onChange="editor.cambiarColor($index)">
                         <div class="sp-replacer sp-light">

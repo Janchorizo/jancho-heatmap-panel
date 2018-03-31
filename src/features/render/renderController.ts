@@ -18,7 +18,6 @@ export default class Feature{
       this.panelController.events.on( 'panel-initialized', this.onPanelInitialized.bind(this));
       this.panelController.events.on( 'render', this.onRender.bind(this));
       //this.panelController.events.on( 'refresh', this.onRefresh);
-      console.log('hola, feature iniciada');
   }
 
   onInitEditMode(){
@@ -27,7 +26,7 @@ export default class Feature{
 
   onRender(){
     console.info('renderizando sala ...');
-    this.renderSala( '#'+this.panel.panelDivId, this.panel.mappedData);
+    this.renderSala( '#'+this.panel.panelDivId, this.panel.data);
     console.info('renderizado completado');
   }
 
@@ -55,46 +54,48 @@ export default class Feature{
     }
   }
 
+  /**
+   * cargarPlano - Carga el plano svg en el elemento indicado
+   *
+   * @param  {type} target Id del elemento div en el que cargar el plano
+   * @param  {type} dir    Dirección al fichero SVG
+   * @return {type}        No tiene valor de retorno
+   */
   cargarPlano( target, dir){
     // target => class name
-    console.log( "rendering on " + target);
-    console.log( document.getElementById( target));
     d3.xml( dir).mimeType( "image/svg+xml").get( function( error, xml){
       if( error){ throw( error);}
       let div = document.getElementById(target);
-      div.removeChild(div.childNodes[0]);
-      div.appendChild(xml.documentElement);
+      if(div != null){
+        div.removeChild(div.childNodes[0]);
+        div.appendChild(xml.documentElement);
+      }
     });
   }
 
   renderSala (target, data){
-    console.log('Fase 1 ...');
+    var t = d3.transition()
+    .duration(750)
+    .ease(d3.easeLinear);
+
     //Binding
-    var salas = d3.select(target+' svg').selectAll('rect')
-      .data(data, function(d){ return d ? d.identificador : this.id; });
+    var salas = d3.select(target+' svg').selectAll( this.panel.render.elementIdentifyer)
+      .data(data, function(d){ return d ? d.metric : this.id; });
 
-    console.log('Fase 1 update ...');
     //Update
-    var t = d3.transition()
-      .duration(750)
-      .ease(d3.easeLinear);
-
+    salas
+      .style('fill', '#fff');
     salas
       .transition(t)
-      .style('fill', $.proxy( function(d){ return this.scaleColor( d.valor)}, this));
-
-    console.log('Fase 2 ...');
+      .style('fill', $.proxy( function(d){ return this.scaleColor( d.value)}, this));
+/*
+    //Binding
     var salas = d3.select(target+' svg').selectAll('path')
-      .data(data, function(d){ return d ? d.identificador : this.id; });
+      .data(data, function(d){ return d ? d.metric : this.id; });
 
-    console.log('Fase 2 update...');
     //Update
-    var t = d3.transition()
-      .duration(750)
-      .ease(d3.easeLinear);
-
     salas
       .transition(t)
-      .style('fill', $.proxy( function(d){ return this.scaleColor( d.valor)}, this));
+      .style('fill', $.proxy( function(d){ return this.scaleColor( d.value)}, this));*/
   }
 }

@@ -67,7 +67,6 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './dataPr
                     this.panelController.events.on('data-received', this.onDataReceived.bind(this));
                     //this.panelController.events.on( 'panel-initialized', this.onPanelInitialized);
                     this.panelController.events.on('refresh', this.onRefresh.bind(this));
-                    console.log('data object done');
                 }
 
                 _createClass(Feature, [{
@@ -78,38 +77,29 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './dataPr
                 }, {
                     key: 'onDataReceived',
                     value: function onDataReceived(dataList) {
-                        console.log('dataProcessing controller onDataReceived');
                         if (dataList.length > 0) {
                             this.panel.rawData = dataList;
-                            this.panel.dataProcessing.processingOnGoing = true;
-
                             var data = dataList.map(this.seriesHandler.bind(this));
                             this.panel.data = data.map(this.mapSeriesToValue.bind(this));
-
-                            this.panel.dataProcessing.processingOnGoing = false;
                         } else {
                             return;
                         }
+                        this.panelController.render();
                     }
                 }, {
                     key: 'onRefresh',
                     value: function onRefresh() {
-                        console.log('dataProcessing controller refresh');
                         if (this.panel.rawData.length > 0) {
-                            this.panel.dataProcessing.processingOnGoing = true;
-
                             var data = this.panel.rawData.map(this.seriesHandler.bind(this));
                             this.panel.data = data.map(this.mapSeriesToValue.bind(this));
-
-                            this.panel.dataProcessing.processingOnGoing = false;
                         } else {
                             return;
                         }
+                        this.panelController.render();
                     }
                 }, {
                     key: 'seriesHandler',
                     value: function seriesHandler(dataList) {
-                        console.log('data processing series handler');
                         //tratar nulos
                         var series = new TimeSeries({
                             datapoints: dataList.datapoints,
