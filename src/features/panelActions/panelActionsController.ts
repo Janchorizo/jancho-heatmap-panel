@@ -6,7 +6,26 @@ import _ from 'lodash';
 import { panelActionsDefaults } from "./panelActionsDefaults.js";
 import { panelActionsEditor } from "./panelActionsEditor.js";
 
+/**
+ * @alias panelActionsFeature
+ * @classdesc <h2>panelActions feature</h2>
+ * Implementación de una funcionalidad<br>
+ * Mediante el patrón mediador, se suscribe a los eventos del plugin a través
+ * de la referencia al $scope que se le pasa.
+ * <br>
+ * <br><h3>Funcionalidad</h3>
+ * Proporciona funcionalidad añadida para el menú contextual del panel<br>
+ * <br><h3>Eventos suscritos</h3>
+ * ninguno
+ */
 export default class Feature{
+  /**
+   * constructor - description
+   *
+   * @param  {type} $scope Es el contexto del plugin que se pasa para poder suscribirse
+   * a los eventos.
+   * @return {type}        Nueva instancia de un Feature
+   */
   constructor( $scope){
       this.$scope = $scope;
       this.panelController = $scope.ctrl;

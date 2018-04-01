@@ -45,6 +45,13 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', '../../li
       }();
 
       Feature = function () {
+        /**
+         * constructor - description
+         *
+         * @param  {type} $scope Es el contexto del plugin que se pasa para poder suscribirse
+         * a los eventos.
+         * @return {type}        Nueva instancia de un Feature
+         */
         function Feature($scope) {
           _classCallCheck(this, Feature);
 
@@ -59,6 +66,13 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', '../../li
           this.panelController.events.on('render', this.onRender.bind(this));
           //this.panelController.events.on( 'refresh', this.onRefresh);
         }
+
+        /**
+         * onInitEditMode - Handler para el evento de init-edit-mode
+         *
+         * @memberof renderFeature
+         */
+
 
         _createClass(Feature, [{
           key: 'onInitEditMode',
@@ -116,13 +130,18 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', '../../li
           value: function renderSala(target, data) {
             var t = d3.transition().duration(750).ease(d3.easeLinear);
 
+            console.info('1');
+            //ClearOutput
+            var t = d3.select(target + ' svg').selectAll('.' + this.panel.render.elementIdentifyer).style('fill', this.panel.render.unknownDataColor);
+
+            console.info('2');
             //Binding
-            var salas = d3.select(target + ' svg').selectAll(this.panel.render.elementIdentifyer).data(data, function (d) {
+            var salas = d3.select(target + ' svg').selectAll('.' + this.panel.render.elementIdentifyer).data(data, function (d) {
               return d ? d.metric : this.id;
             });
 
+            console.info('3');
             //Update
-            salas.style('fill', '#fff');
             salas.transition(t).style('fill', $.proxy(function (d) {
               return this.scaleColor(d.value);
             }, this));

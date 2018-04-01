@@ -10,6 +10,17 @@
                      ng-change="editor.actualizarMapa()"></input>
             </div>
         </div>
+        <p>The following class selector will determine the SVG elements <br>
+        to be updated based on the values provided by the metrics. <br>
+        <i>Do not use the dot notation, just the class name</i> </p>
+        <div class="gf-form-inline">
+            <div class="gf-form">
+                <label class="gf-form-label width-6">Class</label>
+                <input class="gf-form-input"
+                     ng-model="ctrl.panel.render.elementIdentifyer"
+                     ng-change="ctrl.render()"></input>
+            </div>
+        </div>
     </div>
     <div class="section gf-form-group">
         <h5 class="section-heading">Coloring</h5>
@@ -73,5 +84,11 @@
                     <a  ng-click="editor.invertirColores()">Invert</a>
                 </span>
             </div>
+    </div>
+    <div class="section gf-form-group">
+        <h5 class="section-heading">colorUnknownData</h5>
+        <p>SVG elements with a {{ ctrl.panel.render.elementIdentifyer }} class with unknown data will be filled
+        with the specified color.</p>
+         <spectrum-picker ng-model="ctrl.panel.render.unknownDataColor" ng-change="ctrl.render()"></spectrum-picker>
     </div>
 </div>

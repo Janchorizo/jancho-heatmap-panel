@@ -40,7 +40,7 @@ export class HeatmapController extends MetricsPanelCtrl{
         _.defaultsDeep( this.panel, panelDefaults);
         this.panel.panelDivId = 'heatmap-'+this.$scope.$id;
 
-        console.info('Loading Features v9...');
+        console.info('Loading Features vW...');
         this.dataProcessingFeature = new DataProcessingFeature( this.$scope);
         this.panelActionsFeature = new PanelActionsFeature( this.$scope);
         this.renderFeature = new RenderFeature( this.$scope);

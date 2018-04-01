@@ -55,6 +55,13 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './dataPr
             }();
 
             Feature = function () {
+                /**
+                 * constructor - description
+                 *
+                 * @param  {type} $scope Es el contexto del plugin que se pasa para poder suscribirse
+                 * a los eventos.
+                 * @return {type}        Nueva instancia de un Feature
+                 */
                 function Feature($scope) {
                     _classCallCheck(this, Feature);
 
@@ -69,6 +76,13 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './dataPr
                     this.panelController.events.on('refresh', this.onRefresh.bind(this));
                 }
 
+                /**
+                 * onInitEditMode - Handler para el evento de init-edit-mode
+                 *
+                 * @memberof dataProcessingFeature
+                 */
+
+
                 _createClass(Feature, [{
                     key: 'onInitEditMode',
                     value: function onInitEditMode() {
@@ -80,6 +94,7 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './dataPr
                         if (dataList.length > 0) {
                             this.panel.rawData = dataList;
                             var data = dataList.map(this.seriesHandler.bind(this));
+                            this.panel.data = [];
                             this.panel.data = data.map(this.mapSeriesToValue.bind(this));
                         } else {
                             return;

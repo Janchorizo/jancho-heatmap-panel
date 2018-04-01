@@ -6,7 +6,32 @@ import * as d3 from '../../libs/d3/build/d3.js' ;
 import { renderDefaults } from "./renderDefaults.js";
 import { renderEditor } from "./renderEditor.js";
 
+/**
+ * @alias renderFeature
+ * @classdesc <h2>render feature</h2>
+ * Implementación de una funcionalidad
+ * Mediante el patrón mediador, se suscribe a los eventos del plugin a través
+ * de la referencia al $scope que se le pasa.
+ * <br>
+ * <br><h3>Funcionalidad</h3>
+ * Implementa toda la representación visual del panel. Tanto la carga del SVG,
+ * como la actualización del mismo a partir de los datos del plugin.<br>
+ * <br><h3>Eventos suscritos</h3>
+ * <ul>
+ *  <li>init-edit-mode</li>
+ *  <li>panel-initialized</li>
+ *  <li>render</li>
+ * </ul>
+ * @requires D3.js
+ */
 export default class Feature{
+  /**
+   * constructor - description
+   *
+   * @param  {type} $scope Es el contexto del plugin que se pasa para poder suscribirse
+   * a los eventos.
+   * @return {type}        Nueva instancia de un Feature
+   */
   constructor( $scope){
       this.$scope = $scope;
       this.panelController = $scope.ctrl;
@@ -20,22 +45,44 @@ export default class Feature{
       //this.panelController.events.on( 'refresh', this.onRefresh);
   }
 
+  /**
+   * onInitEditMode - Handler para el evento de init-edit-mode
+   *
+   * @memberof renderFeature
+   */
   onInitEditMode(){
     this.panelController.addEditorTab( 'Render', renderEditor( this.$scope), 2);
   }
 
+  /**
+   * onRender - Handler para el evento de render
+   *
+   * @memberof renderFeature
+   */
   onRender(){
     console.info('renderizando sala ...');
     this.renderSala( '#'+this.panel.panelDivId, this.panel.data);
     console.info('renderizado completado');
   }
 
+  /**
+   * onPanelInitialized - Handler para el evento panel-initialized
+   *
+   * @memberof renderFeature
+   */
   onPanelInitialized(){
     this.actualizarColores();
     this.cargarPlano( this.panel.panelDivId, this.panel.render.baseMapRoute + this.panel.render.mapRoute);
     this.panelController.render();
   }
 
+  /**
+   * actualizarColores - Cambio de la función proporcionada para la escala de color <br><br>
+   * Para la representación de valores discretos se construye una función ad-hoc.<br>
+   * Para la representación de valores contínua se obtiene una escala de la librería D3.js.
+   *
+   * @memberof renderFeature
+   */
   actualizarColores(){
     if(this.panel.render.discrete_continuous == true){
       this.scaleColor = (function( value){
@@ -59,7 +106,7 @@ export default class Feature{
    *
    * @param  {type} target Id del elemento div en el que cargar el plano
    * @param  {type} dir    Dirección al fichero SVG
-   * @return {type}        No tiene valor de retorno
+   * @memberof renderFeature
    */
   cargarPlano( target, dir){
     // target => class name
@@ -73,18 +120,31 @@ export default class Feature{
     });
   }
 
+  /**
+   * renderSala - Actualiza los colores de la figura SVG <br>
+   * El color aplicado a cada sala lo proporciona la función scaleColor, que se suministra
+   * mediante inyección de dependencias, y se actualiza en
+   *
+   * @param  {type} target Elemento del DOM del que cuelga el elemento svg
+   * @param  {type} data   TimeSeries del que obtener los valores para el mapa de calor
+   * @memberof renderFeature
+   */
   renderSala (target, data){
     var t = d3.transition()
     .duration(750)
     .ease(d3.easeLinear);
 
+    console.info('1');
+    //ClearOutput
+    var t = d3.select(target+' svg').selectAll( '.'+this.panel.render.elementIdentifyer).style( 'fill', this.panel.render.unknownDataColor);
+
+    console.info('2');
     //Binding
-    var salas = d3.select(target+' svg').selectAll( this.panel.render.elementIdentifyer)
+    var salas = d3.select(target+' svg').selectAll( '.'+this.panel.render.elementIdentifyer)
       .data(data, function(d){ return d ? d.metric : this.id; });
 
+    console.info('3');
     //Update
-    salas
-      .style('fill', '#fff');
     salas
       .transition(t)
       .style('fill', $.proxy( function(d){ return this.scaleColor( d.value)}, this));
