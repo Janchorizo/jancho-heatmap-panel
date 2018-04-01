@@ -130,30 +130,18 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', '../../li
           value: function renderSala(target, data) {
             var t = d3.transition().duration(750).ease(d3.easeLinear);
 
-            console.info('1');
             //ClearOutput
             var t = d3.select(target + ' svg').selectAll('.' + this.panel.render.elementIdentifyer).style('fill', this.panel.render.unknownDataColor);
 
-            console.info('2');
             //Binding
             var salas = d3.select(target + ' svg').selectAll('.' + this.panel.render.elementIdentifyer).data(data, function (d) {
               return d ? d.metric : this.id;
             });
 
-            console.info('3');
             //Update
             salas.transition(t).style('fill', $.proxy(function (d) {
               return this.scaleColor(d.value);
             }, this));
-            /*
-                //Binding
-                var salas = d3.select(target+' svg').selectAll('path')
-                  .data(data, function(d){ return d ? d.metric : this.id; });
-            
-                //Update
-                salas
-                  .transition(t)
-                  .style('fill', $.proxy( function(d){ return this.scaleColor( d.value)}, this));*/
           }
         }]);
 
