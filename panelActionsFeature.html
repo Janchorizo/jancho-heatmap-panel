@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: HeatmapController</title>
+    <title>JSDoc: Class: panelActionsFeature</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Class: HeatmapController</h1>
+    <h1 class="page-title">Class: panelActionsFeature</h1>
 
     
 
@@ -28,22 +28,17 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>HeatmapController<span class="signature">($scope, $injector)</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>panelActionsFeature<span class="signature">($scope)</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">HeatmapController - Clase HeatmapController
+            <div class="class-description"><h2>panelActions feature</h2>
+Implementación de una funcionalidad<br>
+Mediante el patrón mediador, se suscribe a los eventos del plugin a través
+de la referencia al $scope que se le pasa.
 <br>
-Implementa el patrón de cadena de responsabilidades, y como mediador para
-los eventos del plugin. <br><br>
-
-A cada instancia de nueva funcionalidad, se le pasa el $scope e $injector,
-para poder suscribirse a los eventos que recibe el plugin.
-El plugin no implementa funcionalidad, ni control. Cada instancia de nueva
-funcionalidad es responsable de implementar aquello que requiera.
-<br><br>
-Actualmente se instancian :
-- dataProcessing
-- render
-- panelActions</div>
+<br><h3>Funcionalidad</h3>
+Proporciona funcionalidad añadida para el menú contextual del panel<br>
+<br><h3>Eventos suscritos</h3>
+ninguno</div>
         
     
 </header>
@@ -58,7 +53,7 @@ Actualmente se instancian :
     
 
     
-    <h4 class="name" id="HeatmapController"><span class="type-signature"></span>new HeatmapController<span class="signature">($scope, $injector)</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="panelActionsFeature"><span class="type-signature"></span>new panelActionsFeature<span class="signature">($scope)</span><span class="type-signature"></span></h4>
     
 
     
@@ -66,9 +61,7 @@ Actualmente se instancian :
 
 
 <div class="description">
-    constructor - Constructor para HeatmapController
-<br>
-Instancia cada una de las funcionalidades registradas.
+    constructor - description
 </div>
 
 
@@ -120,30 +113,8 @@ Instancia cada una de las funcionalidades registradas.
 
             
 
-            <td class="description last">description</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>$injector</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">type</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">description</td>
+            <td class="description last">Es el contexto del plugin que se pasa para poder suscribirse
+a los eventos.</td>
         </tr>
 
     
@@ -184,7 +155,7 @@ Instancia cada una de las funcionalidades registradas.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="heatmapCtrl.js.html">heatmapCtrl.js</a>, <a href="heatmapCtrl.js.html#line27">line 27</a>
+        <a href="features_panelActions_panelActionsController.ts.html">features/panelActions/panelActionsController.ts</a>, <a href="features_panelActions_panelActionsController.ts.html#line21">line 21</a>
     </li></ul></dd>
     
 
