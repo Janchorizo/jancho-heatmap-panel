@@ -35,7 +35,6 @@ export default class Feature{
   constructor( $scope){
       this.$scope = $scope;
       this.panelController = $scope.ctrl;
-      this.panelController.hola();
       this.panel = this.panelController.panel;
 
       const defaults = _.cloneDeep(renderDefaults)
@@ -85,7 +84,6 @@ export default class Feature{
    * @memberof renderFeature
    */
   actualizarColores(){
-    this.panelController.hola();
     if(this.panel.render.discrete_continuous == true){
       this.scaleColor = (function( value){
         if( value <= this.panel.render.thresholds[0]){

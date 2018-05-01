@@ -68,7 +68,9 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './dataPr
                     this.$scope = $scope;
                     this.panelController = $scope.ctrl;
                     this.panel = this.panelController.panel;
-                    _.defaults(this.panelController.panel, dataProcessingDefaults);
+
+                    var defaults = _.cloneDeep(dataProcessingDefaults);
+                    _.defaults(this.panelController.panel, defaults);
 
                     this.panelController.events.on('init-edit-mode', this.onInitEditMode.bind(this));
                     this.panelController.events.on('data-received', this.onDataReceived.bind(this));

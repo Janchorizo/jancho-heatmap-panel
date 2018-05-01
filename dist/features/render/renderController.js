@@ -57,7 +57,6 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', '../../li
 
           this.$scope = $scope;
           this.panelController = $scope.ctrl;
-          this.panelController.hola();
           this.panel = this.panelController.panel;
 
           var defaults = _.cloneDeep(renderDefaults);
@@ -97,7 +96,6 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', '../../li
         }, {
           key: 'actualizarColores',
           value: function actualizarColores() {
-            this.panelController.hola();
             if (this.panel.render.discrete_continuous == true) {
               this.scaleColor = function (value) {
                 if (value <= this.panel.render.thresholds[0]) {

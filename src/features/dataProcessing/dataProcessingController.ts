@@ -34,7 +34,9 @@ export default class Feature{
       this.$scope = $scope;
       this.panelController = $scope.ctrl;
       this.panel = this.panelController.panel;
-      _.defaults( this.panelController.panel, dataProcessingDefaults);
+      
+      const defaults = _.cloneDeep(dataProcessingDefaults);
+      _.defaults( this.panelController.panel, defaults);
 
       this.panelController.events.on( 'init-edit-mode', this.onInitEditMode.bind(this));
       this.panelController.events.on( 'data-received', this.onDataReceived.bind(this));
