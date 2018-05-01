@@ -6,10 +6,10 @@ export const renderDefaults = {
     elementIdentifyer:'sala',
     unknownDataColor: 'white',
     mapRoute: 'plano.svg',
-    discrete_continuous: false,
+    discrete_continuous: true,
     colors: ['rgb(98, 158, 81)', 'rgb(31, 29, 29)', 'red'],
     //colors:['rgb(98, 158, 81)', 'white', 'red'],
     domain: [0, 10, 20],
-    thresholds: [33, 75],
+    thresholds: [7.5, 15],
   },
 };

@@ -37,17 +37,22 @@ export class HeatmapController extends MetricsPanelCtrl{
      */
     constructor( $scope, $injector){
         super( $scope, $injector);
-        _.defaultsDeep( this.panel, panelDefaults);
+        const defaults = _.cloneDeep(panelDefaults);
+        this.panel = _.defaultsDeep( this.panel, defaults);
         this.panel.panelDivId = 'heatmap-'+this.$scope.$id;
 
-        console.info('Loading Features vW...');
+        console.info('Loading Features for v13...');
+        console.log(this.$scope)
         this.dataProcessingFeature = new DataProcessingFeature( this.$scope);
         this.panelActionsFeature = new PanelActionsFeature( this.$scope);
         this.renderFeature = new RenderFeature( this.$scope);
-        console.info('Feature loading complete');
 
         this.refresh();
         this.render();
+    }
+
+    hola(){
+      console.log('Hola soy'+this.$scope.$id);
     }
 }
 

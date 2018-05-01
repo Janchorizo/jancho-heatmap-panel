@@ -57,8 +57,11 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', '../../li
 
           this.$scope = $scope;
           this.panelController = $scope.ctrl;
+          this.panelController.hola();
           this.panel = this.panelController.panel;
-          _.defaults(this.panelController.panel, renderDefaults);
+
+          var defaults = _.cloneDeep(renderDefaults);
+          _.defaults(this.panelController.panel, defaults);
 
           this.panelController.events.on('init-edit-mode', this.onInitEditMode.bind(this));
           //this.panelController.events.on( 'data-received', this.onDataReceived);
@@ -82,9 +85,7 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', '../../li
         }, {
           key: 'onRender',
           value: function onRender() {
-            console.info('renderizando sala ...');
             this.renderSala('#' + this.panel.panelDivId, this.panel.data);
-            console.info('renderizado completado');
           }
         }, {
           key: 'onPanelInitialized',
@@ -96,6 +97,7 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', '../../li
         }, {
           key: 'actualizarColores',
           value: function actualizarColores() {
+            this.panelController.hola();
             if (this.panel.render.discrete_continuous == true) {
               this.scaleColor = function (value) {
                 if (value <= this.panel.render.thresholds[0]) {
@@ -109,6 +111,7 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', '../../li
             } else {
               this.scaleColor = d3.scaleLinear().domain(this.panel.render.domain).range(this.panel.render.colors);
             }
+            console.log(this.panel);
           }
         }, {
           key: 'cargarPlano',
