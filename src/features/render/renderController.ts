@@ -72,7 +72,7 @@ export default class Feature{
    */
   onPanelInitialized(){
     this.actualizarColores();
-    this.cargarPlano( this.panel.panelDivId, this.panel.render.baseMapRoute + this.panel.render.mapRoute);
+    this.cargarPlano( this.panel.panelDivId, this.panel.render.baseMapRoute + this.panel.render.mapRoute + ".svg");
     this.panelController.render();
   }
 

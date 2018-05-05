@@ -19,7 +19,7 @@ export class RenderEditorController {
 
   actualizarMapa(){
     let target = this.panel.panelDivId;
-    let dir = this.panel.render.baseMapRoute + this.panel.render.mapRoute;
+    let dir = this.panel.render.baseMapRoute + this.panel.render.mapRoute + ".svg";
 
     d3.xml( dir).mimeType( "image/svg+xml").get( function( error, xml){
       if( error){ throw( error);}

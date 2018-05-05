@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-System.register(['../../libs/d3/build/d3.js'], function (_export, _context) {
+System.register(["../../libs/d3/build/d3.js"], function (_export, _context) {
   "use strict";
 
   var d3, _createClass, RenderEditorController;
@@ -25,7 +25,7 @@ System.register(['../../libs/d3/build/d3.js'], function (_export, _context) {
     };
   }
 
-  _export('renderEditor', renderEditor);
+  _export("renderEditor", renderEditor);
 
   return {
     setters: [function (_libsD3BuildD3Js) {
@@ -50,7 +50,7 @@ System.register(['../../libs/d3/build/d3.js'], function (_export, _context) {
         };
       }();
 
-      _export('RenderEditorController', RenderEditorController = function () {
+      _export("RenderEditorController", RenderEditorController = function () {
         function RenderEditorController($scope) {
           _classCallCheck(this, RenderEditorController);
 
@@ -60,7 +60,7 @@ System.register(['../../libs/d3/build/d3.js'], function (_export, _context) {
         }
 
         _createClass(RenderEditorController, [{
-          key: 'invertirColores',
+          key: "invertirColores",
           value: function invertirColores() {
             var temp = this.panel.render.colors[0];
             this.panel.render.colors[0] = this.panel.render.colors[2];
@@ -71,10 +71,10 @@ System.register(['../../libs/d3/build/d3.js'], function (_export, _context) {
             this.panelCtrl.render();
           }
         }, {
-          key: 'actualizarMapa',
+          key: "actualizarMapa",
           value: function actualizarMapa() {
             var target = this.panel.panelDivId;
-            var dir = this.panel.render.baseMapRoute + this.panel.render.mapRoute;
+            var dir = this.panel.render.baseMapRoute + this.panel.render.mapRoute + ".svg";
 
             d3.xml(dir).mimeType("image/svg+xml").get(function (error, xml) {
               if (error) {
@@ -87,7 +87,7 @@ System.register(['../../libs/d3/build/d3.js'], function (_export, _context) {
             this.panelCtrl.render();
           }
         }, {
-          key: 'actualizarColores',
+          key: "actualizarColores",
           value: function actualizarColores() {
             if (this.panel.render.discrete_continuous == true) {
               this.panelCtrl.renderFeature.scaleColor = function (value) {
@@ -109,7 +109,7 @@ System.register(['../../libs/d3/build/d3.js'], function (_export, _context) {
         return RenderEditorController;
       }());
 
-      _export('RenderEditorController', RenderEditorController);
+      _export("RenderEditorController", RenderEditorController);
     }
   };
 });

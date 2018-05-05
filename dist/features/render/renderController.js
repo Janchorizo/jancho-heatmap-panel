@@ -90,7 +90,7 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', '../../li
           key: 'onPanelInitialized',
           value: function onPanelInitialized() {
             this.actualizarColores();
-            this.cargarPlano(this.panel.panelDivId, this.panel.render.baseMapRoute + this.panel.render.mapRoute);
+            this.cargarPlano(this.panel.panelDivId, this.panel.render.baseMapRoute + this.panel.render.mapRoute + ".svg");
             this.panelController.render();
           }
         }, {
