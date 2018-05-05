@@ -129,61 +129,51 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './dataPr
                     value: function mapSeriesToValue(timeseries) {
                         var value = {};
                         value['metric'] = timeseries.id;
+                        var elements = timeseries.datapoints.map(function (s) {
+                            return s[0];
+                        });
+
                         switch (this.panel.dataProcessing.valueStat) {
                             case 'min':
-                                value['value'] = Math.min.apply(Math, _toConsumableArray(timeseries.datapoints.map(function (s) {
-                                    return s[0];
-                                })));
+                                value['value'] = Math.min.apply(Math, _toConsumableArray(elements));
                                 break;
                             case 'max':
-                                value['value'] = Math.max.apply(Math, _toConsumableArray(timeseries.datapoints.map(function (s) {
-                                    return s[0];
-                                })));
+                                value['value'] = Math.max.apply(Math, _toConsumableArray(elements));
                                 break;
                             case 'avg':
-                                value['value'] = timeseries.datapoints.map(function (s) {
-                                    return s[0];
-                                }).reduce(function (a, b) {
+                                value['value'] = elements.reduce(function (a, b) {
                                     return a + b;
                                 }, 0) / timeseries.datapoints.length;
                                 break;
                             case 'current':
-                                value['value'] = timeseries.datapoints[timeseries.datapoints.length - 1][0];
+                                value['value'] = elements[timeseries.datapoints.length - 1];
                                 break;
                             case 'total':
-                                value['value'] = timeseries.datapoints.map(function (s) {
-                                    return s[0];
-                                }).reduce(function (a, b) {
+                                ;
+                                value['value'] = elements.reduce(function (a, b) {
                                     return a + b;
                                 }, 0);
                                 break;
                             case 'first':
-                                value['value'] = timeseries.datapoints[0][0];
+                                value['value'] = elements[0];
                                 break;
                             case 'diff':
-                                value['value'] = _.max(_.map(_.map(timeseries.datapoints.map(function (a) {
-                                    return a[0];
-                                }), function (a, b, c) {
-                                    if (b < c.length - 1) {
-                                        return [a, c[b + 1]];
-                                    } else {
-                                        return [0, 0];
-                                    }
-                                }), function (a) {
+                                var pairs = _.map(elements, function (a, b, c) {
+                                    return b < c.length - 1 ? [a, c[b + 1]] : [0, 0];
+                                });
+                                var differences = _.map(pairs, function (a) {
                                     return Math.abs(a[0] - a[1]);
-                                }));
+                                });
+                                value['value'] = _.max(differences);
                                 break;
                             case 'range':
-                                value['value'] = _.max(timeseries.datapoints.map(function (a) {
-                                    return a[0];
-                                })) - _.min(timeseries.datapoints.map(function (a) {
-                                    return a[0];
-                                }));
+                                value['value'] = _.max(elements) - _.min(elements);
                                 break;
                             case 'last_time':
                                 value['value'] = timeseries.datapoints[timeseries.datapoints.length - 1][1];
                                 break;
                         }
+                        console.log('Value : ' + value['value']);
                         return value;
                     }
                 }]);

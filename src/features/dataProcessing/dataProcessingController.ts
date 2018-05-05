@@ -110,42 +110,40 @@ export default class Feature{
   mapSeriesToValue( timeseries){
         let value = {};
         value['metric'] = timeseries.id;
+        const elements = timeseries.datapoints.map(function(s){ return( s[0]);});
+
         switch( this.panel.dataProcessing.valueStat){
             case 'min':
-                value['value'] = Math.min( ...timeseries.datapoints.map(function(s){ return( s[0]);}));
+                value['value'] = Math.min( ...elements);
             break;
             case 'max':
-                value['value'] = Math.max( ...timeseries.datapoints.map(function(s){ return( s[0]);}));
+                value['value'] = Math.max( ...elements);
             break;
             case 'avg':
-                value['value'] = timeseries.datapoints.map(function(s){ return( s[0]);})
-                                            .reduce( (a,b)=>a+b, 0) / timeseries.datapoints.length
+                value['value'] = elements.reduce( (a,b)=>a+b, 0) / timeseries.datapoints.length
             break;
             case 'current':
-                value['value'] = timeseries.datapoints[ timeseries.datapoints.length -1][0];
+                value['value'] = elements[ timeseries.datapoints.length -1];
             break;
-            case 'total':
-                value['value'] = timeseries.datapoints.map(function(s){ return( s[0]);}).reduce( (a,b)=>a+b, 0);
+            case 'total':;
+                value['value'] = elements.reduce( (a,b)=>a+b, 0);
             break;
             case 'first':
-                value['value'] = timeseries.datapoints[0][0];
+                value['value'] = elements[0];
             break;
             case 'diff':
-                value['value'] =
-                _.max(
-                  _.map(
-                  _.map( timeseries.datapoints.map( (a)=>{return a[0];}), (a,b,c)=>{
-                              if(b< c.length -1){ return [a, c[b+1]];
-                              }else{return[0,0];}}),
-                        (a)=>{return Math.abs(a[0]-a[1]);}));
+                const pairs = _.map( elements, (a,b,c)=>{ return (b< c.length -1)?([a, c[b+1]]):([0,0]); });
+                const differences = _.map( pairs, (a)=>{return Math.abs(a[0]-a[1]);});
+                value['value'] =_.max( differences);
             break;
             case 'range':
-                value['value'] = _.max( timeseries.datapoints.map((a)=>{return a[0];})) - _.min( timeseries.datapoints.map((a)=>{return a[0];}));
+                value['value'] = _.max(elements) - _.min(elements);
             break;
             case 'last_time':
                 value['value'] = timeseries.datapoints[ timeseries.datapoints.length -1][1];
             break;
         }
+        console.log('Value : ' + value['value']);
         return( value);
     }
 }
