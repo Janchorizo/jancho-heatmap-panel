@@ -4,15 +4,6 @@ export class DataProcessingEditorController {
     this.panelCtrl = $scope.ctrl;
     this.panel = this.panelCtrl.panel;
   }
-
-  changeValueStat( value){
-    this.panel.dataProcessing.valueStat = value;
-    this.panelCtrl.refresh();
-  }
-
-  hola(){
-    console.info('Qué pasa dataProcessingggggg');
-  }
 }
 
 export function dataProcessingEditor( scope){

@@ -3,6 +3,7 @@ export const dataProcessingDefaults = {
     feature: 'dataProcessing',
     desc: 'dataProcessing description',
     valueStat: 'current',
+    showDescription: false,
     valueStatOptions: [
       { value: 'min', text: 'Min', desc: 'Minimum value registered in the current data subset.' },
       { value: 'max', text: 'Max', desc: 'Maximum value registered in the current data subset.' },

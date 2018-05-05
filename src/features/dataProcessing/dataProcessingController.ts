@@ -34,7 +34,7 @@ export default class Feature{
       this.$scope = $scope;
       this.panelController = $scope.ctrl;
       this.panel = this.panelController.panel;
-      
+
       const defaults = _.cloneDeep(dataProcessingDefaults);
       _.defaults( this.panelController.panel, defaults);
 

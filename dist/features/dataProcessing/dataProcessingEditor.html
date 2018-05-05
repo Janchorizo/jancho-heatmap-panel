@@ -2,7 +2,7 @@
     <div class="section gf-form-group">
         <h5 class="section-heading">Values</h5>
         <p>Select the statistic to represent on the SVG resource. </p>
-
+        <button type="button" name="button" ng-model="ctrl.panel.showDescription" value="showDescription">Show descriptions</button>
         <div class="gf-form-inline">
             <div class="gf-form">
                 <label class="gf-form-label width-6">Stat</label>
@@ -10,12 +10,12 @@
                   <select class="gf-form-input"
                       ng-model="ctrl.panel.dataProcessing.valueStat"
                       ng-options="f.value as f.text for f in ctrl.panel.dataProcessing.valueStatOptions"
-                      ng-change="editor.changeValueStat( ctrl.panel.dataProcessing.valueStat)"></select>
+                      ng-change="ctrl.refresh()"></select>
                 </div>
             </div>
         </div>
     </div>
-    <div class="section gf-form-group" ng-show="ctrl.panel.render.discrete_continuous == false">
+    <div class="section gf-form-group" ng-show="ctrl.panel.render.showDescription == true">
         <h5 class="section-heading">Available statistics</h5>
         <p>A complete list of available statistics for incoming data.</p>
         <ul>
