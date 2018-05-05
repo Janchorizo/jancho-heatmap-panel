@@ -11,6 +11,13 @@ System.register(["../../libs/d3/build/d3.js"], function (_export, _context) {
     }
   }
 
+  /**
+   * renderEditor - function exported to be used as the AngularJs component
+   *
+   * @param  {type} scope A reference to the scope of the plugin to route functions and variables
+   * @return AngularJS Component       New renderEditor
+   * @memberof renderEditor
+   */
   function renderEditor(scope) {
     'use strict';
 
@@ -51,6 +58,14 @@ System.register(["../../libs/d3/build/d3.js"], function (_export, _context) {
       }();
 
       _export("RenderEditorController", RenderEditorController = function () {
+
+        /**
+         * constructor - description
+         *
+         * @param  {type} $scope A reference to the plugin's scope for editing panel's variables
+         * @return {type}        New instance of RenderEditorController
+         * @memberof renderEditor
+         */
         function RenderEditorController($scope) {
           _classCallCheck(this, RenderEditorController);
 
@@ -58,6 +73,14 @@ System.register(["../../libs/d3/build/d3.js"], function (_export, _context) {
           this.panelCtrl = $scope.ctrl;
           this.panel = $scope.ctrl.panel;
         }
+
+        /**
+         * invertirColores - handler for an editor tab event <br>
+         * Reverts the order of the colors applied on the scale.
+         *
+         * @memberof renderEditor
+         */
+
 
         _createClass(RenderEditorController, [{
           key: "invertirColores",

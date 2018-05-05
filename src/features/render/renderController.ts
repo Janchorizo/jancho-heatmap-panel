@@ -9,28 +9,26 @@ import { renderEditor } from "./renderEditor.js";
 /**
  * @alias renderFeature
  * @classdesc <h2>render feature</h2>
- * Implementación de una funcionalidad
- * Mediante el patrón mediador, se suscribe a los eventos del plugin a través
- * de la referencia al $scope que se le pasa.
+ * Implementation for a feature.<br>
+ * Makes use of the mediator pattern in order to subscribe the feature to
+ * the plugin's event, through the $scope reference which is passed to it.
  * <br>
- * <br><h3>Funcionalidad</h3>
- * Implementa toda la representación visual del panel. Tanto la carga del SVG,
- * como la actualización del mismo a partir de los datos del plugin.<br>
- * <br><h3>Eventos suscritos</h3>
+ * <br><h3>Functionaliy <i>(Subscribed events)</i><h3>
  * <ul>
- *  <li>init-edit-mode</li>
- *  <li>panel-initialized</li>
- *  <li>render</li>
+ *   <li>init-edit-mode</li>
+ *   <li>panel-initialized</li>
+ *   <li>render</li>
  * </ul>
  * @requires D3.js
  */
 export default class Feature{
   /**
-   * constructor - description
+   * constructor - description <br>
+   * Important the use of _.cloneDeep to ensure that no two instances of the same plugin
+   * share references of the same variables.
    *
-   * @param  {type} $scope Es el contexto del plugin que se pasa para poder suscribirse
-   * a los eventos.
-   * @return {type}        Nueva instancia de un Feature
+   * @param  {type} $scope A reference to the plugin's scope for the subscription to events
+   * @return {type}        New instance of Feature
    */
   constructor( $scope){
       this.$scope = $scope;
@@ -48,7 +46,7 @@ export default class Feature{
   }
 
   /**
-   * onInitEditMode - Handler para el evento de init-edit-mode
+   * onInitEditMode - Handler for the event : init-edit-mode<br>
    *
    * @memberof renderFeature
    */
@@ -57,8 +55,8 @@ export default class Feature{
   }
 
   /**
-   * onRender - Handler para el evento de render
-   *
+   * onRender - Handler for the event : render<br>
+   * Requires of an element containing the svg to update based on the data
    * @memberof renderFeature
    */
   onRender(){
@@ -66,7 +64,13 @@ export default class Feature{
   }
 
   /**
-   * onPanelInitialized - Handler para el evento panel-initialized
+   * onPanelInitialized - Handler for the event : panel-initialized <br>
+   * Renders the svg and data for the first time. Including :
+   * <ol>
+   * <li>Create a first instance of the color scale</li>
+   * <li>Load and append it to the specified element by the panelDivId identyfier</li>
+   * <li>Create an event for rendering the data over the svg</li>
+   * </ol>
    *
    * @memberof renderFeature
    */
@@ -77,9 +81,10 @@ export default class Feature{
   }
 
   /**
-   * actualizarColores - Cambio de la función proporcionada para la escala de color <br><br>
-   * Para la representación de valores discretos se construye una función ad-hoc.<br>
-   * Para la representación de valores contínua se obtiene una escala de la librería D3.js.
+   * actualizarColores - Changes the instance of color scale to be used by D3.<br><br>
+   * For discrete representation (fixed number of colors) an ad-hoc function is done.<br>
+   * For continous representation (range of colors) a D3.js scale function is used, based on <br>
+   * domain and color selected.
    *
    * @memberof renderFeature
    */
@@ -102,14 +107,15 @@ export default class Feature{
   }
 
   /**
-   * cargarPlano - Carga el plano svg en el elemento indicado
+   * cargarPlano - Loads the svg resource into the DOM, hanging from the<br>
+   * element specified by the elementIdentifyer id attribute.
    *
-   * @param  {type} target Id del elemento div en el que cargar el plano
-   * @param  {type} dir    Dirección al fichero SVG
+   * @param  {type} target id attribute
+   * @param  {type} dir    svg resource url from where it is served
    * @memberof renderFeature
    */
   cargarPlano( target, dir){
-    // target => class name
+    // target => id name
     d3.xml( dir).mimeType( "image/svg+xml").get( function( error, xml){
       if( error){ throw( error);}
       let div = document.getElementById(target);
@@ -121,12 +127,11 @@ export default class Feature{
   }
 
   /**
-   * renderSala - Actualiza los colores de la figura SVG <br>
-   * El color aplicado a cada sala lo proporciona la función scaleColor, que se suministra
-   * mediante inyección de dependencias, y se actualiza en
+   * renderSala - Renders data on the svg resource <br>
+   * Color applied to each element specified is provided by the function loaded in scaleColor.
    *
-   * @param  {type} target Elemento del DOM del que cuelga el elemento svg
-   * @param  {type} data   TimeSeries del que obtener los valores para el mapa de calor
+   * @param  {type} target DOM element from which it hangs the svg
+   * @param  {type} data   TimeSeries processed data, in the form of pairs [metric, value]
    * @memberof renderFeature
    */
   renderSala (target, data){
@@ -139,8 +144,8 @@ export default class Feature{
 
     //Binding
     var salas = d3.select(target+' svg').selectAll( '.'+this.panel.render.elementIdentifyer)
-      .data(data, function(d){ return d ? d.metric : this.id; });
 
+    .data(data, function(d){ return d ? d.metric : this.id; });
     //Update
     salas
       .transition(t)

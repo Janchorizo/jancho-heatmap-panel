@@ -37,34 +37,34 @@ import { renderEditor } from "./renderEditor.js";
 /**
  * @alias renderFeature
  * @classdesc &lt;h2>render feature&lt;/h2>
- * Implementación de una funcionalidad
- * Mediante el patrón mediador, se suscribe a los eventos del plugin a través
- * de la referencia al $scope que se le pasa.
+ * Implementation for a feature.&lt;br>
+ * Makes use of the mediator pattern in order to subscribe the feature to
+ * the plugin's event, through the $scope reference which is passed to it.
  * &lt;br>
- * &lt;br>&lt;h3>Funcionalidad&lt;/h3>
- * Implementa toda la representación visual del panel. Tanto la carga del SVG,
- * como la actualización del mismo a partir de los datos del plugin.&lt;br>
- * &lt;br>&lt;h3>Eventos suscritos&lt;/h3>
+ * &lt;br>&lt;h3>Functionaliy &lt;i>(Subscribed events)&lt;/i>&lt;h3>
  * &lt;ul>
- *  &lt;li>init-edit-mode&lt;/li>
- *  &lt;li>panel-initialized&lt;/li>
- *  &lt;li>render&lt;/li>
+ *   &lt;li>init-edit-mode&lt;/li>
+ *   &lt;li>panel-initialized&lt;/li>
+ *   &lt;li>render&lt;/li>
  * &lt;/ul>
  * @requires D3.js
  */
 export default class Feature{
   /**
-   * constructor - description
+   * constructor - description &lt;br>
+   * Important the use of _.cloneDeep to ensure that no two instances of the same plugin
+   * share references of the same variables.
    *
-   * @param  {type} $scope Es el contexto del plugin que se pasa para poder suscribirse
-   * a los eventos.
-   * @return {type}        Nueva instancia de un Feature
+   * @param  {type} $scope A reference to the plugin's scope for the subscription to events
+   * @return {type}        New instance of Feature
    */
   constructor( $scope){
       this.$scope = $scope;
       this.panelController = $scope.ctrl;
       this.panel = this.panelController.panel;
-      _.defaults( this.panelController.panel, renderDefaults);
+
+      const defaults = _.cloneDeep(renderDefaults)
+      _.defaults( this.panelController.panel, defaults);
 
       this.panelController.events.on( 'init-edit-mode', this.onInitEditMode.bind(this));
       //this.panelController.events.on( 'data-received', this.onDataReceived);
@@ -74,7 +74,7 @@ export default class Feature{
   }
 
   /**
-   * onInitEditMode - Handler para el evento de init-edit-mode
+   * onInitEditMode - Handler for the event : init-edit-mode&lt;br>
    *
    * @memberof renderFeature
    */
@@ -83,31 +83,36 @@ export default class Feature{
   }
 
   /**
-   * onRender - Handler para el evento de render
-   *
+   * onRender - Handler for the event : render&lt;br>
+   * Requires of an element containing the svg to update based on the data
    * @memberof renderFeature
    */
   onRender(){
-    console.info('renderizando sala ...');
     this.renderSala( '#'+this.panel.panelDivId, this.panel.data);
-    console.info('renderizado completado');
   }
 
   /**
-   * onPanelInitialized - Handler para el evento panel-initialized
+   * onPanelInitialized - Handler for the event : panel-initialized &lt;br>
+   * Renders the svg and data for the first time. Including :
+   * &lt;ol>
+   * &lt;li>Create a first instance of the color scale&lt;/li>
+   * &lt;li>Load and append it to the specified element by the panelDivId identyfier&lt;/li>
+   * &lt;li>Create an event for rendering the data over the svg&lt;/li>
+   * &lt;/ol>
    *
    * @memberof renderFeature
    */
   onPanelInitialized(){
     this.actualizarColores();
-    this.cargarPlano( this.panel.panelDivId, this.panel.render.baseMapRoute + this.panel.render.mapRoute);
+    this.cargarPlano( this.panel.panelDivId, this.panel.render.baseMapRoute + this.panel.render.mapRoute + ".svg");
     this.panelController.render();
   }
 
   /**
-   * actualizarColores - Cambio de la función proporcionada para la escala de color &lt;br>&lt;br>
-   * Para la representación de valores discretos se construye una función ad-hoc.&lt;br>
-   * Para la representación de valores contínua se obtiene una escala de la librería D3.js.
+   * actualizarColores - Changes the instance of color scale to be used by D3.&lt;br>&lt;br>
+   * For discrete representation (fixed number of colors) an ad-hoc function is done.&lt;br>
+   * For continous representation (range of colors) a D3.js scale function is used, based on &lt;br>
+   * domain and color selected.
    *
    * @memberof renderFeature
    */
@@ -130,14 +135,15 @@ export default class Feature{
   }
 
   /**
-   * cargarPlano - Carga el plano svg en el elemento indicado
+   * cargarPlano - Loads the svg resource into the DOM, hanging from the&lt;br>
+   * element specified by the elementIdentifyer id attribute.
    *
-   * @param  {type} target Id del elemento div en el que cargar el plano
-   * @param  {type} dir    Dirección al fichero SVG
+   * @param  {type} target id attribute
+   * @param  {type} dir    svg resource url from where it is served
    * @memberof renderFeature
    */
   cargarPlano( target, dir){
-    // target => class name
+    // target => id name
     d3.xml( dir).mimeType( "image/svg+xml").get( function( error, xml){
       if( error){ throw( error);}
       let div = document.getElementById(target);
@@ -149,12 +155,11 @@ export default class Feature{
   }
 
   /**
-   * renderSala - Actualiza los colores de la figura SVG &lt;br>
-   * El color aplicado a cada sala lo proporciona la función scaleColor, que se suministra
-   * mediante inyección de dependencias, y se actualiza en
+   * renderSala - Renders data on the svg resource &lt;br>
+   * Color applied to each element specified is provided by the function loaded in scaleColor.
    *
-   * @param  {type} target Elemento del DOM del que cuelga el elemento svg
-   * @param  {type} data   TimeSeries del que obtener los valores para el mapa de calor
+   * @param  {type} target DOM element from which it hangs the svg
+   * @param  {type} data   TimeSeries processed data, in the form of pairs [metric, value]
    * @memberof renderFeature
    */
   renderSala (target, data){
@@ -162,25 +167,17 @@ export default class Feature{
     .duration(750)
     .ease(d3.easeLinear);
 
-    //Binding
-    var salas = d3.select(target+' svg').selectAll( this.panel.render.elementIdentifyer)
-      .data(data, function(d){ return d ? d.metric : this.id; });
+    //ClearOutput
+    var t = d3.select(target+' svg').selectAll( '.'+this.panel.render.elementIdentifyer).style( 'fill', this.panel.render.unknownDataColor);
 
+    //Binding
+    var salas = d3.select(target+' svg').selectAll( '.'+this.panel.render.elementIdentifyer)
+
+    .data(data, function(d){ return d ? d.metric : this.id; });
     //Update
-    salas
-      .style('fill', '#fff');
     salas
       .transition(t)
       .style('fill', $.proxy( function(d){ return this.scaleColor( d.value)}, this));
-/*
-    //Binding
-    var salas = d3.select(target+' svg').selectAll('path')
-      .data(data, function(d){ return d ? d.metric : this.id; });
-
-    //Update
-    salas
-      .transition(t)
-      .style('fill', $.proxy( function(d){ return this.scaleColor( d.value)}, this));*/
   }
 }
 </code></pre>
@@ -193,13 +190,13 @@ export default class Feature{
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="dataProcessingFeature.html">dataProcessingFeature</a></li><li><a href="HeatmapController.html">HeatmapController</a></li><li><a href="panelActionsFeature.html">panelActionsFeature</a></li><li><a href="renderFeature.html">renderFeature</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="dataProcessingFeature.html">dataProcessingFeature</a></li><li><a href="HeatmapController.html">HeatmapController</a></li><li><a href="panelActionsFeature.html">panelActionsFeature</a></li><li><a href="renderEditor.html">renderEditor</a></li><li><a href="renderFeature.html">renderFeature</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Apr 01 2018 10:19:16 GMT+0200 (CEST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat May 05 2018 22:26:18 GMT+0200 (CEST)
 </footer>
 
 <script> prettyPrint(); </script>

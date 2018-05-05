@@ -9,27 +9,30 @@ import DataProcessingFeature from './features/dataProcessing/dataProcessingContr
 
 
 /**
- * HeatmapController - Clase HeatmapController
+ * HeatmapController - Class HeatmapController
  * <br>
- * Implementa el patrón de cadena de responsabilidades, y como mediador para
- * los eventos del plugin. <br><br>
- *
- * A cada instancia de nueva funcionalidad, se le pasa el $scope e $injector,
- * para poder suscribirse a los eventos que recibe el plugin.
- * El plugin no implementa funcionalidad, ni control. Cada instancia de nueva
- * funcionalidad es responsable de implementar aquello que requiera.
+ * Implements the responsabilities pattern, and acts as mediator for the plugin's
+ * events. <br><br>
+ * The $scope and $injector of this parent class is passed to each new instance
+ * of a feature to make it posible for the feature to subscribe to Grafana events.
  * <br><br>
- * Actualmente se instancian :
- * - dataProcessing
- * - render
- * - panelActions
+ * The class does not implement any kind of functionality, nor control. Each new
+ * instance of a feature is responsible of implementing any of it, and should not
+ * make assumptions about the existance of other plugins; otherwise should be
+ * specified. <br><br>
+ * Actually, the following features: <br>
+ * <ul>
+ *  <li>dataProcessing</li>
+ *  <li>render</li>
+ *  <li>panelActions</li>
+ * </ul>
  */
 export class HeatmapController extends MetricsPanelCtrl{
 
     /**
-     * constructor - Constructor para HeatmapController
+     * constructor - Constructor for HeatmapController
      * <br>
-     * Instancia cada una de las funcionalidades registradas.
+     * Instances each one of the registered features.
      *
      * @param  {type} $scope    description
      * @param  {type} $injector description

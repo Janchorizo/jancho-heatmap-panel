@@ -46,11 +46,12 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', '../../li
 
       Feature = function () {
         /**
-         * constructor - description
+         * constructor - description <br>
+         * Important the use of _.cloneDeep to ensure that no two instances of the same plugin
+         * share references of the same variables.
          *
-         * @param  {type} $scope Es el contexto del plugin que se pasa para poder suscribirse
-         * a los eventos.
-         * @return {type}        Nueva instancia de un Feature
+         * @param  {type} $scope A reference to the plugin's scope for the subscription to events
+         * @return {type}        New instance of Feature
          */
         function Feature($scope) {
           _classCallCheck(this, Feature);
@@ -70,7 +71,7 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', '../../li
         }
 
         /**
-         * onInitEditMode - Handler para el evento de init-edit-mode
+         * onInitEditMode - Handler for the event : init-edit-mode<br>
          *
          * @memberof renderFeature
          */
@@ -113,7 +114,7 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', '../../li
         }, {
           key: 'cargarPlano',
           value: function cargarPlano(target, dir) {
-            // target => class name
+            // target => id name
             d3.xml(dir).mimeType("image/svg+xml").get(function (error, xml) {
               if (error) {
                 throw error;
@@ -137,7 +138,6 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', '../../li
             var salas = d3.select(target + ' svg').selectAll('.' + this.panel.render.elementIdentifyer).data(data, function (d) {
               return d ? d.metric : this.id;
             });
-
             //Update
             salas.transition(t).style('fill', $.proxy(function (d) {
               return this.scaleColor(d.value);

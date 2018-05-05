@@ -54,9 +54,9 @@ System.register(['app/plugins/sdk', 'lodash', './panelDefaults.js', './features/
         _inherits(HeatmapController, _MetricsPanelCtrl);
 
         /**
-         * constructor - Constructor para HeatmapController
+         * constructor - Constructor for HeatmapController
          * <br>
-         * Instancia cada una de las funcionalidades registradas.
+         * Instances each one of the registered features.
          *
          * @param  {type} $scope    description
          * @param  {type} $injector description
