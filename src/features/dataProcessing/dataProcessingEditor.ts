@@ -4,6 +4,10 @@ export class DataProcessingEditorController {
     this.panelCtrl = $scope.ctrl;
     this.panel = this.panelCtrl.panel;
   }
+
+  toggleDescVisibility(){
+    this.panel.dataProcessing.showDescription = !this.panel.dataProcessing.showDescription;
+  }
 }
 
 export function dataProcessingEditor( scope){

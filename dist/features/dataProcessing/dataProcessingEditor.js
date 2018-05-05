@@ -3,7 +3,7 @@
 System.register([], function (_export, _context) {
   "use strict";
 
-  var DataProcessingEditorController;
+  var _createClass, DataProcessingEditorController;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -30,13 +30,42 @@ System.register([], function (_export, _context) {
   return {
     setters: [],
     execute: function () {
-      _export('DataProcessingEditorController', DataProcessingEditorController = function DataProcessingEditorController($scope) {
-        _classCallCheck(this, DataProcessingEditorController);
+      _createClass = function () {
+        function defineProperties(target, props) {
+          for (var i = 0; i < props.length; i++) {
+            var descriptor = props[i];
+            descriptor.enumerable = descriptor.enumerable || false;
+            descriptor.configurable = true;
+            if ("value" in descriptor) descriptor.writable = true;
+            Object.defineProperty(target, descriptor.key, descriptor);
+          }
+        }
 
-        $scope.editor = this;
-        this.panelCtrl = $scope.ctrl;
-        this.panel = this.panelCtrl.panel;
-      });
+        return function (Constructor, protoProps, staticProps) {
+          if (protoProps) defineProperties(Constructor.prototype, protoProps);
+          if (staticProps) defineProperties(Constructor, staticProps);
+          return Constructor;
+        };
+      }();
+
+      _export('DataProcessingEditorController', DataProcessingEditorController = function () {
+        function DataProcessingEditorController($scope) {
+          _classCallCheck(this, DataProcessingEditorController);
+
+          $scope.editor = this;
+          this.panelCtrl = $scope.ctrl;
+          this.panel = this.panelCtrl.panel;
+        }
+
+        _createClass(DataProcessingEditorController, [{
+          key: 'toggleDescVisibility',
+          value: function toggleDescVisibility() {
+            this.panel.dataProcessing.showDescription = !this.panel.dataProcessing.showDescription;
+          }
+        }]);
+
+        return DataProcessingEditorController;
+      }());
 
       _export('DataProcessingEditorController', DataProcessingEditorController);
     }
