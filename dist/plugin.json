@@ -9,7 +9,7 @@
             "url":"none"
         },
         "keywords":["panel", "d3", "heatmap", "plugin"],
-        "version":"0.96"
+        "version":"0.9.8"
     },
     "dependencies":{
         "grafanaVersion":"5.0.3",

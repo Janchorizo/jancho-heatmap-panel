@@ -5,16 +5,9 @@ export class RenderEditorController {
     $scope.editor = this;
     this.panelCtrl = $scope.ctrl;
     this.panel = $scope.ctrl.panel;
-    console.log( $scope);
-    this.panelCtrl.hola();
-  }
-
-  hola(){
-    console.info('Qué pasa chavalada');
   }
 
   invertirColores(){
-    console.log('invertirColores');
     let temp = this.panel.render.colors[0];
     this.panel.render.colors[0] = this.panel.render.colors[2];
     this.panel.render.colors[2] = temp;
@@ -22,7 +15,6 @@ export class RenderEditorController {
       this.actualizarColores();
     }
     this.panelCtrl.render();
-    this.panelCtrl.hola();
   }
 
   actualizarMapa(){
@@ -39,7 +31,6 @@ export class RenderEditorController {
   }
 
   actualizarColores(){
-    console.log('actualizarColores');
     if(this.panel.render.discrete_continuous == true){
       this.panelCtrl.renderFeature.scaleColor = (function( value){
         if( value <= this.panel.render.thresholds[0]){
@@ -66,7 +57,7 @@ export function renderEditor( scope){
     return{
       restrict: 'E',
       scope: true,
-      templateUrl: pathToTemplate,//'public/plugins/jancho-heatmap-panel/features/render/renderEditor.html',
+      templateUrl: pathToTemplate,
       controller: RenderEditorController,
     };
   };

@@ -19,7 +19,7 @@ System.register(['../../libs/d3/build/d3.js'], function (_export, _context) {
       return {
         restrict: 'E',
         scope: true,
-        templateUrl: pathToTemplate, //'public/plugins/jancho-heatmap-panel/features/render/renderEditor.html',
+        templateUrl: pathToTemplate,
         controller: RenderEditorController
       };
     };
@@ -57,19 +57,11 @@ System.register(['../../libs/d3/build/d3.js'], function (_export, _context) {
           $scope.editor = this;
           this.panelCtrl = $scope.ctrl;
           this.panel = $scope.ctrl.panel;
-          console.log($scope);
-          this.panelCtrl.hola();
         }
 
         _createClass(RenderEditorController, [{
-          key: 'hola',
-          value: function hola() {
-            console.info('Qué pasa chavalada');
-          }
-        }, {
           key: 'invertirColores',
           value: function invertirColores() {
-            console.log('invertirColores');
             var temp = this.panel.render.colors[0];
             this.panel.render.colors[0] = this.panel.render.colors[2];
             this.panel.render.colors[2] = temp;
@@ -77,7 +69,6 @@ System.register(['../../libs/d3/build/d3.js'], function (_export, _context) {
               this.actualizarColores();
             }
             this.panelCtrl.render();
-            this.panelCtrl.hola();
           }
         }, {
           key: 'actualizarMapa',
@@ -98,7 +89,6 @@ System.register(['../../libs/d3/build/d3.js'], function (_export, _context) {
         }, {
           key: 'actualizarColores',
           value: function actualizarColores() {
-            console.log('actualizarColores');
             if (this.panel.render.discrete_continuous == true) {
               this.panelCtrl.renderFeature.scaleColor = function (value) {
                 if (value <= this.panel.render.thresholds[0]) {

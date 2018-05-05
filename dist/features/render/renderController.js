@@ -109,7 +109,6 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', '../../li
             } else {
               this.scaleColor = d3.scaleLinear().domain(this.panel.render.domain).range(this.panel.render.colors);
             }
-            console.log(this.panel);
           }
         }, {
           key: 'cargarPlano',

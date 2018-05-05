@@ -99,7 +99,6 @@ export default class Feature{
         .domain( this.panel.render.domain)
         .range( this.panel.render.colors);
     }
-    console.log(this.panel);
   }
 
   /**
