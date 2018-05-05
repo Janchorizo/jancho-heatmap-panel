@@ -72,7 +72,6 @@ System.register(['app/plugins/sdk', 'lodash', './panelDefaults.js', './features/
           _this.panel.panelDivId = 'heatmap-' + _this.$scope.$id;
 
           console.info('Loading Features for v1.0...');
-          console.log(_this.$scope);
           _this.dataProcessingFeature = new DataProcessingFeature(_this.$scope);
           _this.panelActionsFeature = new PanelActionsFeature(_this.$scope);
           _this.renderFeature = new RenderFeature(_this.$scope);

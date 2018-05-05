@@ -143,7 +143,6 @@ export default class Feature{
                 value['value'] = timeseries.datapoints[ timeseries.datapoints.length -1][1];
             break;
         }
-        console.log('Value : ' + value['value']);
         return( value);
     }
 }

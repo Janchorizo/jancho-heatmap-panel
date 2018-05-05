@@ -173,7 +173,6 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './dataPr
                                 value['value'] = timeseries.datapoints[timeseries.datapoints.length - 1][1];
                                 break;
                         }
-                        console.log('Value : ' + value['value']);
                         return value;
                     }
                 }]);
