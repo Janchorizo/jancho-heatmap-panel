@@ -2,6 +2,7 @@
 Heatmap generator panel plugin for Grafana
 This plugin allows for the creation of configurable heatmaps from
 SVG figures with class and id tags to identify elements to fill.
+Documentation for the actual implementation of the plugin [can be found here](https://janchorizo.github.io/jancho-heatmap-panel/).
 
 ## Example of use case
 Already with an static SVG image representing some model of the data provided
@@ -14,12 +15,23 @@ selector and
 
 ## How to use
 
-## Available options
-### Render tab
-All visually affecting options are groupped in this tab. Currently implemented options are :
-* SVG resurce path
+![svg location](/img/svgLocation.png)
 
-* Class tag for elements to be updated
+![svg ](/img/svgAttributes.png)
+
+![svg ](/img/svgLoad.png)
+
+![svg ](/img/svgMetrics.png)
+
+![svg ](/img/plugin.png)
+
+## Available editor options
+### Render tab
+![Render Editor Tab](/img/renderEditorTab.png)
+All visually affecting options are groupped in this tab. Currently implemented options are :
+* SVG resurce name _excluding the .svg extension_
+
+* Class attribute for elements to be updated
 
 * Discrete / Continuous color scale
 
@@ -29,6 +41,7 @@ All visually affecting options are groupped in this tab. Currently implemented o
 
 * Color to be used for SVG elements without data
 ### DataProcessing tab
+![Data Processing Editor Tab](/img/dataProcessingEditorTab.png)
 Refered to the the manipulation of incomming data, it is possible
 to select a statistic to be applied to each of the metrics.
 
