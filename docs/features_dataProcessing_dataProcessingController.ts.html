@@ -33,31 +33,32 @@ import _ from 'lodash';
 import { dataProcessingDefaults } from "./dataProcessingDefaults.js";
 import { dataProcessingEditor } from "./dataProcessingEditor.js";
 
-/**
- * @alias dataProcessingFeature
- * @classdesc &lt;h2>dataProcessing feature&lt;/h2>
- * Implementación de una funcionalidad
- * Mediante el patrón mediador, se suscribe a los eventos del plugin a través
- * de la referencia al $scope que se le pasa.
- * &lt;br>
- * &lt;br>&lt;h3>Funcionalidad&lt;/h3>
- * Trata todos los datos provenientes de series temporales, los pasa a una estructura manejable
- * y aplica la estadística elegida.&lt;br>
- * &lt;br>&lt;h3>Eventos suscritos&lt;/h3>
- * &lt;ul>
- *  &lt;li>init-edit-mode&lt;/li>
- *  &lt;li>data-received&lt;/li>
- *  &lt;li>refresh&lt;/li>
- * &lt;/ul>
- */
+ /**
+  * @alias dataProcessingFeature
+  * @classdesc &lt;h2>dataProcessingFeature feature&lt;/h2>
+  * Implementation for a feature.&lt;br>
+  * Makes use of the mediator pattern in order to subscribe the feature to
+  * the plugin's event, through the $scope reference which is passed to it.
+  * &lt;br>
+  * &lt;br>&lt;h3>Functionaliy&lt;h3>
+  * This feature is responsible for managing data from TimeSeries, process it, &lt;br>
+  * and applying the specified statistic.
+  * &lt;i>Subscribed events&lt;/i>
+  * &lt;ul>
+  *  &lt;li>init-edit-mode&lt;/li>
+  *  &lt;li>data-received&lt;/li>
+  *  &lt;li>refresh&lt;/li>
+  * &lt;/ul>
+  */
 export default class Feature{
-  /**
-   * constructor - description
-   *
-   * @param  {type} $scope Es el contexto del plugin que se pasa para poder suscribirse
-   * a los eventos.
-   * @return {type}        Nueva instancia de un Feature
-   */
+   /**
+    * constructor - description &lt;br>
+    * Important the use of _.cloneDeep to ensure that no two instances of the same plugin
+    * share references of the same variables.
+    *
+    * @param  {type} $scope A reference to the plugin's scope for the subscription to events
+    * @return {type}        New instance of Feature
+    */
   constructor( $scope){
       this.$scope = $scope;
       this.panelController = $scope.ctrl;
@@ -73,7 +74,7 @@ export default class Feature{
   }
 
   /**
-   * onInitEditMode - Handler para el evento de init-edit-mode
+   * onInitEditMode - Handler for the event : init-edit-mode&lt;br>
    *
    * @memberof dataProcessingFeature
    */
@@ -82,7 +83,9 @@ export default class Feature{
   }
 
   /**
-   * onDataReceived - description
+   * onDataReceived - Handler for the event : data-received&lt;br>
+   * When new data is received, it is converted into a simpler data structure;&lt;br>
+   * then the selected statistic is applied to each of the metrics received.
    *
    * @param  {type} dataList description
    * @memberof dataProcessingFeature
@@ -98,7 +101,10 @@ export default class Feature{
   }
 
   /**
-   * onRefresh - description
+   * onRefresh - Handler for the event : refresh&lt;br>
+   * When configuration is modified, data is converted into a simpler data structure;&lt;br>
+   * then the selected statistic is applied to each of the metrics received.&lt;br>
+   * &lt;i>Previous data received, stored in the rawData attribute, is used.&lt;/i>
    *
    * @memberof dataProcessingFeature
    */
@@ -111,10 +117,10 @@ export default class Feature{
   }
 
   /**
-   * seriesHandler - Extrae una estrctura más simple del dataList que proporciona Grafana.
+   * seriesHandler - Extracts a simpler data structure.&lt;br>
    *
-   * @param  {type} dataList Estructura original que proporciona Grafana
-   * @return {TimeSeries}          Estructura simplificada para las métricas suministradas
+   * @param  {type} dataList Original data structure
+   * @return {TimeSeries}          TimeSeries created from the original one
    * @memberof dataProcessingFeature
    */
   seriesHandler( dataList){
@@ -127,12 +133,11 @@ export default class Feature{
   }
 
   /**
-   * mapSeriesToValue - Transforma una serie temporal a un objeto
-   * con el alias de la métrica, y el valor asociado (según la estadística elegida).
+   * mapSeriesToValue - Applies statistics to obtain a [metric, value] pair from a TimeSeries.&lt;br>
    *
    * @param  {Timeseries} timeseries receives a timeseries object containing all values registered for
    * a metric.
-   * @return {Object}            Object containing both the alias, and the value for a metric
+   * @return {Object}            Object containing both the name and value for a specific metric.
    * @memberof dataProcessingFeature
    */
   mapSeriesToValue( timeseries){
@@ -184,13 +189,13 @@ export default class Feature{
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="dataProcessingFeature.html">dataProcessingFeature</a></li><li><a href="HeatmapController.html">HeatmapController</a></li><li><a href="panelActionsFeature.html">panelActionsFeature</a></li><li><a href="renderEditor.html">renderEditor</a></li><li><a href="renderFeature.html">renderFeature</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="dataProcessingEditor.html">dataProcessingEditor</a></li><li><a href="dataProcessingFeature.html">dataProcessingFeature</a></li><li><a href="HeatmapController.html">HeatmapController</a></li><li><a href="panelActionsFeature.html">panelActionsFeature</a></li><li><a href="renderEditor.html">renderEditor</a></li><li><a href="renderFeature.html">renderFeature</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat May 05 2018 22:26:18 GMT+0200 (CEST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun May 06 2018 11:15:38 GMT+0200 (CEST)
 </footer>
 
 <script> prettyPrint(); </script>

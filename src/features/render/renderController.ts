@@ -13,7 +13,10 @@ import { renderEditor } from "./renderEditor.js";
  * Makes use of the mediator pattern in order to subscribe the feature to
  * the plugin's event, through the $scope reference which is passed to it.
  * <br>
- * <br><h3>Functionaliy <i>(Subscribed events)</i><h3>
+ * <br><h3>Functionaliy<h3><br>
+ * This feature is responsible for representing data values in an svg, including <br>
+ * the load of the svg in the DOM.
+ * <i>Subscribed events</i>
  * <ul>
  *   <li>init-edit-mode</li>
  *   <li>panel-initialized</li>

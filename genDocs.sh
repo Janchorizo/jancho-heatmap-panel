@@ -20,7 +20,7 @@ echo '
 }
 
 ' > conf.json
-jsdoc -c conf.json  --destination ./doc  -r .
+jsdoc -c conf.json  --destination ./docs  -r .
 rm conf.json
 mv ./_dist ./dist
 mv ./_node_modules ./node_modules

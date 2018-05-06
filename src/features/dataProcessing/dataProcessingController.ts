@@ -5,31 +5,32 @@ import _ from 'lodash';
 import { dataProcessingDefaults } from "./dataProcessingDefaults.js";
 import { dataProcessingEditor } from "./dataProcessingEditor.js";
 
-/**
- * @alias dataProcessingFeature
- * @classdesc <h2>dataProcessing feature</h2>
- * Implementación de una funcionalidad
- * Mediante el patrón mediador, se suscribe a los eventos del plugin a través
- * de la referencia al $scope que se le pasa.
- * <br>
- * <br><h3>Funcionalidad</h3>
- * Trata todos los datos provenientes de series temporales, los pasa a una estructura manejable
- * y aplica la estadística elegida.<br>
- * <br><h3>Eventos suscritos</h3>
- * <ul>
- *  <li>init-edit-mode</li>
- *  <li>data-received</li>
- *  <li>refresh</li>
- * </ul>
- */
+ /**
+  * @alias dataProcessingFeature
+  * @classdesc <h2>dataProcessingFeature feature</h2>
+  * Implementation for a feature.<br>
+  * Makes use of the mediator pattern in order to subscribe the feature to
+  * the plugin's event, through the $scope reference which is passed to it.
+  * <br>
+  * <br><h3>Functionaliy<h3>
+  * This feature is responsible for managing data from TimeSeries, process it, <br>
+  * and applying the specified statistic.
+  * <i>Subscribed events</i>
+  * <ul>
+  *  <li>init-edit-mode</li>
+  *  <li>data-received</li>
+  *  <li>refresh</li>
+  * </ul>
+  */
 export default class Feature{
-  /**
-   * constructor - description
-   *
-   * @param  {type} $scope Es el contexto del plugin que se pasa para poder suscribirse
-   * a los eventos.
-   * @return {type}        Nueva instancia de un Feature
-   */
+   /**
+    * constructor - description <br>
+    * Important the use of _.cloneDeep to ensure that no two instances of the same plugin
+    * share references of the same variables.
+    *
+    * @param  {type} $scope A reference to the plugin's scope for the subscription to events
+    * @return {type}        New instance of Feature
+    */
   constructor( $scope){
       this.$scope = $scope;
       this.panelController = $scope.ctrl;
@@ -45,7 +46,7 @@ export default class Feature{
   }
 
   /**
-   * onInitEditMode - Handler para el evento de init-edit-mode
+   * onInitEditMode - Handler for the event : init-edit-mode<br>
    *
    * @memberof dataProcessingFeature
    */
@@ -54,7 +55,9 @@ export default class Feature{
   }
 
   /**
-   * onDataReceived - description
+   * onDataReceived - Handler for the event : data-received<br>
+   * When new data is received, it is converted into a simpler data structure;<br>
+   * then the selected statistic is applied to each of the metrics received.
    *
    * @param  {type} dataList description
    * @memberof dataProcessingFeature
@@ -70,7 +73,10 @@ export default class Feature{
   }
 
   /**
-   * onRefresh - description
+   * onRefresh - Handler for the event : refresh<br>
+   * When configuration is modified, data is converted into a simpler data structure;<br>
+   * then the selected statistic is applied to each of the metrics received.<br>
+   * <i>Previous data received, stored in the rawData attribute, is used.</i>
    *
    * @memberof dataProcessingFeature
    */
@@ -83,10 +89,10 @@ export default class Feature{
   }
 
   /**
-   * seriesHandler - Extrae una estrctura más simple del dataList que proporciona Grafana.
+   * seriesHandler - Extracts a simpler data structure.<br>
    *
-   * @param  {type} dataList Estructura original que proporciona Grafana
-   * @return {TimeSeries}          Estructura simplificada para las métricas suministradas
+   * @param  {type} dataList Original data structure
+   * @return {TimeSeries}          TimeSeries created from the original one
    * @memberof dataProcessingFeature
    */
   seriesHandler( dataList){
@@ -99,12 +105,11 @@ export default class Feature{
   }
 
   /**
-   * mapSeriesToValue - Transforma una serie temporal a un objeto
-   * con el alias de la métrica, y el valor asociado (según la estadística elegida).
+   * mapSeriesToValue - Applies statistics to obtain a [metric, value] pair from a TimeSeries.<br>
    *
    * @param  {Timeseries} timeseries receives a timeseries object containing all values registered for
    * a metric.
-   * @return {Object}            Object containing both the alias, and the value for a metric
+   * @return {Object}            Object containing both the name and value for a specific metric.
    * @memberof dataProcessingFeature
    */
   mapSeriesToValue( timeseries){

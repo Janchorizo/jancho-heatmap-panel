@@ -30,15 +30,15 @@
     
         <h2><span class="attribs"><span class="type-signature"></span></span>dataProcessingFeature<span class="signature">($scope)</span><span class="type-signature"></span></h2>
         
-            <div class="class-description"><h2>dataProcessing feature</h2>
-Implementación de una funcionalidad
-Mediante el patrón mediador, se suscribe a los eventos del plugin a través
-de la referencia al $scope que se le pasa.
+            <div class="class-description"><h2>dataProcessingFeature feature</h2>
+Implementation for a feature.<br>
+Makes use of the mediator pattern in order to subscribe the feature to
+the plugin's event, through the $scope reference which is passed to it.
 <br>
-<br><h3>Funcionalidad</h3>
-Trata todos los datos provenientes de series temporales, los pasa a una estructura manejable
-y aplica la estadística elegida.<br>
-<br><h3>Eventos suscritos</h3>
+<br><h3>Functionaliy<h3>
+This feature is responsible for managing data from TimeSeries, process it, <br>
+and applying the specified statistic.
+<i>Subscribed events</i>
 <ul>
  <li>init-edit-mode</li>
  <li>data-received</li>
@@ -66,7 +66,9 @@ y aplica la estadística elegida.<br>
 
 
 <div class="description">
-    constructor - description
+    constructor - description <br>
+Important the use of _.cloneDeep to ensure that no two instances of the same plugin
+share references of the same variables.
 </div>
 
 
@@ -118,8 +120,7 @@ y aplica la estadística elegida.<br>
 
             
 
-            <td class="description last">Es el contexto del plugin que se pasa para poder suscribirse
-a los eventos.</td>
+            <td class="description last">A reference to the plugin's scope for the subscription to events</td>
         </tr>
 
     
@@ -222,8 +223,7 @@ a los eventos.</td>
 
 
 <div class="description">
-    mapSeriesToValue - Transforma una serie temporal a un objeto
-con el alias de la métrica, y el valor asociado (según la estadística elegida).
+    mapSeriesToValue - Applies statistics to obtain a [metric, value] pair from a TimeSeries.<br>
 </div>
 
 
@@ -317,7 +317,7 @@ a metric.</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="features_dataProcessing_dataProcessingController.ts.html">features/dataProcessing/dataProcessingController.ts</a>, <a href="features_dataProcessing_dataProcessingController.ts.html#line110">line 110</a>
+        <a href="features_dataProcessing_dataProcessingController.ts.html">features/dataProcessing/dataProcessingController.ts</a>, <a href="features_dataProcessing_dataProcessingController.ts.html#line115">line 115</a>
     </li></ul></dd>
     
 
@@ -344,7 +344,7 @@ a metric.</td>
 
         
 <div class="param-desc">
-    Object containing both the alias, and the value for a metric
+    Object containing both the name and value for a specific metric.
 </div>
 
 
@@ -381,7 +381,9 @@ a metric.</td>
 
 
 <div class="description">
-    onDataReceived - description
+    onDataReceived - Handler for the event : data-received<br>
+When new data is received, it is converted into a simpler data structure;<br>
+then the selected statistic is applied to each of the metrics received.
 </div>
 
 
@@ -474,7 +476,7 @@ a metric.</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="features_dataProcessing_dataProcessingController.ts.html">features/dataProcessing/dataProcessingController.ts</a>, <a href="features_dataProcessing_dataProcessingController.ts.html#line62">line 62</a>
+        <a href="features_dataProcessing_dataProcessingController.ts.html">features/dataProcessing/dataProcessingController.ts</a>, <a href="features_dataProcessing_dataProcessingController.ts.html#line65">line 65</a>
     </li></ul></dd>
     
 
@@ -516,7 +518,7 @@ a metric.</td>
 
 
 <div class="description">
-    onInitEditMode - Handler para el evento de init-edit-mode
+    onInitEditMode - Handler for the event : init-edit-mode<br>
 </div>
 
 
@@ -560,7 +562,7 @@ a metric.</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="features_dataProcessing_dataProcessingController.ts.html">features/dataProcessing/dataProcessingController.ts</a>, <a href="features_dataProcessing_dataProcessingController.ts.html#line52">line 52</a>
+        <a href="features_dataProcessing_dataProcessingController.ts.html">features/dataProcessing/dataProcessingController.ts</a>, <a href="features_dataProcessing_dataProcessingController.ts.html#line53">line 53</a>
     </li></ul></dd>
     
 
@@ -602,7 +604,10 @@ a metric.</td>
 
 
 <div class="description">
-    onRefresh - description
+    onRefresh - Handler for the event : refresh<br>
+When configuration is modified, data is converted into a simpler data structure;<br>
+then the selected statistic is applied to each of the metrics received.<br>
+<i>Previous data received, stored in the rawData attribute, is used.</i>
 </div>
 
 
@@ -646,7 +651,7 @@ a metric.</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="features_dataProcessing_dataProcessingController.ts.html">features/dataProcessing/dataProcessingController.ts</a>, <a href="features_dataProcessing_dataProcessingController.ts.html#line77">line 77</a>
+        <a href="features_dataProcessing_dataProcessingController.ts.html">features/dataProcessing/dataProcessingController.ts</a>, <a href="features_dataProcessing_dataProcessingController.ts.html#line83">line 83</a>
     </li></ul></dd>
     
 
@@ -688,7 +693,7 @@ a metric.</td>
 
 
 <div class="description">
-    seriesHandler - Extrae una estrctura más simple del dataList que proporciona Grafana.
+    seriesHandler - Extracts a simpler data structure.<br>
 </div>
 
 
@@ -740,7 +745,7 @@ a metric.</td>
 
             
 
-            <td class="description last">Estructura original que proporciona Grafana</td>
+            <td class="description last">Original data structure</td>
         </tr>
 
     
@@ -781,7 +786,7 @@ a metric.</td>
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="features_dataProcessing_dataProcessingController.ts.html">features/dataProcessing/dataProcessingController.ts</a>, <a href="features_dataProcessing_dataProcessingController.ts.html#line92">line 92</a>
+        <a href="features_dataProcessing_dataProcessingController.ts.html">features/dataProcessing/dataProcessingController.ts</a>, <a href="features_dataProcessing_dataProcessingController.ts.html#line98">line 98</a>
     </li></ul></dd>
     
 
@@ -808,7 +813,7 @@ a metric.</td>
 
         
 <div class="param-desc">
-    Estructura simplificada para las métricas suministradas
+    TimeSeries created from the original one
 </div>
 
 
@@ -847,13 +852,13 @@ a metric.</td>
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="dataProcessingFeature.html">dataProcessingFeature</a></li><li><a href="HeatmapController.html">HeatmapController</a></li><li><a href="panelActionsFeature.html">panelActionsFeature</a></li><li><a href="renderEditor.html">renderEditor</a></li><li><a href="renderFeature.html">renderFeature</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="dataProcessingEditor.html">dataProcessingEditor</a></li><li><a href="dataProcessingFeature.html">dataProcessingFeature</a></li><li><a href="HeatmapController.html">HeatmapController</a></li><li><a href="panelActionsFeature.html">panelActionsFeature</a></li><li><a href="renderEditor.html">renderEditor</a></li><li><a href="renderFeature.html">renderFeature</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sat May 05 2018 22:26:18 GMT+0200 (CEST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun May 06 2018 11:15:38 GMT+0200 (CEST)
 </footer>
 
 <script> prettyPrint(); </script>

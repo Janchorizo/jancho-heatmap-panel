@@ -56,11 +56,12 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './dataPr
 
             Feature = function () {
                 /**
-                 * constructor - description
+                 * constructor - description <br>
+                 * Important the use of _.cloneDeep to ensure that no two instances of the same plugin
+                 * share references of the same variables.
                  *
-                 * @param  {type} $scope Es el contexto del plugin que se pasa para poder suscribirse
-                 * a los eventos.
-                 * @return {type}        Nueva instancia de un Feature
+                 * @param  {type} $scope A reference to the plugin's scope for the subscription to events
+                 * @return {type}        New instance of Feature
                  */
                 function Feature($scope) {
                     _classCallCheck(this, Feature);
@@ -79,7 +80,7 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './dataPr
                 }
 
                 /**
-                 * onInitEditMode - Handler para el evento de init-edit-mode
+                 * onInitEditMode - Handler for the event : init-edit-mode<br>
                  *
                  * @memberof dataProcessingFeature
                  */
