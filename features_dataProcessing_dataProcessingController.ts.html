@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: features/dataProcessing/dataProcessingController.ts</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: features/dataProcessing/dataProcessingController.ts</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import {MetricsPanelCtrl} from 'app/plugins/sdk';
+import TimeSeries from 'app/core/time_series2';
+import _ from 'lodash';
+
+import { dataProcessingDefaults } from "./dataProcessingDefaults.js";
+import { dataProcessingEditor } from "./dataProcessingEditor.js";
+
+ /**
+  * @alias dataProcessingFeature
+  * @classdesc &lt;h2>dataProcessingFeature feature&lt;/h2>
+  * Implementation for a feature.&lt;br>
+  * Makes use of the mediator pattern in order to subscribe the feature to
+  * the plugin's event, through the $scope reference which is passed to it.
+  * &lt;br>
+  * &lt;br>&lt;h3>Functionaliy&lt;h3>
+  * This feature is responsible for managing data from TimeSeries, process it, &lt;br>
+  * and applying the specified statistic.
+  * &lt;i>Subscribed events&lt;/i>
+  * &lt;ul>
+  *  &lt;li>init-edit-mode&lt;/li>
+  *  &lt;li>data-received&lt;/li>
+  *  &lt;li>refresh&lt;/li>
+  * &lt;/ul>
+  */
+export default class Feature{
+   /**
+    * constructor - description &lt;br>
+    * Important the use of _.cloneDeep to ensure that no two instances of the same plugin
+    * share references of the same variables.
+    *
+    * @param  {type} $scope A reference to the plugin's scope for the subscription to events
+    * @return {type}        New instance of Feature
+    */
+  constructor( $scope){
+      this.$scope = $scope;
+      this.panelController = $scope.ctrl;
+      this.panel = this.panelController.panel;
+
+      const defaults = _.cloneDeep(dataProcessingDefaults);
+      _.defaults( this.panelController.panel, defaults);
+
+      this.panelController.events.on( 'init-edit-mode', this.onInitEditMode.bind(this));
+      this.panelController.events.on( 'data-received', this.onDataReceived.bind(this));
+      //this.panelController.events.on( 'panel-initialized', this.onPanelInitialized);
+      this.panelController.events.on( 'refresh', this.onRefresh.bind(this));
+  }
+
+  /**
+   * onInitEditMode - Handler for the event : init-edit-mode&lt;br>
+   *
+   * @memberof dataProcessingFeature
+   */
+  onInitEditMode(){
+      this.panelController.addEditorTab( 'DataProcessing', dataProcessingEditor( this.$scope), 2);
+  }
+
+  /**
+   * onDataReceived - Handler for the event : data-received&lt;br>
+   * When new data is received, it is converted into a simpler data structure;&lt;br>
+   * then the selected statistic is applied to each of the metrics received.
+   *
+   * @param  {type} dataList description
+   * @memberof dataProcessingFeature
+   */
+  onDataReceived( dataList){
+    if( dataList.length > 0){
+      this.panel.rawData = dataList;
+      let data = dataList.map( this.seriesHandler.bind( this));
+      this.panel.data = [];
+      this.panel.data = data.map( this.mapSeriesToValue.bind( this));
+    }else{ return;}
+    this.panelController.render();
+  }
+
+  /**
+   * onRefresh - Handler for the event : refresh&lt;br>
+   * When configuration is modified, data is converted into a simpler data structure;&lt;br>
+   * then the selected statistic is applied to each of the metrics received.&lt;br>
+   * &lt;i>Previous data received, stored in the rawData attribute, is used.&lt;/i>
+   *
+   * @memberof dataProcessingFeature
+   */
+  onRefresh(){
+    if( this.panel.rawData.length > 0){
+      let data = this.panel.rawData.map( this.seriesHandler.bind( this));
+      this.panel.data = data.map( this.mapSeriesToValue.bind( this));
+    }else{ return;}
+    this.panelController.render();
+  }
+
+  /**
+   * seriesHandler - Extracts a simpler data structure.&lt;br>
+   *
+   * @param  {type} dataList Original data structure
+   * @return {TimeSeries}          TimeSeries created from the original one
+   * @memberof dataProcessingFeature
+   */
+  seriesHandler( dataList){
+      //tratar nulos
+      let series = new TimeSeries({
+          datapoints: dataList.datapoints,
+          alias: dataList.target
+      });
+      return( series);
+  }
+
+  /**
+   * mapSeriesToValue - Applies statistics to obtain a [metric, value] pair from a TimeSeries.&lt;br>
+   *
+   * @param  {Timeseries} timeseries receives a timeseries object containing all values registered for
+   * a metric.
+   * @return {Object}            Object containing both the name and value for a specific metric.
+   * @memberof dataProcessingFeature
+   */
+  mapSeriesToValue( timeseries){
+        let value = {};
+        value['metric'] = timeseries.id;
+        const elements = timeseries.datapoints.map(function(s){ return( s[0]);});
+
+        switch( this.panel.dataProcessing.valueStat){
+            case 'min':
+                value['value'] = Math.min( ...elements);
+            break;
+            case 'max':
+                value['value'] = Math.max( ...elements);
+            break;
+            case 'avg':
+                value['value'] = elements.reduce( (a,b)=>a+b, 0) / timeseries.datapoints.length
+            break;
+            case 'current':
+                value['value'] = elements[ timeseries.datapoints.length -1];
+            break;
+            case 'total':;
+                value['value'] = elements.reduce( (a,b)=>a+b, 0);
+            break;
+            case 'first':
+                value['value'] = elements[0];
+            break;
+            case 'diff':
+                const pairs = _.map( elements, (a,b,c)=>{ return (b&lt; c.length -1)?([a, c[b+1]]):([0,0]); });
+                const differences = _.map( pairs, (a)=>{return Math.abs(a[0]-a[1]);});
+                value['value'] =_.max( differences);
+            break;
+            case 'range':
+                value['value'] = _.max(elements) - _.min(elements);
+            break;
+            case 'last_time':
+                value['value'] = timeseries.datapoints[ timeseries.datapoints.length -1][1];
+            break;
+        }
+        return( value);
+    }
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="dataProcessingEditor.html">dataProcessingEditor</a></li><li><a href="dataProcessingFeature.html">dataProcessingFeature</a></li><li><a href="HeatmapController.html">HeatmapController</a></li><li><a href="panelActionsFeature.html">panelActionsFeature</a></li><li><a href="renderEditor.html">renderEditor</a></li><li><a href="renderFeature.html">renderFeature</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun May 06 2018 11:15:38 GMT+0200 (CEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

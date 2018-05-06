@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: features/render/renderController.ts</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: features/render/renderController.ts</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import {MetricsPanelCtrl} from 'app/plugins/sdk';
+import TimeSeries from 'app/core/time_series2';
+import _ from 'lodash';
+import * as d3 from '../../libs/d3/build/d3.js' ;
+
+import { renderDefaults } from "./renderDefaults.js";
+import { renderEditor } from "./renderEditor.js";
+
+/**
+ * @alias renderFeature
+ * @classdesc &lt;h2>render feature&lt;/h2>
+ * Implementation for a feature.&lt;br>
+ * Makes use of the mediator pattern in order to subscribe the feature to
+ * the plugin's event, through the $scope reference which is passed to it.
+ * &lt;br>
+ * &lt;br>&lt;h3>Functionaliy&lt;h3>&lt;br>
+ * This feature is responsible for representing data values in an svg, including &lt;br>
+ * the load of the svg in the DOM.
+ * &lt;i>Subscribed events&lt;/i>
+ * &lt;ul>
+ *   &lt;li>init-edit-mode&lt;/li>
+ *   &lt;li>panel-initialized&lt;/li>
+ *   &lt;li>render&lt;/li>
+ * &lt;/ul>
+ * @requires D3.js
+ */
+export default class Feature{
+  /**
+   * constructor - description &lt;br>
+   * Important the use of _.cloneDeep to ensure that no two instances of the same plugin
+   * share references of the same variables.
+   *
+   * @param  {type} $scope A reference to the plugin's scope for the subscription to events
+   * @return {type}        New instance of Feature
+   */
+  constructor( $scope){
+      this.$scope = $scope;
+      this.panelController = $scope.ctrl;
+      this.panel = this.panelController.panel;
+
+      const defaults = _.cloneDeep(renderDefaults)
+      _.defaults( this.panelController.panel, defaults);
+
+      this.panelController.events.on( 'init-edit-mode', this.onInitEditMode.bind(this));
+      //this.panelController.events.on( 'data-received', this.onDataReceived);
+      this.panelController.events.on( 'panel-initialized', this.onPanelInitialized.bind(this));
+      this.panelController.events.on( 'render', this.onRender.bind(this));
+      //this.panelController.events.on( 'refresh', this.onRefresh);
+  }
+
+  /**
+   * onInitEditMode - Handler for the event : init-edit-mode&lt;br>
+   *
+   * @memberof renderFeature
+   */
+  onInitEditMode(){
+    this.panelController.addEditorTab( 'Render', renderEditor( this.$scope), 2);
+  }
+
+  /**
+   * onRender - Handler for the event : render&lt;br>
+   * Requires of an element containing the svg to update based on the data
+   * @memberof renderFeature
+   */
+  onRender(){
+    this.renderSala( '#'+this.panel.panelDivId, this.panel.data);
+  }
+
+  /**
+   * onPanelInitialized - Handler for the event : panel-initialized &lt;br>
+   * Renders the svg and data for the first time. Including :
+   * &lt;ol>
+   * &lt;li>Create a first instance of the color scale&lt;/li>
+   * &lt;li>Load and append it to the specified element by the panelDivId identyfier&lt;/li>
+   * &lt;li>Create an event for rendering the data over the svg&lt;/li>
+   * &lt;/ol>
+   *
+   * @memberof renderFeature
+   */
+  onPanelInitialized(){
+    this.actualizarColores();
+    this.cargarPlano( this.panel.panelDivId, this.panel.render.baseMapRoute + this.panel.render.mapRoute + ".svg");
+    this.panelController.render();
+  }
+
+  /**
+   * actualizarColores - Changes the instance of color scale to be used by D3.&lt;br>&lt;br>
+   * For discrete representation (fixed number of colors) an ad-hoc function is done.&lt;br>
+   * For continous representation (range of colors) a D3.js scale function is used, based on &lt;br>
+   * domain and color selected.
+   *
+   * @memberof renderFeature
+   */
+  actualizarColores(){
+    if(this.panel.render.discrete_continuous == true){
+      this.scaleColor = (function( value){
+        if( value &lt;= this.panel.render.thresholds[0]){
+          return( this.panel.render.colors[0]);
+        }else if( value &lt;= this.panel.render.thresholds[1]){
+          return( this.panel.render.colors[1]);
+        }else{
+          return( this.panel.render.colors[2]);
+        }
+      });
+    }else{
+      this.scaleColor =  d3.scaleLinear()
+        .domain( this.panel.render.domain)
+        .range( this.panel.render.colors);
+    }
+  }
+
+  /**
+   * cargarPlano - Loads the svg resource into the DOM, hanging from the&lt;br>
+   * element specified by the elementIdentifyer id attribute.
+   *
+   * @param  {type} target id attribute
+   * @param  {type} dir    svg resource url from where it is served
+   * @memberof renderFeature
+   */
+  cargarPlano( target, dir){
+    // target => id name
+    d3.xml( dir).mimeType( "image/svg+xml").get( function( error, xml){
+      if( error){ throw( error);}
+      let div = document.getElementById(target);
+      if(div != null){
+        div.removeChild(div.childNodes[0]);
+        div.appendChild(xml.documentElement);
+      }
+    });
+  }
+
+  /**
+   * renderSala - Renders data on the svg resource &lt;br>
+   * Color applied to each element specified is provided by the function loaded in scaleColor.
+   *
+   * @param  {type} target DOM element from which it hangs the svg
+   * @param  {type} data   TimeSeries processed data, in the form of pairs [metric, value]
+   * @memberof renderFeature
+   */
+  renderSala (target, data){
+    var t = d3.transition()
+    .duration(750)
+    .ease(d3.easeLinear);
+
+    //ClearOutput
+    var t = d3.select(target+' svg').selectAll( '.'+this.panel.render.elementIdentifyer).style( 'fill', this.panel.render.unknownDataColor);
+
+    //Binding
+    var salas = d3.select(target+' svg').selectAll( '.'+this.panel.render.elementIdentifyer)
+
+    .data(data, function(d){ return d ? d.metric : this.id; });
+    //Update
+    salas
+      .transition(t)
+      .style('fill', $.proxy( function(d){ return this.scaleColor( d.value)}, this));
+  }
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="dataProcessingEditor.html">dataProcessingEditor</a></li><li><a href="dataProcessingFeature.html">dataProcessingFeature</a></li><li><a href="HeatmapController.html">HeatmapController</a></li><li><a href="panelActionsFeature.html">panelActionsFeature</a></li><li><a href="renderEditor.html">renderEditor</a></li><li><a href="renderFeature.html">renderFeature</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun May 06 2018 11:15:38 GMT+0200 (CEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
