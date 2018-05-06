@@ -14,14 +14,36 @@ to all svg elements whished to be updated- differenciating between them through 
 selector and
 
 ## How to use
+The plugin needs a base svg file on top of which to represent data by coloring the
+regions of the svg according to the identifiers, the values and color scale specified.
+
+Firstly, save the svg resources under the _resources_ folder of the plugin.
 
 ![svg location](/img/svgLocation.png)
 
-![svg ](/img/svgAttributes.png)
+These svg files should have, for each region desired to be colored, a class attribute
+common to all regions which will be used to locate every one of them; and an unique
+identifier _(id attribute)_ for each of them, which will be used as an alias in the metrics
+tab to associate the data to the regions of the image.
+
+![svg attributes](/img/svgAttributes.png)
+
+Additionally, the name _(without the .svg extension)_ of the resource can be written in
+the defaults file of the render feature, so that it can be easily selected from a dropdown menu.
+
+![svg defaults](/img/svgDefaults.png)
+
+In the render editor tab, specify the name of the file from the dropdown menu or manually.
+Define too the class attribute that each element to be colored has.
 
 ![svg ](/img/svgLoad.png)
 
+Now, use the identifier in the Alias field of a metric to associate incoming data to that region.
+
 ![svg ](/img/svgMetrics.png)
+
+Now, the svg elements will be colored according to the value of statistic applied to data incoming,
+and to the alias of the metrics.
 
 ![svg ](/img/plugin.png)
 
