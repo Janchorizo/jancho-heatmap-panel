@@ -17,6 +17,12 @@ selector and
 The plugin needs a base svg file on top of which to represent data by coloring the
 regions of the svg according to the identifiers, the values and color scale specified.
 
+> Now, it is possible to import an svg image directly through the Render editor tab.
+> Inserting the URL into the box and clicking in the adyacent import button is everything
+> needed to use the image in the plugin.
+> _Note that, given that the image is added client-side, it will not appear in the available
+> images, as there is not a possibility to store it locally_
+
 Firstly, save the svg resources under the _resources_ folder of the plugin.
 
 ![svg location](/img/svgLocation.png)
@@ -55,6 +61,8 @@ and to the alias of the metrics.
 All visually affecting options are groupped in this tab. Currently implemented options are :
 * SVG resurce name _excluding the .svg extension_
 
+* URL pointing to an SVG image online, to import it into the plugin
+
 * Class attribute for elements to be updated
 
 * Discrete / Continuous color scale
@@ -64,6 +72,9 @@ All visually affecting options are groupped in this tab. Currently implemented o
 * Colors to be used for data visualization
 
 * Color to be used for SVG elements without data
+
+* Legend for displaying the alias, value and color for each metric
+
 ### DataProcessing tab
 ![Data Processing Editor Tab](/img/dataProcessingEditorTab.png)
 Refered to the the manipulation of incomming data, it is possible
