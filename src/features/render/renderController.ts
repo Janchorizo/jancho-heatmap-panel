@@ -153,5 +153,39 @@ export default class Feature{
     salas
       .transition(t)
       .style('fill', $.proxy( function(d){ return this.scaleColor( d.value)}, this));
+
+    var legend = d3.select('div#'+this.panel.panelDivId).select('div.legend').selectAll('div.legendElement')
+      .data(data, d=>d.metric);
+
+    d3.select('div#'+this.panel.panelDivId).select('div.legend')
+      .style('display',(this.panel.render.legend===true)?'block':'none');
+
+    legend
+      .exit()
+        .remove();
+
+    legend
+      .enter()
+        .append('div')
+        .attr('class', 'legendElement')
+        .style('display','flex')
+        .each(function(){
+          d3.select(this).append('p');
+          d3.select(this).append('div');
+        });
+
+    legend.selectAll('div')
+        .style('width','0.8em')
+        .style('height','0.8em')
+        .style('border-radius','50%')
+        .style('margin', '0.3em 0.7em')
+        .style('background-color', $.proxy( function(d){ return this.scaleColor( d.value)}, this));
+    legend.selectAll('p')
+      .style('margin',0)
+      .style('display','inline-block')
+      .html(function(d){
+        console.log(d)
+        return(d.metric+' ( '+d.value+' )')});
+
   }
 }

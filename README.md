@@ -38,7 +38,7 @@ Define too the class attribute that each element to be colored has.
 
 ![svg ](/img/svgLoad.png)
 
-Now, use the identifier in the Alias field of a metric to associate incoming data to that region.
+Use the identifier in the Alias field of a metric to associate incoming data to that region.
 
 ![svg ](/img/svgMetrics.png)
 
@@ -46,6 +46,8 @@ Now, the svg elements will be colored according to the value of statistic applie
 and to the alias of the metrics.
 
 ![svg ](/img/plugin.png)
+
+
 
 ## Available editor options
 ### Render tab

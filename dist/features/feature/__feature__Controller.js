@@ -49,13 +49,16 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './__feat
                     this.$scope = $scope;
                     this.panelController = $scope.ctrl;
                     this.panel = $scope.ctrl.panel;
-                    _.defaults(this.panel, __feature__Defaults);
+
+                    var defaults = _.cloneDeep(__feature__Defaults);
+                    _.defaults(this.panel, defaults);
 
                     this.panelController.events.on('init-edit-mode', this.onInitEditMode.bind(this));
                     //this.panelController.events.on( 'data-received', this.onDataReceived.bind(this));
                     //this.panelController.events.on( 'panel-initialized', this.onPanelInitialized.bind(this));
                     //this.panelController.events.on( 'render', this.onRender.bind(this));
                     //this.panelController.events.on( 'refresh', this.onRefresh.bind(this));
+                    //this.events.on('init-panel-actions', this.onInitPanelActions.bind(this));
                 }
 
                 _createClass(Feature, [{
@@ -63,6 +66,14 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', './__feat
                     value: function onInitEditMode() {
                         this.panelController.addEditorTab('__Feature__', __feature__Editor(this.$scope), 2);
                     }
+                }, {
+                    key: 'onInitPanelActions',
+                    value: function onInitPanelActions(actions) {
+                        actions.push({ text: 'event button text', click: 'ctrl.panelEvent()' });
+                    }
+                }, {
+                    key: 'panelEvent',
+                    value: function panelEvent() {}
                 }]);
 
                 return Feature;

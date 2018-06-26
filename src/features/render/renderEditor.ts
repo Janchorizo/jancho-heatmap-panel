@@ -54,10 +54,40 @@ export class RenderEditorController {
     d3.xml( dir).mimeType( "image/svg+xml").get( function( error, xml){
       if( error){ throw( error);}
       let div = document.getElementById( target);
-      div.removeChild(div.childNodes[0]);
+      while (div.hasChildNodes()) {  
+        div.removeChild(div.firstChild);
+      } 
       div.appendChild(xml.documentElement);
     });
     this.panelCtrl.render();
+  }
+
+  /**
+   * importarMapa - handler for an editor tab event <br>
+   * Loads the svg resource on the DOM, after flushing the older one, and
+   * retrieving the svg from the url given.<br>
+   * It is follwed by a render event call.
+   *
+   * @memberof renderEditor
+   */
+  importarMapa(){
+
+    window.fetch(this.panel.render.mapUrl)
+    .then((response) => response.text())
+    .then(svg => {
+        console.info('loading svg');
+        let target = this.panel.panelDivId;
+        let div = document.getElementById( target);
+
+        while (div.hasChildNodes()) {  
+            div.removeChild(div.firstChild);
+        } 
+        //div.removeChild(div.childNodes[0]);
+
+        //div.appendChild(svg.documentElement);
+        div.insertAdjacentHTML("afterbegin", svg);
+        this.panelCtrl.render();
+    });
   }
 
   /**

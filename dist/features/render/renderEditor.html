@@ -27,6 +27,24 @@
                      ng-change="editor.actualizarMapa()"></input>
             </div>
         </div>
+        <p>Import the SVG from an online resource.<br>
+        <i>The URL should point to the svg directly</i></p>
+        <div class="gf-form-inline">
+          <div class="gf-form">
+            <div class="gf-form-inline">
+                <div class="gf-form">
+                    <label class="gf-form-label width-6">URL</label>
+                    <input class="gf-form-input"
+                         ng-model="ctrl.panel.render.mapUrl"></input>
+                </div>
+            </div>
+            <span class="gf-form-label ">
+                <a ng-click="editor.importarMapa()">
+                  <i class="fa fa-download" aria-hidden="true"></i>
+                </a>
+            </span>
+          </div>
+        </div>
         <p>The following class selector will determine the SVG elements <br>
         to be updated based on the values provided by the metrics. <br>
         <i>Do not use the dot notation, just the class name</i> </p>
@@ -110,12 +128,22 @@
     </div>
     <div class="section gf-form-group">
         <h5 class="section-heading">Fill color for unknown data</h5>
-        <p>SVG elements with a {{ ctrl.panel.render.elementIdentifyer }} class with unknown data will be filled
-          with the specified color.<br>
+        <p>SVG elements with a {{ ctrl.panel.render.elementIdentifyer }} class with unknown data <br>
+          will be filled with the specified color.<br>
           It is used to flush colors from no longer available metrics.
         </p>
         <span class="gf-form-label width-3">
           <spectrum-picker ng-model="ctrl.panel.render.unknownDataColor" ng-change="ctrl.render()"></spectrum-picker>
         </span>
+    </div>
+    <div class="section gf-form-group">
+        <h5 class="section-heading">Legend</h5>
+        <p>Display a legend with the alias, value and color of each metric.</p>
+        <input type="radio" name="legend" data-ng-value="true"
+            ng-model="ctrl.panel.render.legend"
+            ng-change="ctrl.render()"> yes </input>
+        <input type="radio" name="legend" data-ng-value="false"
+            ng-model="ctrl.panel.render.legend"
+            ng-change="ctrl.render()">  No</input>
     </div>
 </div>

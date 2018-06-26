@@ -104,10 +104,34 @@ System.register(["../../libs/d3/build/d3.js"], function (_export, _context) {
                 throw error;
               }
               var div = document.getElementById(target);
-              div.removeChild(div.childNodes[0]);
+              while (div.hasChildNodes()) {
+                div.removeChild(div.firstChild);
+              }
               div.appendChild(xml.documentElement);
             });
             this.panelCtrl.render();
+          }
+        }, {
+          key: "importarMapa",
+          value: function importarMapa() {
+            var _this = this;
+
+            window.fetch(this.panel.render.mapUrl).then(function (response) {
+              return response.text();
+            }).then(function (svg) {
+              console.info('loading svg');
+              var target = _this.panel.panelDivId;
+              var div = document.getElementById(target);
+
+              while (div.hasChildNodes()) {
+                div.removeChild(div.firstChild);
+              }
+              //div.removeChild(div.childNodes[0]);
+
+              //div.appendChild(svg.documentElement);
+              div.insertAdjacentHTML("afterbegin", svg);
+              _this.panelCtrl.render();
+            });
           }
         }, {
           key: "actualizarColores",
