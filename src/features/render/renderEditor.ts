@@ -90,6 +90,16 @@ export class RenderEditorController {
     });
   }
 
+  cambiarFuente(){
+    if(this.panel.render.source.local === true){
+        this.panel.render.source.remote = false;
+        this.actualizarMapa();
+    }else if(this.panel.render.source.local === false){
+        this.panel.render.source.remote = true;
+        this.importarMapa();
+    }
+  }
+
   /**
    * actualizarColores - handler for an editor tab event <br>
    * Changes the instance of color scale to be used by D3.<br>

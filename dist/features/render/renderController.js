@@ -115,6 +115,11 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', '../../li
           key: 'cargarPlano',
           value: function cargarPlano(target, dir) {
             // target => id name
+            if (this.panel.render.source.local === true) this.cargarPlanoLocal(target, dir);else if (this.panel.render.source.remote === true) this.cargarPlanoRemoto(target, this.panel.render.mapUrl);
+          }
+        }, {
+          key: 'cargarPlanoLocal',
+          value: function cargarPlanoLocal(target, dir) {
             d3.xml(dir).mimeType("image/svg+xml").get(function (error, xml) {
               if (error) {
                 throw error;
@@ -124,6 +129,24 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', '../../li
                 div.removeChild(div.childNodes[0]);
                 div.appendChild(xml.documentElement);
               }
+            });
+          }
+        }, {
+          key: 'cargarPlanoRemoto',
+          value: function cargarPlanoRemoto(target, dir) {
+            var _this = this;
+
+            window.fetch(dir).then(function (response) {
+              return response.text();
+            }).then(function (svg) {
+              console.info('loading svg');
+              var div = document.getElementById(target);
+
+              while (div.hasChildNodes()) {
+                div.removeChild(div.firstChild);
+              }
+              div.insertAdjacentHTML("afterbegin", svg);
+              _this.panelCtrl.render();
             });
           }
         }, {

@@ -11,6 +11,10 @@ System.register([], function (_export, _context) {
         render: {
           feature: 'render',
           desc: 'rendering SVG map',
+          source: {
+            local: true,
+            remote: false
+          },
           baseMapRoute: 'public/plugins/jancho-heatmap-panel/resources/',
           elementIdentifyer: 'sala',
           unknownDataColor: 'white',

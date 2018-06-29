@@ -1,49 +1,66 @@
 <div class="editor-row">
     <div class="section gf-form-group">
+        <h5 class="section-heading">Svg Resources source</h5>
+        <p>Determine wether the image should be loaded from a local copy,<br>
+          or from an online url.
+        </p>
+        <input type="radio" name="source" data-ng-value="true"
+            ng-model="ctrl.panel.render.source.local"
+            ng-change="editor.cambiarFuente()"> Local </input>
+        <input type="radio" name="source" data-ng-value="false"
+            ng-model="ctrl.panel.render.source.local"
+            ng-change="editor.cambiarFuente()">  Remote</input>
+    </div>
+    <div class="section gf-form-group">
         <h5 class="section-heading">Svg Resources</h5>
-        <p>Select the SVG resource to represent on the visualization.<br>
-        <i>Exclude the .svg extension if entering tha name manually</i></p>
-        <div class="gf-form-inline">
-          <div class="gf-form">
-            <label class="gf-form-label width-6">Available</label>
-            <div class="gf-form-select-wrapper width-12">
-              <select class="gf-form-input"
-              ng-model="ctrl.panel.render.mapRoute"
-              ng-options="f for f in ctrl.panel.render.availableMaps"
-              ng-change="editor.actualizarMapa()"></select>
+
+        <div ng-show="ctrl.panel.render.source.local == true">
+            <p>Select the SVG resource to represent on the visualization.<br>
+            <i>Exclude the .svg extension if entering tha name manually</i></p>
+            <div class="gf-form-inline">
+              <div class="gf-form">
+                <label class="gf-form-label width-6">Available</label>
+                <div class="gf-form-select-wrapper width-12">
+                  <select class="gf-form-input"
+                  ng-model="ctrl.panel.render.mapRoute"
+                  ng-options="f for f in ctrl.panel.render.availableMaps"
+                  ng-change="editor.actualizarMapa()"></select>
+                </div>
+                <span class="gf-form-label ">
+                    <a ng-click="editor.actualizarMapa()">
+                      <i class="fa fa-refresh" aria-hidden="true"></i>
+                    </a>
+                </span>
+              </div>
             </div>
-            <span class="gf-form-label ">
-                <a ng-click="editor.actualizarMapa()">
-                  <i class="fa fa-refresh" aria-hidden="true"></i>
-                </a>
-            </span>
-          </div>
-        </div>
-        <div class="gf-form-inline">
-            <div class="gf-form">
-                <label class="gf-form-label width-6">Manually</label>
-                <input class="gf-form-input"
-                     ng-model="ctrl.panel.render.mapRoute"
-                     ng-change="editor.actualizarMapa()"></input>
-            </div>
-        </div>
-        <p>Import the SVG from an online resource.<br>
-        <i>The URL should point to the svg directly</i></p>
-        <div class="gf-form-inline">
-          <div class="gf-form">
             <div class="gf-form-inline">
                 <div class="gf-form">
-                    <label class="gf-form-label width-6">URL</label>
+                    <label class="gf-form-label width-6">Manually</label>
                     <input class="gf-form-input"
-                         ng-model="ctrl.panel.render.mapUrl"></input>
+                         ng-model="ctrl.panel.render.mapRoute"
+                         ng-change="editor.actualizarMapa()"></input>
                 </div>
             </div>
-            <span class="gf-form-label ">
-                <a ng-click="editor.importarMapa()">
-                  <i class="fa fa-download" aria-hidden="true"></i>
-                </a>
-            </span>
-          </div>
+        </div>
+        <div ng-show="ctrl.panel.render.source.local == false">
+            <p>Import the SVG from an online resource.<br>
+            <i>The URL should point to the svg directly</i></p>
+            <div class="gf-form-inline">
+              <div class="gf-form">
+                <div class="gf-form-inline">
+                    <div class="gf-form">
+                        <label class="gf-form-label width-6">URL</label>
+                        <input class="gf-form-input"
+                             ng-model="ctrl.panel.render.mapUrl"></input>
+                    </div>
+                </div>
+                <span class="gf-form-label ">
+                    <a ng-click="editor.importarMapa()">
+                      <i class="fa fa-download" aria-hidden="true"></i>
+                    </a>
+                </span>
+              </div>
+            </div>
         </div>
         <p>The following class selector will determine the SVG elements <br>
         to be updated based on the values provided by the metrics. <br>

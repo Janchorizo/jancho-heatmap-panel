@@ -105,3 +105,7 @@ The following are supported :
 ### Known Issues
 
 ### Changelog
+It is now possible to load images directly from an url<br>
+It is now possible to select wether select wether to use an online resource,
+or a local image. This makes it possible to have Snapshots that load correctly
+when online images are selected.

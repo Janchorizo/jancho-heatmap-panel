@@ -134,6 +134,17 @@ System.register(["../../libs/d3/build/d3.js"], function (_export, _context) {
             });
           }
         }, {
+          key: "cambiarFuente",
+          value: function cambiarFuente() {
+            if (this.panel.render.source.local === true) {
+              this.panel.render.source.remote = false;
+              this.actualizarMapa();
+            } else if (this.panel.render.source.local === false) {
+              this.panel.render.source.remote = true;
+              this.importarMapa();
+            }
+          }
+        }, {
           key: "actualizarColores",
           value: function actualizarColores() {
             if (this.panel.render.discrete_continuous == true) {

@@ -119,6 +119,13 @@ export default class Feature{
    */
   cargarPlano( target, dir){
     // target => id name
+    if(this.panel.render.source.local === true)
+        this.cargarPlanoLocal( target, dir)
+    else if(this.panel.render.source.remote === true)
+        this.cargarPlanoRemoto( target, this.panel.render.mapUrl)
+  }
+
+  cargarPlanoLocal( target, dir){
     d3.xml( dir).mimeType( "image/svg+xml").get( function( error, xml){
       if( error){ throw( error);}
       let div = document.getElementById(target);
@@ -129,6 +136,20 @@ export default class Feature{
     });
   }
 
+  cargarPlanoRemoto( target, dir){
+    window.fetch(dir)
+    .then((response) => response.text())
+    .then(svg => {
+        console.info('loading svg');
+        let div = document.getElementById( target);
+
+        while (div.hasChildNodes()) {  
+            div.removeChild(div.firstChild);
+        } 
+        div.insertAdjacentHTML("afterbegin", svg);
+        this.panelCtrl.render();
+    });
+  }
   /**
    * renderSala - Renders data on the svg resource <br>
    * Color applied to each element specified is provided by the function loaded in scaleColor.
