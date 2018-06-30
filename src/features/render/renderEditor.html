@@ -1,6 +1,6 @@
 <div class="editor-row">
     <div class="section gf-form-group">
-        <h5 class="section-heading">Svg Resources source</h5>
+        <h5 class="section-heading">Svg Resources</h5>
         <p>Determine wether the image should be loaded from a local copy,<br>
           or from an online url.
         </p>
@@ -10,10 +10,6 @@
         <input type="radio" name="source" data-ng-value="false"
             ng-model="ctrl.panel.render.source.local"
             ng-change="editor.cambiarFuente()">  Remote</input>
-    </div>
-    <div class="section gf-form-group">
-        <h5 class="section-heading">Svg Resources</h5>
-
         <div ng-show="ctrl.panel.render.source.local == true">
             <p>Select the SVG resource to represent on the visualization.<br>
             <i>Exclude the .svg extension if entering tha name manually</i></p>
