@@ -53,7 +53,8 @@ export class RenderEditorController {
 
     d3.xml( dir).mimeType( "image/svg+xml").get( function( error, xml){
       if( error){ throw( error);}
-      let div = document.getElementById( target);
+      let root = document.getElementById(target);
+      let div = root.getElementsByClassName('image')[0]
       while (div.hasChildNodes()) {  
         div.removeChild(div.firstChild);
       } 
@@ -75,16 +76,13 @@ export class RenderEditorController {
     window.fetch(this.panel.render.mapUrl)
     .then((response) => response.text())
     .then(svg => {
-        console.info('loading svg');
         let target = this.panel.panelDivId;
-        let div = document.getElementById( target);
+          let root = document.getElementById(target);
+          let div = root.getElementsByClassName('image')[0]
 
         while (div.hasChildNodes()) {  
             div.removeChild(div.firstChild);
         } 
-        //div.removeChild(div.childNodes[0]);
-
-        //div.appendChild(svg.documentElement);
         div.insertAdjacentHTML("afterbegin", svg);
         this.panelCtrl.render();
     });

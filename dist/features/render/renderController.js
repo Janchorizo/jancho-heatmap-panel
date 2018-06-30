@@ -124,7 +124,8 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', '../../li
               if (error) {
                 throw error;
               }
-              var div = document.getElementById(target);
+              var root = document.getElementById(target);
+              var div = root.getElementsByClassName('image')[0];
               if (div != null) {
                 div.removeChild(div.childNodes[0]);
                 div.appendChild(xml.documentElement);
@@ -139,8 +140,8 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', '../../li
             window.fetch(dir).then(function (response) {
               return response.text();
             }).then(function (svg) {
-              console.info('loading svg');
-              var div = document.getElementById(target);
+              var root = document.getElementById(target);
+              var div = root.getElementsByClassName('image')[0];
 
               while (div.hasChildNodes()) {
                 div.removeChild(div.firstChild);
@@ -183,7 +184,6 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', '../../li
               return this.scaleColor(d.value);
             }, this));
             legend.selectAll('p').style('margin', 0).style('display', 'inline-block').html(function (d) {
-              console.log(d);
               return d.metric + ' ( ' + d.value + ' )';
             });
           }

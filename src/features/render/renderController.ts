@@ -127,8 +127,9 @@ export default class Feature{
 
   cargarPlanoLocal( target, dir){
     d3.xml( dir).mimeType( "image/svg+xml").get( function( error, xml){
-      if( error){ throw( error);}
-      let div = document.getElementById(target);
+    if( error){ throw( error);}
+      let root = document.getElementById(target);
+      let div = root.getElementsByClassName('image')[0]
       if(div != null){
         div.removeChild(div.childNodes[0]);
         div.appendChild(xml.documentElement);
@@ -140,8 +141,8 @@ export default class Feature{
     window.fetch(dir)
     .then((response) => response.text())
     .then(svg => {
-        console.info('loading svg');
-        let div = document.getElementById( target);
+      let root = document.getElementById(target);
+      let div = root.getElementsByClassName('image')[0]
 
         while (div.hasChildNodes()) {  
             div.removeChild(div.firstChild);
@@ -205,7 +206,6 @@ export default class Feature{
       .style('margin',0)
       .style('display','inline-block')
       .html(function(d){
-        console.log(d)
         return(d.metric+' ( '+d.value+' )')});
 
   }
