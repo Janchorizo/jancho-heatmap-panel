@@ -67,7 +67,9 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', '../../li
           //this.panelController.events.on( 'data-received', this.onDataReceived);
           this.panelController.events.on('panel-initialized', this.onPanelInitialized.bind(this));
           this.panelController.events.on('render', this.onRender.bind(this));
+          this.panelController.events.on('panel-size-changed', this.onSizeChange.bind(this));
           //this.panelController.events.on( 'refresh', this.onRefresh);
+          console.log(this.panelController);
         }
 
         /**
@@ -87,6 +89,24 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', '../../li
           value: function onRender() {
             this.renderSala('#' + this.panel.panelDivId, this.panel.data);
           }
+        }, {
+          key: 'onSizeChange',
+          value: function onSizeChange(a) {}
+          //console.log('size has changed', a);
+
+
+          /**
+           * onPanelInitialized - Handler for the event : panel-initialized <br>
+           * Renders the svg and data for the first time. Including :
+           * <ol>
+           * <li>Create a first instance of the color scale</li>
+           * <li>Load and append it to the specified element by the panelDivId identyfier</li>
+           * <li>Create an event for rendering the data over the svg</li>
+           * </ol>
+           *
+           * @memberof renderFeature
+           */
+
         }, {
           key: 'onPanelInitialized',
           value: function onPanelInitialized() {
@@ -110,12 +130,14 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', '../../li
             } else {
               this.scaleColor = d3.scaleLinear().domain(this.panel.render.domain).range(this.panel.render.colors);
             }
+            this.panelController.render();
           }
         }, {
           key: 'cargarPlano',
           value: function cargarPlano(target, dir) {
             // target => id name
             if (this.panel.render.source.local === true) this.cargarPlanoLocal(target, dir);else if (this.panel.render.source.remote === true) this.cargarPlanoRemoto(target, this.panel.render.mapUrl);
+            this.panelController.render();
           }
         }, {
           key: 'cargarPlanoLocal',
@@ -126,17 +148,19 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', '../../li
               }
               var root = document.getElementById(target);
               var div = root.getElementsByClassName('image')[0];
-              if (div != null) {
-                div.removeChild(div.childNodes[0]);
-                div.appendChild(xml.documentElement);
+              while (div.hasChildNodes()) {
+                div.removeChild(div.firstChild);
               }
+              div.appendChild(xml.documentElement);
+              var h = d3.select('div#' + target + ' div.image svg').style('height').split('px')[0] * 1.1;
+              var w = d3.select('div#' + target + ' div.image svg').style('width').split('px')[0] * 1.1;
+              d3.select('div#' + target + ' div.image svg').attr('width', '100%').attr('height', '100%').attr('viewBox', '0 0 ' + w + ' ' + h).attr('preserveAspectRatio', 'xMinYMin meet');
+              console.log('al reves');
             });
           }
         }, {
           key: 'cargarPlanoRemoto',
           value: function cargarPlanoRemoto(target, dir) {
-            var _this = this;
-
             window.fetch(dir).then(function (response) {
               return response.text();
             }).then(function (svg) {
@@ -147,7 +171,9 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', '../../li
                 div.removeChild(div.firstChild);
               }
               div.insertAdjacentHTML("afterbegin", svg);
-              _this.panelCtrl.render();
+              var h = d3.select('div#' + target + ' div.image svg').style('height').split('px')[0] * 1.1;
+              var w = d3.select('div#' + target + ' div.image svg').style('width').split('px')[0] * 1.1;
+              d3.select('div#' + target + ' div.image svg').attr('width', '100%').attr('height', '100%').attr('viewBox', '0 0 ' + w + ' ' + h).attr('preserveAspectRatio', 'xMinYMin meet');
             });
           }
         }, {

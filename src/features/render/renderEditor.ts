@@ -59,6 +59,13 @@ export class RenderEditorController {
         div.removeChild(div.firstChild);
       } 
       div.appendChild(xml.documentElement);
+        const h = (d3.select('div#'+target+' div.image svg').style('height').split('px')[0])*1.1;
+        const w = (d3.select('div#'+target+' div.image svg').style('width').split('px')[0])*1.1;
+          d3.select('div#'+target+' div.image svg')
+            .attr('width','100%')
+            .attr('height','100%')
+            .attr('viewBox', '0 0 '+w+' '+h)
+            .attr('preserveAspectRatio', 'xMinYMin meet');
     });
     this.panelCtrl.render();
   }
@@ -84,7 +91,14 @@ export class RenderEditorController {
             div.removeChild(div.firstChild);
         } 
         div.insertAdjacentHTML("afterbegin", svg);
-        this.panelCtrl.render();
+        const h = (d3.select('div#'+target+' div.image svg').style('height').split('px')[0])*1.1;
+        const w = (d3.select('div#'+target+' div.image svg').style('width').split('px')[0])*1.1;
+          d3.select('div#'+target+' div.image svg')
+            .attr('width','100%')
+            .attr('height','100%')
+            .attr('viewBox', '0 0 '+w+' '+h)
+            .attr('preserveAspectRatio', 'xMinYMin meet');
+            this.panelCtrl.render();
     });
   }
 

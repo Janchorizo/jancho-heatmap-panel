@@ -109,6 +109,9 @@ System.register(["../../libs/d3/build/d3.js"], function (_export, _context) {
                 div.removeChild(div.firstChild);
               }
               div.appendChild(xml.documentElement);
+              var h = d3.select('div#' + target + ' div.image svg').style('height').split('px')[0] * 1.1;
+              var w = d3.select('div#' + target + ' div.image svg').style('width').split('px')[0] * 1.1;
+              d3.select('div#' + target + ' div.image svg').attr('width', '100%').attr('height', '100%').attr('viewBox', '0 0 ' + w + ' ' + h).attr('preserveAspectRatio', 'xMinYMin meet');
             });
             this.panelCtrl.render();
           }
@@ -128,6 +131,9 @@ System.register(["../../libs/d3/build/d3.js"], function (_export, _context) {
                 div.removeChild(div.firstChild);
               }
               div.insertAdjacentHTML("afterbegin", svg);
+              var h = d3.select('div#' + target + ' div.image svg').style('height').split('px')[0] * 1.1;
+              var w = d3.select('div#' + target + ' div.image svg').style('width').split('px')[0] * 1.1;
+              d3.select('div#' + target + ' div.image svg').attr('width', '100%').attr('height', '100%').attr('viewBox', '0 0 ' + w + ' ' + h).attr('preserveAspectRatio', 'xMinYMin meet');
               _this.panelCtrl.render();
             });
           }

@@ -45,7 +45,9 @@ export default class Feature{
       //this.panelController.events.on( 'data-received', this.onDataReceived);
       this.panelController.events.on( 'panel-initialized', this.onPanelInitialized.bind(this));
       this.panelController.events.on( 'render', this.onRender.bind(this));
+      this.panelController.events.on( 'panel-size-changed', this.onSizeChange.bind(this));
       //this.panelController.events.on( 'refresh', this.onRefresh);
+      console.log(this.panelController);
   }
 
   /**
@@ -64,6 +66,10 @@ export default class Feature{
    */
   onRender(){
     this.renderSala( '#'+this.panel.panelDivId, this.panel.data);
+  }
+
+  onSizeChange(a){
+  //console.log('size has changed', a);
   }
 
   /**
@@ -107,6 +113,7 @@ export default class Feature{
         .domain( this.panel.render.domain)
         .range( this.panel.render.colors);
     }
+    this.panelController.render();
   }
 
   /**
@@ -123,6 +130,7 @@ export default class Feature{
         this.cargarPlanoLocal( target, dir)
     else if(this.panel.render.source.remote === true)
         this.cargarPlanoRemoto( target, this.panel.render.mapUrl)
+    this.panelController.render();
   }
 
   cargarPlanoLocal( target, dir){
@@ -130,10 +138,18 @@ export default class Feature{
     if( error){ throw( error);}
       let root = document.getElementById(target);
       let div = root.getElementsByClassName('image')[0]
-      if(div != null){
-        div.removeChild(div.childNodes[0]);
-        div.appendChild(xml.documentElement);
-      }
+        while (div.hasChildNodes()) {  
+            div.removeChild(div.firstChild);
+        } 
+      div.appendChild(xml.documentElement);
+        const h = (d3.select('div#'+target+' div.image svg').style('height').split('px')[0])*1.1;
+        const w = (d3.select('div#'+target+' div.image svg').style('width').split('px')[0])*1.1;
+          d3.select('div#'+target+' div.image svg')
+            .attr('width','100%')
+            .attr('height','100%')
+            .attr('viewBox', '0 0 '+w+' '+h)
+            .attr('preserveAspectRatio', 'xMinYMin meet');
+        console.log('al reves')
     });
   }
 
@@ -148,7 +164,13 @@ export default class Feature{
             div.removeChild(div.firstChild);
         } 
         div.insertAdjacentHTML("afterbegin", svg);
-        this.panelCtrl.render();
+        const h = (d3.select('div#'+target+' div.image svg').style('height').split('px')[0])*1.1;
+        const w = (d3.select('div#'+target+' div.image svg').style('width').split('px')[0])*1.1;
+          d3.select('div#'+target+' div.image svg')
+            .attr('width','100%')
+            .attr('height','100%')
+            .attr('viewBox', '0 0 '+w+' '+h)
+            .attr('preserveAspectRatio', 'xMinYMin meet');
     });
   }
   /**

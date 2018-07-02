@@ -9,7 +9,7 @@ export const renderDefaults = {
     baseMapRoute: 'public/plugins/jancho-heatmap-panel/resources/',
     elementIdentifyer:'sala',
     unknownDataColor: 'white',
-    availableMaps: ['plano', 'brain'],
+    availableMaps: ['plano',],
     mapRoute: 'plano',
     mapUrl: '',
     legend:true,
