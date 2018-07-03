@@ -69,7 +69,6 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', '../../li
           this.panelController.events.on('render', this.onRender.bind(this));
           this.panelController.events.on('panel-size-changed', this.onSizeChange.bind(this));
           //this.panelController.events.on( 'refresh', this.onRefresh);
-          console.log(this.panelController);
         }
 
         /**
@@ -91,22 +90,16 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', '../../li
           }
         }, {
           key: 'onSizeChange',
-          value: function onSizeChange(a) {}
-          //console.log('size has changed', a);
+          value: function onSizeChange(a) {
+            var target = this.panel.panelDivId;
+            var panel = document.getElementById(target);
 
-
-          /**
-           * onPanelInitialized - Handler for the event : panel-initialized <br>
-           * Renders the svg and data for the first time. Including :
-           * <ol>
-           * <li>Create a first instance of the color scale</li>
-           * <li>Load and append it to the specified element by the panelDivId identyfier</li>
-           * <li>Create an event for rendering the data over the svg</li>
-           * </ol>
-           *
-           * @memberof renderFeature
-           */
-
+            if (panel.clientWidth < panel.clientHeight) {
+              d3.select('div#' + target + ' div.image svg').attr('width', '100%').attr('height', 'auto');
+            } else {
+              d3.select('div#' + target + ' div.image svg').attr('width', 'auto').attr('height', '100%');
+            }
+          }
         }, {
           key: 'onPanelInitialized',
           value: function onPanelInitialized() {
@@ -152,10 +145,17 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', '../../li
                 div.removeChild(div.firstChild);
               }
               div.appendChild(xml.documentElement);
-              var h = d3.select('div#' + target + ' div.image svg').style('height').split('px')[0] * 1.1;
-              var w = d3.select('div#' + target + ' div.image svg').style('width').split('px')[0] * 1.1;
-              d3.select('div#' + target + ' div.image svg').attr('width', '100%').attr('height', '100%').attr('viewBox', '0 0 ' + w + ' ' + h).attr('preserveAspectRatio', 'xMinYMin meet');
-              console.log('al reves');
+              var panel = document.getElementById(target);
+              var h = d3.select('div#' + target + ' div.image svg').style('height').split('px')[0];
+              var w = d3.select('div#' + target + ' div.image svg').style('width').split('px')[0];
+
+              d3.select('div#' + target + ' div.image svg').attr('viewBox', '0 0 ' + w + ' ' + h).attr('preserveAspectRatio', 'xMinYMin meet');
+
+              if (panel.clientWidth < panel.clientHeight) {
+                d3.select('div#' + target + ' div.image svg').attr('width', '100%').attr('height', 'auto');
+              } else {
+                d3.select('div#' + target + ' div.image svg').attr('width', 'auto').attr('height', '100%');
+              }
             });
           }
         }, {
@@ -171,9 +171,17 @@ System.register(['app/plugins/sdk', 'app/core/time_series2', 'lodash', '../../li
                 div.removeChild(div.firstChild);
               }
               div.insertAdjacentHTML("afterbegin", svg);
-              var h = d3.select('div#' + target + ' div.image svg').style('height').split('px')[0] * 1.1;
-              var w = d3.select('div#' + target + ' div.image svg').style('width').split('px')[0] * 1.1;
-              d3.select('div#' + target + ' div.image svg').attr('width', '100%').attr('height', '100%').attr('viewBox', '0 0 ' + w + ' ' + h).attr('preserveAspectRatio', 'xMinYMin meet');
+              var panel = document.getElementById(target);
+              var h = d3.select('div#' + target + ' div.image svg').style('height').split('px')[0];
+              var w = d3.select('div#' + target + ' div.image svg').style('width').split('px')[0];
+
+              d3.select('div#' + target + ' div.image svg').attr('viewBox', '0 0 ' + w + ' ' + h).attr('preserveAspectRatio', 'xMinYMin meet');
+
+              if (panel.clientWidth < panel.clientHeight) {
+                d3.select('div#' + target + ' div.image svg').attr('width', '100%').attr('height', 'auto');
+              } else {
+                d3.select('div#' + target + ' div.image svg').attr('width', 'auto').attr('height', '100%');
+              }
             });
           }
         }, {

@@ -47,7 +47,6 @@ export default class Feature{
       this.panelController.events.on( 'render', this.onRender.bind(this));
       this.panelController.events.on( 'panel-size-changed', this.onSizeChange.bind(this));
       //this.panelController.events.on( 'refresh', this.onRefresh);
-      console.log(this.panelController);
   }
 
   /**
@@ -69,7 +68,18 @@ export default class Feature{
   }
 
   onSizeChange(a){
-  //console.log('size has changed', a);
+        const target = this.panel.panelDivId;
+        const panel = document.getElementById(target);
+
+        if(panel.clientWidth < panel.clientHeight){
+          d3.select('div#'+target+' div.image svg')
+            .attr('width','100%')
+            .attr('height','auto');
+        }else{
+          d3.select('div#'+target+' div.image svg')
+            .attr('width','auto')
+            .attr('height','100%');
+        }
   }
 
   /**
@@ -142,14 +152,24 @@ export default class Feature{
             div.removeChild(div.firstChild);
         } 
       div.appendChild(xml.documentElement);
-        const h = (d3.select('div#'+target+' div.image svg').style('height').split('px')[0])*1.1;
-        const w = (d3.select('div#'+target+' div.image svg').style('width').split('px')[0])*1.1;
+        const panel = document.getElementById(target);
+        const h = (d3.select('div#'+target+' div.image svg').style('height').split('px')[0]);
+        const w = (d3.select('div#'+target+' div.image svg').style('width').split('px')[0]);
+
           d3.select('div#'+target+' div.image svg')
-            .attr('width','100%')
-            .attr('height','100%')
             .attr('viewBox', '0 0 '+w+' '+h)
             .attr('preserveAspectRatio', 'xMinYMin meet');
-        console.log('al reves')
+
+        if(panel.clientWidth < panel.clientHeight){
+          d3.select('div#'+target+' div.image svg')
+            .attr('width','100%')
+            .attr('height','auto');
+        }else{
+          d3.select('div#'+target+' div.image svg')
+            .attr('width','auto')
+            .attr('height','100%');
+        }
+
     });
   }
 
@@ -164,13 +184,23 @@ export default class Feature{
             div.removeChild(div.firstChild);
         } 
         div.insertAdjacentHTML("afterbegin", svg);
-        const h = (d3.select('div#'+target+' div.image svg').style('height').split('px')[0])*1.1;
-        const w = (d3.select('div#'+target+' div.image svg').style('width').split('px')[0])*1.1;
+        const panel = document.getElementById(target);
+        const h = (d3.select('div#'+target+' div.image svg').style('height').split('px')[0]);
+        const w = (d3.select('div#'+target+' div.image svg').style('width').split('px')[0]);
+
           d3.select('div#'+target+' div.image svg')
-            .attr('width','100%')
-            .attr('height','100%')
             .attr('viewBox', '0 0 '+w+' '+h)
             .attr('preserveAspectRatio', 'xMinYMin meet');
+
+        if(panel.clientWidth < panel.clientHeight){
+          d3.select('div#'+target+' div.image svg')
+            .attr('width','100%')
+            .attr('height','auto');
+        }else{
+          d3.select('div#'+target+' div.image svg')
+            .attr('width','auto')
+            .attr('height','100%');
+        }
     });
   }
   /**

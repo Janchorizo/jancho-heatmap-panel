@@ -61,11 +61,23 @@ export class RenderEditorController {
       div.appendChild(xml.documentElement);
         const h = (d3.select('div#'+target+' div.image svg').style('height').split('px')[0])*1.1;
         const w = (d3.select('div#'+target+' div.image svg').style('width').split('px')[0])*1.1;
+        const panel = document.getElementById(target);
+        const h = (d3.select('div#'+target+' div.image svg').style('height').split('px')[0]);
+        const w = (d3.select('div#'+target+' div.image svg').style('width').split('px')[0]);
+
           d3.select('div#'+target+' div.image svg')
-            .attr('width','100%')
-            .attr('height','100%')
             .attr('viewBox', '0 0 '+w+' '+h)
             .attr('preserveAspectRatio', 'xMinYMin meet');
+
+        if(panel.clientWidth < panel.clientHeight){
+          d3.select('div#'+target+' div.image svg')
+            .attr('width','100%')
+            .attr('height','auto');
+        }else{
+          d3.select('div#'+target+' div.image svg')
+            .attr('width','auto')
+            .attr('height','100%');
+        }
     });
     this.panelCtrl.render();
   }
@@ -91,13 +103,22 @@ export class RenderEditorController {
             div.removeChild(div.firstChild);
         } 
         div.insertAdjacentHTML("afterbegin", svg);
-        const h = (d3.select('div#'+target+' div.image svg').style('height').split('px')[0])*1.1;
-        const w = (d3.select('div#'+target+' div.image svg').style('width').split('px')[0])*1.1;
+        const h = (d3.select('div#'+target+' div.image svg').style('height').split('px')[0]);
+        const w = (d3.select('div#'+target+' div.image svg').style('width').split('px')[0]);
+
           d3.select('div#'+target+' div.image svg')
-            .attr('width','100%')
-            .attr('height','100%')
             .attr('viewBox', '0 0 '+w+' '+h)
             .attr('preserveAspectRatio', 'xMinYMin meet');
+
+        if(panel.clientWidth < panel.clientHeight){
+          d3.select('div#'+target+' div.image svg')
+            .attr('width','100%')
+            .attr('height','auto');
+        }else{
+          d3.select('div#'+target+' div.image svg')
+            .attr('width','auto')
+            .attr('height','100%');
+        }
             this.panelCtrl.render();
     });
   }
